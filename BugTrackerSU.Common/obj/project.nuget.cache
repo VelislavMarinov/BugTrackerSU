@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "UWi66sJxRwePa0Qq+CNu4uxsEHWJt7huohOgcDwzbEuqSSrQqLsLNSrc20mFwF7Vak6v5PWTZ7dd7zN4aOfSVQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\BugTrackerSU.Common\\BugTrackerSU.Common.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Велислав\\.nuget\\packages\\stylecop.analyzers\\1.2.0-beta.435\\stylecop.analyzers.1.2.0-beta.435.nupkg.sha512",
+    "C:\\Users\\Велислав\\.nuget\\packages\\stylecop.analyzers.unstable\\1.2.0.435\\stylecop.analyzers.unstable.1.2.0.435.nupkg.sha512"
+  ],
+  "logs": []
+}

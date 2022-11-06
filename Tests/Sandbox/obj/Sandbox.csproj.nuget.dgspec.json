@@ -1,0 +1,679 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Tests\\Sandbox\\Sandbox.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\BugTrackerSU.Common\\BugTrackerSU.Common.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\BugTrackerSU.Common\\BugTrackerSU.Common.csproj",
+        "projectName": "BugTrackerSU.Common",
+        "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\BugTrackerSU.Common\\BugTrackerSU.Common.csproj",
+        "packagesPath": "C:\\Users\\Велислав\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\BugTrackerSU.Common\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Велислав\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "StyleCop.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.2.0-beta.435, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data.Common\\BugTrackerSU.Data.Common.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data.Common\\BugTrackerSU.Data.Common.csproj",
+        "projectName": "BugTrackerSU.Data.Common",
+        "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data.Common\\BugTrackerSU.Data.Common.csproj",
+        "packagesPath": "C:\\Users\\Велислав\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data.Common\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Велислав\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "StyleCop.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.2.0-beta.435, )"
+            },
+            "System.ComponentModel.Annotations": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data.Models\\BugTrackerSU.Data.Models.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data.Models\\BugTrackerSU.Data.Models.csproj",
+        "projectName": "BugTrackerSU.Data.Models",
+        "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data.Models\\BugTrackerSU.Data.Models.csproj",
+        "packagesPath": "C:\\Users\\Велислав\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data.Models\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Велислав\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data.Common\\BugTrackerSU.Data.Common.csproj": {
+                "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data.Common\\BugTrackerSU.Data.Common.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.5, )"
+            },
+            "StyleCop.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.2.0-beta.435, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data\\BugTrackerSU.Data.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data\\BugTrackerSU.Data.csproj",
+        "projectName": "BugTrackerSU.Data",
+        "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data\\BugTrackerSU.Data.csproj",
+        "packagesPath": "C:\\Users\\Велислав\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Велислав\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\BugTrackerSU.Common\\BugTrackerSU.Common.csproj": {
+                "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\BugTrackerSU.Common\\BugTrackerSU.Common.csproj"
+              },
+              "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data.Common\\BugTrackerSU.Data.Common.csproj": {
+                "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data.Common\\BugTrackerSU.Data.Common.csproj"
+              },
+              "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data.Models\\BugTrackerSU.Data.Models.csproj": {
+                "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data.Models\\BugTrackerSU.Data.Models.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.5, )"
+            },
+            "Microsoft.Extensions.Configuration.UserSecrets": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "StyleCop.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.2.0-beta.435, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services.Data\\BugTrackerSU.Services.Data.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services.Data\\BugTrackerSU.Services.Data.csproj",
+        "projectName": "BugTrackerSU.Services.Data",
+        "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services.Data\\BugTrackerSU.Services.Data.csproj",
+        "packagesPath": "C:\\Users\\Велислав\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services.Data\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Велислав\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data.Common\\BugTrackerSU.Data.Common.csproj": {
+                "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data.Common\\BugTrackerSU.Data.Common.csproj"
+              },
+              "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data.Models\\BugTrackerSU.Data.Models.csproj": {
+                "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data.Models\\BugTrackerSU.Data.Models.csproj"
+              },
+              "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services.Mapping\\BugTrackerSU.Services.Mapping.csproj": {
+                "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services.Mapping\\BugTrackerSU.Services.Mapping.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "StyleCop.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.2.0-beta.435, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services.Mapping\\BugTrackerSU.Services.Mapping.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services.Mapping\\BugTrackerSU.Services.Mapping.csproj",
+        "projectName": "BugTrackerSU.Services.Mapping",
+        "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services.Mapping\\BugTrackerSU.Services.Mapping.csproj",
+        "packagesPath": "C:\\Users\\Велислав\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services.Mapping\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Велислав\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[11.0.1, )"
+            },
+            "StyleCop.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.2.0-beta.435, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services.Messaging\\BugTrackerSU.Services.Messaging.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services.Messaging\\BugTrackerSU.Services.Messaging.csproj",
+        "projectName": "BugTrackerSU.Services.Messaging",
+        "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services.Messaging\\BugTrackerSU.Services.Messaging.csproj",
+        "packagesPath": "C:\\Users\\Велислав\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services.Messaging\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Велислав\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Sendgrid": {
+              "target": "Package",
+              "version": "[9.28.0, )"
+            },
+            "StyleCop.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.2.0-beta.435, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services\\BugTrackerSU.Services.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services\\BugTrackerSU.Services.csproj",
+        "projectName": "BugTrackerSU.Services",
+        "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services\\BugTrackerSU.Services.csproj",
+        "packagesPath": "C:\\Users\\Велислав\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Велислав\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "StyleCop.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.2.0-beta.435, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Tests\\Sandbox\\Sandbox.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Tests\\Sandbox\\Sandbox.csproj",
+        "projectName": "Sandbox",
+        "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Tests\\Sandbox\\Sandbox.csproj",
+        "packagesPath": "C:\\Users\\Велислав\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Tests\\Sandbox\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Велислав\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\BugTrackerSU.Common\\BugTrackerSU.Common.csproj": {
+                "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\BugTrackerSU.Common\\BugTrackerSU.Common.csproj"
+              },
+              "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data.Common\\BugTrackerSU.Data.Common.csproj": {
+                "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data.Common\\BugTrackerSU.Data.Common.csproj"
+              },
+              "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data.Models\\BugTrackerSU.Data.Models.csproj": {
+                "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data.Models\\BugTrackerSU.Data.Models.csproj"
+              },
+              "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data\\BugTrackerSU.Data.csproj": {
+                "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data\\BugTrackerSU.Data.csproj"
+              },
+              "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services.Data\\BugTrackerSU.Services.Data.csproj": {
+                "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services.Data\\BugTrackerSU.Services.Data.csproj"
+              },
+              "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services.Mapping\\BugTrackerSU.Services.Mapping.csproj": {
+                "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services.Mapping\\BugTrackerSU.Services.Mapping.csproj"
+              },
+              "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services.Messaging\\BugTrackerSU.Services.Messaging.csproj": {
+                "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services.Messaging\\BugTrackerSU.Services.Messaging.csproj"
+              },
+              "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services\\BugTrackerSU.Services.csproj": {
+                "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Services\\BugTrackerSU.Services\\BugTrackerSU.Services.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "CommandLineParser": {
+              "target": "Package",
+              "version": "[2.9.1, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[6.0.5, )"
+            },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "Microsoft.Extensions.Configuration.EnvironmentVariables": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.Extensions.Logging.Console": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "StyleCop.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.2.0-beta.435, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
