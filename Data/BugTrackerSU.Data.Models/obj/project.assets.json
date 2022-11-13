@@ -297,6 +297,16 @@
           "buildTransitive/netcoreapp3.1/_._": {}
         }
       },
+      "BugTrackerSU.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/BugTrackerSU.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BugTrackerSU.Common.dll": {}
+        }
+      },
       "BugTrackerSU.Data.Common/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -888,6 +898,11 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "BugTrackerSU.Common/1.0.0": {
+      "type": "project",
+      "path": "../../BugTrackerSU.Common/BugTrackerSU.Common.csproj",
+      "msbuildProject": "../../BugTrackerSU.Common/BugTrackerSU.Common.csproj"
+    },
     "BugTrackerSU.Data.Common/1.0.0": {
       "type": "project",
       "path": "../BugTrackerSU.Data.Common/BugTrackerSU.Data.Common.csproj",
@@ -896,6 +911,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "BugTrackerSU.Common >= 1.0.0",
       "BugTrackerSU.Data.Common >= 1.0.0",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 6.0.5",
       "StyleCop.Analyzers >= 1.2.0-beta.435"
@@ -928,6 +944,9 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
+            "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\BugTrackerSU.Common\\BugTrackerSU.Common.csproj": {
+              "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\BugTrackerSU.Common\\BugTrackerSU.Common.csproj"
+            },
             "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data.Common\\BugTrackerSU.Data.Common.csproj": {
               "projectPath": "C:\\Users\\Велислав\\Desktop\\SoftUni\\BugTrackerSU\\Data\\BugTrackerSU.Data.Common\\BugTrackerSU.Data.Common.csproj"
             }

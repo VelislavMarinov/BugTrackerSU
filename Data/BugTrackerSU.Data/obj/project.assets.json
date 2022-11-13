@@ -884,6 +884,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
+          "BugTrackerSU.Common": "1.0.0",
           "BugTrackerSU.Data.Common": "1.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.5"
         },

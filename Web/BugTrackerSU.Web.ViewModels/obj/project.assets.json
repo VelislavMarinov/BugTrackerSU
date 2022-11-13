@@ -318,6 +318,16 @@
           "buildTransitive/netcoreapp3.1/_._": {}
         }
       },
+      "BugTrackerSU.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/BugTrackerSU.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BugTrackerSU.Common.dll": {}
+        }
+      },
       "BugTrackerSU.Data.Common/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -335,6 +345,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
+          "BugTrackerSU.Common": "1.0.0",
           "BugTrackerSU.Data.Common": "1.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.5"
         },
@@ -1019,6 +1030,11 @@
         "system.runtime.compilerservices.unsafe.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "BugTrackerSU.Common/1.0.0": {
+      "type": "project",
+      "path": "../../BugTrackerSU.Common/BugTrackerSU.Common.csproj",
+      "msbuildProject": "../../BugTrackerSU.Common/BugTrackerSU.Common.csproj"
     },
     "BugTrackerSU.Data.Common/1.0.0": {
       "type": "project",
