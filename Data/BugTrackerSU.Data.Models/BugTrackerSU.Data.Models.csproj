@@ -23,9 +23,5 @@
     <ProjectReference Include="..\..\BugTrackerSU.Common\BugTrackerSU.Common.csproj" />
     <ProjectReference Include="..\BugTrackerSU.Data.Common\BugTrackerSU.Data.Common.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Enums\" />
-  </ItemGroup>
   
 </Project>
