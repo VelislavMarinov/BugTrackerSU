@@ -26,6 +26,14 @@
 
         public DbSet<Setting> Settings { get; set; }
 
+        public DbSet<Project> Projects { get; set; }
+
+        public DbSet<Ticket> Tickets { get; set; }
+
+        public DbSet<TicketHistory> TicketsHistories { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
