@@ -3471,7 +3471,8 @@
         "dependencies": {
           "BugTrackerSU.Data.Common": "1.0.0",
           "BugTrackerSU.Data.Models": "1.0.0",
-          "BugTrackerSU.Services.Mapping": "1.0.0"
+          "BugTrackerSU.Services.Mapping": "1.0.0",
+          "BugTrackerSU.Web.ViewModels": "1.0.0"
         },
         "compile": {
           "bin/placeholder/BugTrackerSU.Services.Data.dll": {}

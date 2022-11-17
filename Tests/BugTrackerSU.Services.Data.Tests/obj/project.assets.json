@@ -2536,7 +2536,8 @@
         "dependencies": {
           "BugTrackerSU.Data.Common": "1.0.0",
           "BugTrackerSU.Data.Models": "1.0.0",
-          "BugTrackerSU.Services.Mapping": "1.0.0"
+          "BugTrackerSU.Services.Mapping": "1.0.0",
+          "BugTrackerSU.Web.ViewModels": "1.0.0"
         },
         "compile": {
           "bin/placeholder/BugTrackerSU.Services.Data.dll": {}
@@ -2556,6 +2557,20 @@
         },
         "runtime": {
           "bin/placeholder/BugTrackerSU.Services.Mapping.dll": {}
+        }
+      },
+      "BugTrackerSU.Web.ViewModels/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "BugTrackerSU.Data.Models": "1.0.0",
+          "BugTrackerSU.Services.Mapping": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/BugTrackerSU.Web.ViewModels.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BugTrackerSU.Web.ViewModels.dll": {}
         }
       }
     }
@@ -8439,6 +8454,11 @@
       "type": "project",
       "path": "../../Services/BugTrackerSU.Services.Mapping/BugTrackerSU.Services.Mapping.csproj",
       "msbuildProject": "../../Services/BugTrackerSU.Services.Mapping/BugTrackerSU.Services.Mapping.csproj"
+    },
+    "BugTrackerSU.Web.ViewModels/1.0.0": {
+      "type": "project",
+      "path": "../../Web/BugTrackerSU.Web.ViewModels/BugTrackerSU.Web.ViewModels.csproj",
+      "msbuildProject": "../../Web/BugTrackerSU.Web.ViewModels/BugTrackerSU.Web.ViewModels.csproj"
     }
   },
   "projectFileDependencyGroups": {

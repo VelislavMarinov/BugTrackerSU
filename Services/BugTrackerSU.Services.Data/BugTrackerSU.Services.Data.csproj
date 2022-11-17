@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\BugTrackerSU.Data.Common\BugTrackerSU.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\BugTrackerSU.Data.Models\BugTrackerSU.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Web\BugTrackerSU.Web.ViewModels\BugTrackerSU.Web.ViewModels.csproj" />
     <ProjectReference Include="..\BugTrackerSU.Services.Mapping\BugTrackerSU.Services.Mapping.csproj" />
   </ItemGroup>
 
