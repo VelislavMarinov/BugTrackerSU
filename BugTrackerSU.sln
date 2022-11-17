@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{E389DEB6-5F90-444B-A054-12A10D39C76F}"
 EndProject
@@ -28,6 +28,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BugTrackerSU.Web.Infrastructure", "Web\BugTrackerSU.Web.Infrastructure\BugTrackerSU.Web.Infrastructure.csproj", "{7A7A7986-1F5B-4EBD-9B17-8B41F8FABA58}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BugTrackerSU.Services.Data", "Services\BugTrackerSU.Services.Data\BugTrackerSU.Services.Data.csproj", "{4D39C126-3FB5-4B26-B08C-1BF48EFFA23E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{13B7AACB-9C85-4409-8D4B-95A67D0DFFF7} = {13B7AACB-9C85-4409-8D4B-95A67D0DFFF7}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BugTrackerSU.Services.Mapping", "Services\BugTrackerSU.Services.Mapping\BugTrackerSU.Services.Mapping.csproj", "{415FD7FA-0453-4FE1-9A29-C6E1D8B45C3D}"
 EndProject
@@ -37,7 +40,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BugTrackerSU.Services.Data.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BugTrackerSU.Web.Tests", "Tests\BugTrackerSU.Web.Tests\BugTrackerSU.Web.Tests.csproj", "{3EE06C6E-C8F3-418A-A309-8AC81976A074}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugTrackerSU.Web.ViewModels", "Web\BugTrackerSU.Web.ViewModels\BugTrackerSU.Web.ViewModels.csproj", "{13B7AACB-9C85-4409-8D4B-95A67D0DFFF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BugTrackerSU.Web.ViewModels", "Web\BugTrackerSU.Web.ViewModels\BugTrackerSU.Web.ViewModels.csproj", "{13B7AACB-9C85-4409-8D4B-95A67D0DFFF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

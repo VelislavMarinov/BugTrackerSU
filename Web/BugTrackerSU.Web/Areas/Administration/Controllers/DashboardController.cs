@@ -1,7 +1,7 @@
 ﻿namespace BugTrackerSU.Web.Areas.Administration.Controllers
 {
     using BugTrackerSU.Services.Data;
-    using BugTrackerSU.Web.ViewModels.Administration.Dashboard;
+    using BugTrackerSU.Services.Data.User;
 
     using Microsoft.AspNetCore.Mvc;
 
@@ -9,15 +9,20 @@
     {
         private readonly ISettingsService settingsService;
 
-        public DashboardController(ISettingsService settingsService)
+        private readonly IUserService userService;
+
+        public DashboardController(
+            ISettingsService settingsService,
+            IUserService userService)
         {
             this.settingsService = settingsService;
+            this.userService = userService;
         }
 
-        public IActionResult Index()
+        public IActionResult ManageUserRoles()
         {
-            var viewModel = new IndexViewModel { SettingsCount = this.settingsService.GetCount(), };
-            return this.View(viewModel);
+            var model = this.userService.GetAllUsersAndRoles();
+            return this.View(model);
         }
     }
 }

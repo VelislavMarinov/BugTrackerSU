@@ -9,6 +9,7 @@
     using BugTrackerSU.Data.Repositories;
     using BugTrackerSU.Data.Seeding;
     using BugTrackerSU.Services.Data;
+    using BugTrackerSU.Services.Data.User;
     using BugTrackerSU.Services.Mapping;
     using BugTrackerSU.Services.Messaging;
     using BugTrackerSU.Web.ViewModels;
@@ -65,6 +66,7 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<IUserService, UserService>();
         }
 
         private static void Configure(WebApplication app)
