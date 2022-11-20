@@ -215,6 +215,10 @@ namespace BugTrackerSU.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ProjectMangaerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(64)
@@ -223,6 +227,8 @@ namespace BugTrackerSU.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
+
+                    b.HasIndex("ProjectMangaerId");
 
                     b.ToTable("Projects");
                 });
@@ -358,6 +364,9 @@ namespace BugTrackerSU.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("TicketId")
+                        .HasColumnType("int");
+
                     b.Property<string>("TicketPriorityNewValue")
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
@@ -388,6 +397,8 @@ namespace BugTrackerSU.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
+
+                    b.HasIndex("TicketId");
 
                     b.ToTable("TicketsHistories");
                 });
@@ -524,6 +535,17 @@ namespace BugTrackerSU.Data.Migrations
                     b.Navigation("Ticket");
                 });
 
+            modelBuilder.Entity("BugTrackerSU.Data.Models.Project", b =>
+                {
+                    b.HasOne("BugTrackerSU.Data.Models.ApplicationUser", "ProjectMangaer")
+                        .WithMany()
+                        .HasForeignKey("ProjectMangaerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ProjectMangaer");
+                });
+
             modelBuilder.Entity("BugTrackerSU.Data.Models.Ticket", b =>
                 {
                     b.HasOne("BugTrackerSU.Data.Models.ApplicationUser", "AssignedDeveloper")
@@ -549,6 +571,17 @@ namespace BugTrackerSU.Data.Migrations
                     b.Navigation("Project");
 
                     b.Navigation("TicketSubmitter");
+                });
+
+            modelBuilder.Entity("BugTrackerSU.Data.Models.TicketHistory", b =>
+                {
+                    b.HasOne("BugTrackerSU.Data.Models.Ticket", "Ticket")
+                        .WithMany("History")
+                        .HasForeignKey("TicketId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Ticket");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -621,6 +654,8 @@ namespace BugTrackerSU.Data.Migrations
             modelBuilder.Entity("BugTrackerSU.Data.Models.Ticket", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("History");
                 });
 #pragma warning restore 612, 618
         }
