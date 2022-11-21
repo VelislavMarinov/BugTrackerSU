@@ -215,7 +215,7 @@ namespace BugTrackerSU.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ProjectMangaerId")
+                    b.Property<string>("ProjectManagerId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -228,7 +228,7 @@ namespace BugTrackerSU.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.HasIndex("ProjectMangaerId");
+                    b.HasIndex("ProjectManagerId");
 
                     b.ToTable("Projects");
                 });
@@ -537,13 +537,13 @@ namespace BugTrackerSU.Data.Migrations
 
             modelBuilder.Entity("BugTrackerSU.Data.Models.Project", b =>
                 {
-                    b.HasOne("BugTrackerSU.Data.Models.ApplicationUser", "ProjectMangaer")
+                    b.HasOne("BugTrackerSU.Data.Models.ApplicationUser", "ProjectManager")
                         .WithMany()
-                        .HasForeignKey("ProjectMangaerId")
+                        .HasForeignKey("ProjectManagerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("ProjectMangaer");
+                    b.Navigation("ProjectManager");
                 });
 
             modelBuilder.Entity("BugTrackerSU.Data.Models.Ticket", b =>
