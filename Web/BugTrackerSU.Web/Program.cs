@@ -10,6 +10,7 @@
     using BugTrackerSU.Data.Seeding;
     using BugTrackerSU.Services.Data;
     using BugTrackerSU.Services.Data.Project;
+    using BugTrackerSU.Services.Data.Ticket;
     using BugTrackerSU.Services.Data.User;
     using BugTrackerSU.Services.Mapping;
     using BugTrackerSU.Services.Messaging;
@@ -69,6 +70,7 @@
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IProjectService, ProjectService>();
+            services.AddTransient<ITicketService, TicketService>();
         }
 
         private static void Configure(WebApplication app)
