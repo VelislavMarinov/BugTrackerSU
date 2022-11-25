@@ -117,9 +117,6 @@ namespace BugTrackerSU.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("ProjectId")
-                        .HasColumnType("int");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -142,9 +139,45 @@ namespace BugTrackerSU.Data.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("BugTrackerSU.Data.Models.ApplicationUserProject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("IsDeleted");
+
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.ToTable("ApplicationUsersProjects");
                 });
 
             modelBuilder.Entity("BugTrackerSU.Data.Models.Comment", b =>
@@ -509,17 +542,29 @@ namespace BugTrackerSU.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("BugTrackerSU.Data.Models.ApplicationUser", b =>
+            modelBuilder.Entity("BugTrackerSU.Data.Models.ApplicationUserProject", b =>
                 {
-                    b.HasOne("BugTrackerSU.Data.Models.Project", null)
-                        .WithMany("AsignedUsers")
-                        .HasForeignKey("ProjectId");
+                    b.HasOne("BugTrackerSU.Data.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("UserProjects")
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BugTrackerSU.Data.Models.Project", "Project")
+                        .WithMany("ProjectUsers")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("BugTrackerSU.Data.Models.Comment", b =>
                 {
                     b.HasOne("BugTrackerSU.Data.Models.ApplicationUser", "AddedByUser")
-                        .WithMany()
+                        .WithMany("Comments")
                         .HasForeignKey("AddedByUserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -561,7 +606,7 @@ namespace BugTrackerSU.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("BugTrackerSU.Data.Models.ApplicationUser", "TicketSubmitter")
-                        .WithMany()
+                        .WithMany("Tickets")
                         .HasForeignKey("TicketSubmitterId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -639,16 +684,22 @@ namespace BugTrackerSU.Data.Migrations
                 {
                     b.Navigation("Claims");
 
+                    b.Navigation("Comments");
+
                     b.Navigation("Logins");
 
                     b.Navigation("Roles");
+
+                    b.Navigation("Tickets");
+
+                    b.Navigation("UserProjects");
                 });
 
             modelBuilder.Entity("BugTrackerSU.Data.Models.Project", b =>
                 {
-                    b.Navigation("AsignedUsers");
-
                     b.Navigation("ProjectTickets");
+
+                    b.Navigation("ProjectUsers");
                 });
 
             modelBuilder.Entity("BugTrackerSU.Data.Models.Ticket", b =>

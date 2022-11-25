@@ -34,6 +34,8 @@
 
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<ApplicationUserProject> ApplicationUsersProjects { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -55,6 +57,8 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Ticket>().HasOne(s => s.TicketSubmitter).WithMany(x => x.Tickets);
+
             // Needed for Identity models configuration
             base.OnModelCreating(builder);
 
