@@ -40,4 +40,8 @@
     <ProjectReference Include="..\BugTrackerSU.Web.Infrastructure\BugTrackerSU.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\BugTrackerSU.Web.ViewModels\BugTrackerSU.Web.ViewModels.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Tickets\" />
+  </ItemGroup>
 </Project>
