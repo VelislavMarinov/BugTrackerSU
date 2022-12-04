@@ -10,5 +10,7 @@
         Task CreateTicketAsync(CreateTicketViewModel model, string userId);
 
         List<TicketViewModel> GetAllUserTickets(string userId);
+
+        Task EditTicketAsync(EditTicketViewModel model, string userId);
     }
 }

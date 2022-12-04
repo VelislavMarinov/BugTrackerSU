@@ -17,16 +17,13 @@
 
         public int TicketId { get; set; }
 
-        public string UserdId { get; set; }
+        public string UserId { get; set; }
 
         public ICollection<UserViewModel> AsignedProjectDevelopers { get; set; }
 
         [Required]
         [Display(Name = "Assign developer")]
         public string DeveloperId { get; set; }
-
-        [Required]
-        public int ProjectId { get; set; }
 
         [Required(ErrorMessage = "The field is required")]
         [Display(Name = "Status of ticket")]

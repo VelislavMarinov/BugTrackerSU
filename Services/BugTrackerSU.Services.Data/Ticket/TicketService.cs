@@ -7,6 +7,7 @@
 
     using BugTrackerSU.Data.Common.Repositories;
     using BugTrackerSU.Data.Models;
+    using BugTrackerSU.Services.Data.TicketHistory;
     using BugTrackerSU.Web.ViewModels.Tickets;
 
     public class TicketService : ITicketService
@@ -14,6 +15,7 @@
         private readonly IDeletableEntityRepository<Project> projectRepository;
         private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
         private readonly IDeletableEntityRepository<Ticket> ticketRepository;
+        private readonly ITicketHistoryService ticketHistoryService;
 
         public TicketService(
             IDeletableEntityRepository<Project> projectRepository,
@@ -41,6 +43,21 @@
 
             await this.ticketRepository.AddAsync(ticket);
             await this.ticketRepository.SaveChangesAsync();
+        }
+
+        public async Task EditTicketAsync(EditTicketViewModel model, string userId)
+        {
+            await this.ticketHistoryService.CreateTicketHistoryAsync(model.TicketId, model);
+
+            var ticket = this.ticketRepository.All().Where(x => x.Id == model.TicketId).FirstOrDefault();
+            ticket.AssignedDeveloperId = model.DeveloperId;
+            ticket.Priority = model.Priority.ToString();
+            ticket.TicketType = model.TicketType.ToString();
+            ticket.Status = model.Status.ToString();
+
+            this.ticketRepository.Update(ticket);
+            await this.ticketRepository.SaveChangesAsync();
+            throw new NotImplementedException();
         }
 
         public List<TicketViewModel> GetAllUserTickets(string userId)
