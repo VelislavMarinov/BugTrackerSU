@@ -1,0 +1,43 @@
+﻿@using BugTrackerSU.Common
+@using BugTrackerSU.Web.ViewModels.Projects
+@model List<ProjectViewModel>
+
+<table class="table table-striped table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Description</th>
+      <th scope="col">Creation date</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+   @foreach (var project in Model)
+   {
+     <tr>
+      <td>@project.Title</td>
+      <td>@project.Descripiton</td>
+      <td>@DateTime.Now.ToString()</td>
+      <td>
+          <a asp-controller="Projects"
+             asp-action="ProjectDetails"
+             asp-route-id="@project.ProjectId"
+             class="btn btn-primary">
+             View More
+          </a>
+        @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName) || 
+              this.User.IsInRole(GlobalConstants.ProjectManagerRoleName) ||
+             this.User.IsInRole(GlobalConstants.SubmitterRoleName))
+        {
+           <a asp-controller="Tickets"
+             asp-action="Create"
+             asp-route-id="@project.ProjectId"
+             class="btn btn-primary">
+             Create Ticket
+          </a>
+        }
+      </td>
+     </tr>
+   }
+  </tbody>
+</table>

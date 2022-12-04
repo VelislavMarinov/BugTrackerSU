@@ -1,0 +1,67 @@
+﻿@using BugTrackerSU.Data.Models.Enums
+@using BugTrackerSU.Web.ViewModels.Tickets
+@model CreateTicketViewModel
+@{
+    ViewData["Title"] = "Create Sculpture";
+}
+
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 offset-lg-2 col-lg-10 offset-xl-1 col-xl-10">
+            <h1 class="text-center">@ViewData["Title"]</h1>
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="Title"></label>
+                    <input asp-for="Title" class="form-control" placeholder="Ticket Title">
+                    <span asp-validation-for="Title" class="text-danger small"></span>
+                </div>
+                 <div class="form-group">
+                    <label asp-for="Description"></label>
+                    <input asp-for="Description" class="form-control" placeholder="Information about Ticket">
+                    <span asp-validation-for="Description" class="text-danger small"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DeveloperId"></label>
+                    <select asp-for="DeveloperId" class="form-control">
+                     @foreach (var developer in Model.AsignedProjectDevelopers)
+                     {
+                        <option value="@developer.Id">@developer.UserName</option>
+                     }
+                    </select>
+                </div>
+                <div class="form-group">
+                   <label asp-for="TicketType" ></label>
+                     <select asp-for="TicketType" class="form-control">
+                        @foreach (int choice in Enum.GetValues(typeof(TicketType)))
+                          {
+                              <option value="@choice">@Enum.GetName(typeof(TicketType), choice)</option>
+                          }
+                 </select>
+                </div>
+                <div class="form-group">
+                     <label asp-for="Status" ></label>
+                      <select asp-for="Status" class="form-control">
+                        @foreach (int choice in Enum.GetValues(typeof(TicketStatus)))
+                        {
+                            <option value="@choice">@Enum.GetName(typeof(TicketStatus), choice)</option>
+                        }
+                 </select>
+                </div>
+                <div class="form-group">
+                     <label asp-for="Priority" ></label>
+                      <select asp-for="Priority" class="form-control">
+                        @foreach (int choice in Enum.GetValues(typeof(TicketPriority)))
+                        {
+                            <option value="@choice">@Enum.GetName(typeof(TicketPriority), choice)</option>
+                        }
+                 </select>
+                </div>
+                <input type="submit" class="btn btn-info" value="@ViewData["Title"]" />
+            </form>
+        </div>
+    </div>
+</div>

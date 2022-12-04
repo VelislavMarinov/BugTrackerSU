@@ -1,0 +1,52 @@
+﻿@using BugTrackerSU.Web.ViewModels.Administration.Dashboard
+
+@model ManageRolesViewModel
+
+@{
+    this.ViewData["Title"] = "Manage Roles";
+}
+
+<h1>@this.ViewData["Title"]</h1>
+
+
+<form method="post">
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label asp-for="UserId"></label>
+            <select asp-for="UserId" class="form-control">
+                <option value="@null">Serach for user</option>
+               @foreach (var user in Model.Users)
+                {
+                   <option value="@user.Id">@user.UserName</option>
+                }
+            </select>
+        </div>
+        <br>
+        <div class="form-group col-md-4">
+            <label asp-for="RoleId"></label>
+            <select asp-for="RoleId" class="form-control">
+                <option value="">Search for role</option>
+                @foreach (var role in Model.Roles)
+                {
+                    <option value="@role.Id">@role.RoleName</option>
+                }
+            </select>
+        </div>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<br>
+
+<div class="list-group">
+@foreach(var user in Model.Users)
+{
+  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+    <div class=" justify-content-between">
+      <h5 class="mb-1">@user.UserName</h5>
+      <small>Role: @user.RoleName</small>
+    </div>
+  </a>
+}
+</div>
