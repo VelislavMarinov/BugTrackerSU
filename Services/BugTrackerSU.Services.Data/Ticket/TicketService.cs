@@ -8,6 +8,7 @@
     using BugTrackerSU.Data.Common.Repositories;
     using BugTrackerSU.Data.Models;
     using BugTrackerSU.Services.Data.TicketHistory;
+    using BugTrackerSU.Web.ViewModels.Comments;
     using BugTrackerSU.Web.ViewModels.Tickets;
 
     public class TicketService : ITicketService
@@ -75,6 +76,38 @@
                 .ToList();
 
             return tickets;
+        }
+
+        public TicketDetailsViewModel GetTicketDetailsById(int ticketId)
+        {
+            var ticketDetails = this.ticketRepository
+                .All()
+                .Where(x => x.Id == ticketId)
+                .Select(x => new TicketDetailsViewModel
+                {
+                    Title = x.Title,
+                    TicketDescription = x.Description,
+                    DeveloperName = x.AssignedDeveloper.UserName,
+                    TicketId = ticketId,
+                    TicketPriority = x.Priority,
+                    TicketStatus = x.Status,
+                    TicketType = x.TicketType,
+                    CreatedOn = x.CreatedOn,
+                    UpdatedOn = (DateTime)x.ModifiedOn,
+                    Comments = x.Comments
+                                 .Select(c => new CommentViewModel
+                                 {
+                                    CommentId = c.Id,
+                                    Content = c.Content,
+                                    TicketId = x.Id,
+                                    UserId = c.AddedByUserId,
+                                    UserName = c.AddedByUser.UserName,
+                                 })
+                                 .ToList(),
+                })
+                .FirstOrDefault();
+
+            return ticketDetails;
         }
     }
 }
