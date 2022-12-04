@@ -25,8 +25,4 @@
     <ProjectReference Include="..\BugTrackerSU.Services.Mapping\BugTrackerSU.Services.Mapping.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Comment\" />
-  </ItemGroup>
-
 </Project>
