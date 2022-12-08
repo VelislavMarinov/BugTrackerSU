@@ -209,6 +209,9 @@ namespace BugTrackerSU.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
                     b.Property<int>("TicketId")
                         .HasColumnType("int");
 
@@ -218,9 +221,59 @@ namespace BugTrackerSU.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
+                    b.HasIndex("PostId");
+
                     b.HasIndex("TicketId");
 
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("BugTrackerSU.Data.Models.Post", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AddedByUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(496)
+                        .HasColumnType("nvarchar(496)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddedByUserId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("BugTrackerSU.Data.Models.Project", b =>
@@ -569,6 +622,12 @@ namespace BugTrackerSU.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("BugTrackerSU.Data.Models.Post", "Post")
+                        .WithMany("Comments")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("BugTrackerSU.Data.Models.Ticket", "Ticket")
                         .WithMany("Comments")
                         .HasForeignKey("TicketId")
@@ -577,7 +636,28 @@ namespace BugTrackerSU.Data.Migrations
 
                     b.Navigation("AddedByUser");
 
+                    b.Navigation("Post");
+
                     b.Navigation("Ticket");
+                });
+
+            modelBuilder.Entity("BugTrackerSU.Data.Models.Post", b =>
+                {
+                    b.HasOne("BugTrackerSU.Data.Models.ApplicationUser", "AddedByUser")
+                        .WithMany("Posts")
+                        .HasForeignKey("AddedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BugTrackerSU.Data.Models.Project", "Project")
+                        .WithMany("Posts")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("AddedByUser");
+
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("BugTrackerSU.Data.Models.Project", b =>
@@ -688,6 +768,8 @@ namespace BugTrackerSU.Data.Migrations
 
                     b.Navigation("Logins");
 
+                    b.Navigation("Posts");
+
                     b.Navigation("Roles");
 
                     b.Navigation("Tickets");
@@ -695,8 +777,15 @@ namespace BugTrackerSU.Data.Migrations
                     b.Navigation("UserProjects");
                 });
 
+            modelBuilder.Entity("BugTrackerSU.Data.Models.Post", b =>
+                {
+                    b.Navigation("Comments");
+                });
+
             modelBuilder.Entity("BugTrackerSU.Data.Models.Project", b =>
                 {
+                    b.Navigation("Posts");
+
                     b.Navigation("ProjectTickets");
 
                     b.Navigation("ProjectUsers");

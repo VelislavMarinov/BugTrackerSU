@@ -31,5 +31,7 @@
         public string ProjectManagerId { get; set; }
 
         public virtual ICollection<Ticket> ProjectTickets { get; set; }
+
+        public virtual ICollection<Post> Posts { get; set; }
     }
 }

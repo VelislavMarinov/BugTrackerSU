@@ -32,5 +32,12 @@
         // Comment
         public const int CommentContentMinLength = 4;
         public const int CommentContentMaxLength = 496;
+
+        // Post
+        public const int PostTitleMinLength = 4;
+        public const int PostTitleMaxLength = 40;
+
+        public const int PostContentMinLength = 4;
+        public const int PostContentMaxLength = 496;
     }
 }

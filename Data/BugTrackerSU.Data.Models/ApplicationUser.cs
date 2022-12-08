@@ -19,6 +19,7 @@ namespace BugTrackerSU.Data.Models
             this.UserProjects = new List<ApplicationUserProject>();
             this.Tickets = new List<Ticket>();
             this.Comments = new List<Comment>();
+            this.Posts = new List<Post>();
         }
 
         // Audit info
@@ -38,6 +39,8 @@ namespace BugTrackerSU.Data.Models
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
 
         public virtual ICollection<ApplicationUserProject> UserProjects { get; set; }
+
+        public virtual ICollection<Post> Posts { get; set; }
 
         public virtual ICollection<Ticket> Tickets { get; set; }
 

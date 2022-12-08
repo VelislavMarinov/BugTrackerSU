@@ -19,6 +19,10 @@
         [Required]
         public string AddedByUserId { get; set; }
 
+        public int PostId { get; set; }
+
+        public Post Post { get; set; }
+
         public virtual ApplicationUser AddedByUser { get; set; }
     }
 }
