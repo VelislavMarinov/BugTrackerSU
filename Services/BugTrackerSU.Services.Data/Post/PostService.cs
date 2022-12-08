@@ -91,12 +91,41 @@
 
         public List<PostViewModel> GetPosts()
         {
-            throw new NotImplementedException();
+            var post = this.postRepository
+               .All()
+               .Select(x => new PostViewModel
+               {
+                   Id = x.Id,
+                   ProjectName = x.Project.Title,
+                   Title = x.Title,
+                   Content = x.Content,
+                   AddedByUserId = x.AddedByUserId,
+                   AddedByUserUserName = x.AddedByUser.UserName,
+                   CreatedOn = x.CreatedOn,
+               })
+               .ToList();
+
+            return post;
         }
 
         public List<PostViewModel> GetPostsByProjectId(int projectId)
         {
-            throw new NotImplementedException();
+            var post = this.postRepository
+              .All()
+              .Where(x => x.ProjectId == projectId)
+              .Select(x => new PostViewModel
+              {
+                  Id = x.Id,
+                  ProjectName = x.Project.Title,
+                  Title = x.Title,
+                  Content = x.Content,
+                  AddedByUserId = x.AddedByUserId,
+                  AddedByUserUserName = x.AddedByUser.UserName,
+                  CreatedOn = x.CreatedOn,
+              })
+              .ToList();
+
+            return post;
         }
     }
 }
