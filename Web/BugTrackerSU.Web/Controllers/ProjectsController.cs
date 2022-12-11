@@ -63,7 +63,7 @@
 
         public IActionResult MyProjects(int id = 1)
         {
-            var itemsPerPage = 8;
+            var itemsPerPage = 5;
 
             var userId = this.User.GetId();
 
@@ -74,15 +74,15 @@
                 userRole = GlobalConstants.AdministratorRoleName;
             }
 
-            var myProjects = new AllProjectsViewModel
+            var model = new AllProjectsViewModel
             {
                 PageNumber = id,
-                Projects = this.projectService.GetUserProjects(userId, userRole),
+                Projects = this.projectService.GetUserProjects(userId, userRole, id, itemsPerPage),
                 ItemsPerPage = itemsPerPage,
                 ItemsCount = this.projectService.GetUserProjectsCount(userId, userRole),
             };
 
-            return this.View(myProjects);
+            return this.View(model);
         }
 
         public IActionResult Project(int id)

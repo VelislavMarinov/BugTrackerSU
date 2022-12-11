@@ -12,7 +12,7 @@
 
         Task CreateProjectAsync(CreateProjectViewModel model, string userId);
 
-        List<ProjectViewModel> GetUserProjects(string userId, string userRole);
+        List<ProjectViewModel> GetUserProjects(string userId, string userRole, int pageNumber, int itemPerPage);
 
         List<UserViewModel> GetProjectAssignedUsers(int projectId);
 

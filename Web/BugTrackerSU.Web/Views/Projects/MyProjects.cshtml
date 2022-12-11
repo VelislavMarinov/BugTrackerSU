@@ -1,6 +1,6 @@
 ﻿@using BugTrackerSU.Common
 @using BugTrackerSU.Web.ViewModels.Projects
-@model List<ProjectViewModel>
+@model AllProjectsViewModel
 
 
 
@@ -36,7 +36,7 @@
         </tr>
       </thead>
       <tbody>
-       @foreach (var project in Model)
+       @foreach (var project in Model.Projects)
        {
          <tr>
           <td>@project.Title</td>
@@ -66,3 +66,5 @@
       </tbody>
     </table>
 </div>
+
+<partial name="_ProjectsPagingPartial" model="@Model" />

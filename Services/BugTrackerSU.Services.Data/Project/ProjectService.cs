@@ -62,12 +62,15 @@
             await this.projectRepository.SaveChangesAsync();
         }
 
-        public List<ProjectViewModel> GetUserProjects(string userId, string userRole)
+        public List<ProjectViewModel> GetUserProjects(string userId, string userRole, int pageNumber, int itemsPerPage)
         {
             if (userRole == "Administrator")
             {
                 var adminProjects = this.projectRepository.All()
                 .Include(x => x.ProjectUsers)
+                .OrderByDescending(x => x.Id)
+                .Skip((pageNumber - 1) * itemsPerPage)
+                .Take(itemsPerPage)
                 .Select(x => new ProjectViewModel
                 {
                     Title = x.Title,
@@ -83,6 +86,9 @@
             var projects = this.projectRepository.All()
                 .Include(x => x.ProjectUsers)
                 .Where(x => x.ProjectUsers.Any(u => u.ApplicationUser.Id == userId) || x.ProjectManagerId == userId)
+                .OrderByDescending(x => x.Id)
+                .Skip((pageNumber - 1) * itemsPerPage)
+                .Take(itemsPerPage)
                 .Select(x => new ProjectViewModel
                 {
                     Title = x.Title,
@@ -163,7 +169,7 @@
 
         public int GetUserProjectsCount(string userId, string userRole)
         {
-            if(userRole == "Administrator")
+            if (userRole == "Administrator")
             {
                 int adminProjectsCount = this.projectRepository.All().Count();
 
