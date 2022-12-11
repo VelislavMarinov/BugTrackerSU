@@ -72,6 +72,7 @@
                     Title = x.Title,
                     Descripiton = x.Description,
                     ProjectId = x.Id,
+                    CreatedOn = x.CreatedOn,
                 })
                 .ToList();
 
