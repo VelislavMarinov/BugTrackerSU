@@ -20,6 +20,5 @@
         public List<TicketViewModel> Tickets { get; set; }
 
         public List<UserViewModel> AssingedUsers { get; set; }
-
     }
 }

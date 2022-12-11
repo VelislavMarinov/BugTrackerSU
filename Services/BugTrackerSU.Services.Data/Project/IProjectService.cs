@@ -10,7 +10,7 @@
     {
         Task CreateProjectAsync(CreateProjectViewModel model, string userId);
 
-        ICollection<ProjectViewModel> GetUserProjects(string userId);
+        ICollection<ProjectViewModel> GetUserProjects(string userId, string userRole);
 
         List<UserViewModel> GetProjectAssignedUsers(int projectId);
 

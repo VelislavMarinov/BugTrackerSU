@@ -26,7 +26,6 @@
         public const int TicketTypeMaxLength = 50;
 
         // TicketHistory
-
         public const int TicketDeveloperNameMaxLength = 64;
 
         // Comment

@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using BugTrackerSU.Data.Common.Repositories;
     using BugTrackerSU.Data.Models;
     using BugTrackerSU.Web.ViewModels.Administration.Dashboard;
@@ -19,7 +20,6 @@
         public UserService(
             IDeletableEntityRepository<ApplicationUser> userRepository,
             IDeletableEntityRepository<ApplicationRole> roleRepository)
-
         {
             this.userRepository = userRepository;
             this.roleRepository = roleRepository;
@@ -56,7 +56,7 @@
             return model;
         }
 
-        public async Task SetUserRole(string userId,string roleId)
+        public async Task SetUserRole(string userId, string roleId)
         {
             var user = this.userRepository.All().FirstOrDefault(x => x.Id == userId);
             var userRole = new IdentityUserRole<string>

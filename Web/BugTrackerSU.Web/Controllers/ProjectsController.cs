@@ -65,7 +65,14 @@
         {
             var userId = this.User.GetId();
 
-            var model = this.projectService.GetUserProjects(userId);
+            var userRole = string.Empty;
+
+            if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+            {
+                userRole = GlobalConstants.AdministratorRoleName;
+            }
+
+            var model = this.projectService.GetUserProjects(userId, userRole);
 
             return this.View(model);
         }

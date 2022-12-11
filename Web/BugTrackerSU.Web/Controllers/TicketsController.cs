@@ -1,5 +1,6 @@
 ﻿namespace BugTrackerSU.Web.Controllers
 {
+    using System;
     using System.Threading.Tasks;
 
     using BugTrackerSU.Common;
@@ -10,11 +11,9 @@
     using BugTrackerSU.Web.ViewModels.Tickets;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System;
 
     public class TicketsController : BaseController
     {
-
         private readonly IUserService userService;
 
         private readonly IProjectService projectService;
@@ -69,11 +68,22 @@
         [HttpGet]
         public IActionResult MyTickets()
         {
+            var userRole = string.Empty;
+
+            if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+            {
+                userRole = GlobalConstants.AdministratorRoleName;
+            }
+            else if (this.User.IsInRole(GlobalConstants.ProjectManagerRoleName))
+            {
+                userRole = GlobalConstants.ProjectManagerRoleName;
+            }
+
             var userId = this.User.GetId();
 
-            var model = this.ticketService.GetAllUserTickets(userId);
+            var model = this.ticketService.GetAllUserTickets(userId, userRole);
 
-            return View(model);
+            return this.View(model);
         }
     }
 }

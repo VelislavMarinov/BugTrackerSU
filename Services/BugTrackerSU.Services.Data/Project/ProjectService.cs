@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using BugTrackerSU.Common;
     using BugTrackerSU.Data.Common.Repositories;
     using BugTrackerSU.Data.Models;
@@ -44,7 +45,6 @@
             {
                 if (modelUser.Selected == true)
                 {
-
                     var user = this.userRepository.All().Where(x => x.Id == modelUser.Id).FirstOrDefault();
                     if (user != null)
                     {
@@ -62,8 +62,24 @@
             await this.projectRepository.SaveChangesAsync();
         }
 
-        public ICollection<ProjectViewModel> GetUserProjects(string userId)
+        public ICollection<ProjectViewModel> GetUserProjects(string userId, string userRole)
         {
+            if (userRole == "Administrator")
+            {
+                var adminProjects = this.projectRepository.All()
+                .Include(x => x.ProjectUsers)
+                .Select(x => new ProjectViewModel
+                {
+                    Title = x.Title,
+                    Descripiton = x.Description,
+                    ProjectId = x.Id,
+                    CreatedOn = x.CreatedOn,
+                })
+                .ToList();
+
+                return adminProjects;
+            }
+
             var projects = this.projectRepository.All()
                 .Include(x => x.ProjectUsers)
                 .Where(x => x.ProjectUsers.Any(u => u.ApplicationUser.Id == userId) || x.ProjectManagerId == userId)
@@ -103,8 +119,7 @@
                 All()
                 .Include(x => x.ApplicationUser.Roles)
                 .Where(x => x.ProjectId == projectId &&
-                 x.ApplicationUser.Roles.Any(u => u.RoleId == role.Id)
-                )
+                 x.ApplicationUser.Roles.Any(u => u.RoleId == role.Id))
                 .Select(x => x.ApplicationUser)
                 .Select(x => new UserViewModel
                 {
@@ -140,7 +155,6 @@
                         CreatedOn = p.CreatedOn,
                     }).ToList(),
                     AssingedUsers = this.GetProjectAssignedDevelopers(projectId),
-
                 })
                .FirstOrDefault();
 

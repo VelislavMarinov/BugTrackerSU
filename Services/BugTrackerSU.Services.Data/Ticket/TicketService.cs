@@ -20,7 +20,7 @@
 
         public TicketService(
             IDeletableEntityRepository<Project> projectRepository,
-            IDeletableEntityRepository<ApplicationUser> userRepository, 
+            IDeletableEntityRepository<ApplicationUser> userRepository,
             IDeletableEntityRepository<Ticket> ticketRepository)
         {
             this.projectRepository = projectRepository;
@@ -61,8 +61,41 @@
             throw new NotImplementedException();
         }
 
-        public List<TicketViewModel> GetAllUserTickets(string userId)
+        public List<TicketViewModel> GetAllUserTickets(string userId, string role)
         {
+            if (role == "Administrator")
+            {
+                var adminTickets = this.ticketRepository
+               .All()
+               .Select(x => new TicketViewModel
+               {
+                   Title = x.Title,
+                   Description = x.Description,
+                   TicketId = x.Id,
+                   CreatedOn = x.CreatedOn,
+               })
+               .ToList();
+
+                return adminTickets;
+            }
+
+            if (role == "Project Manager")
+            {
+                var projectManagerTickets = this.ticketRepository
+               .All()
+               .Where(x => x.Project.ProjectManagerId == userId)
+               .Select(x => new TicketViewModel
+               {
+                   Title = x.Title,
+                   Description = x.Description,
+                   TicketId = x.Id,
+                   CreatedOn = x.CreatedOn,
+               })
+               .ToList();
+
+                return projectManagerTickets;
+            }
+
             var tickets = this.ticketRepository
                 .All()
                 .Where(x => x.AssignedDeveloperId == userId || x.TicketSubmitterId == userId)
