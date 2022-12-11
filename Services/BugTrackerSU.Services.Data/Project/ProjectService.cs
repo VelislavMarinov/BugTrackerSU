@@ -62,7 +62,7 @@
             await this.projectRepository.SaveChangesAsync();
         }
 
-        public ICollection<ProjectViewModel> GetUserProjects(string userId, string userRole)
+        public List<ProjectViewModel> GetUserProjects(string userId, string userRole)
         {
             if (userRole == "Administrator")
             {
@@ -159,6 +159,23 @@
                .FirstOrDefault();
 
             return model;
+        }
+
+        public int GetUserProjectsCount(string userId, string userRole)
+        {
+            if(userRole == "Administrator")
+            {
+                int adminProjectsCount = this.projectRepository.All().Count();
+
+                return adminProjectsCount;
+            }
+
+            int count = this.projectRepository
+                .All()
+                .Where(x => x.ProjectManagerId == userId || x.ProjectUsers.Any(u => u.ApplicationUserId == userId))
+                .Count();
+
+            return count;
         }
     }
 }

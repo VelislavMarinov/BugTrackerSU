@@ -8,9 +8,11 @@
 
     public interface IProjectService
     {
+        int GetUserProjectsCount(string userId, string userRole);
+
         Task CreateProjectAsync(CreateProjectViewModel model, string userId);
 
-        ICollection<ProjectViewModel> GetUserProjects(string userId, string userRole);
+        List<ProjectViewModel> GetUserProjects(string userId, string userRole);
 
         List<UserViewModel> GetProjectAssignedUsers(int projectId);
 

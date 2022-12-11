@@ -61,8 +61,10 @@
             return this.Redirect("/Home/Index");
         }
 
-        public IActionResult MyProjects()
+        public IActionResult MyProjects(int id = 1)
         {
+            var itemsPerPage = 8;
+
             var userId = this.User.GetId();
 
             var userRole = string.Empty;
@@ -72,9 +74,15 @@
                 userRole = GlobalConstants.AdministratorRoleName;
             }
 
-            var model = this.projectService.GetUserProjects(userId, userRole);
+            var myProjects = new AllProjectsViewModel
+            {
+                PageNumber = id,
+                Projects = this.projectService.GetUserProjects(userId, userRole),
+                ItemsPerPage = itemsPerPage,
+                ItemsCount = this.projectService.GetUserProjectsCount(userId, userRole),
+            };
 
-            return this.View(model);
+            return this.View(myProjects);
         }
 
         public IActionResult Project(int id)
