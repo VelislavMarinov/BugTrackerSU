@@ -1,6 +1,6 @@
 ﻿@using BugTrackerSU.Common
 @using BugTrackerSU.Web.ViewModels.Tickets
-@model List<TicketViewModel>
+@model AllTicketsViewModel
 
 
 @{
@@ -24,7 +24,7 @@
     </tr>
   </thead>
   <tbody>
-   @foreach (var ticket in Model)
+   @foreach (var ticket in Model.Tickets)
    {
      <tr>
       <td>@ticket.Title</td>
