@@ -66,8 +66,10 @@
         }
 
         [HttpGet]
-        public IActionResult MyTickets()
+        public IActionResult MyTickets(int id = 1)
         {
+            var itemsPerPage = 5;
+
             var userRole = string.Empty;
 
             if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
@@ -81,7 +83,13 @@
 
             var userId = this.User.GetId();
 
-            var model = this.ticketService.GetAllUserTickets(userId, userRole);
+            var model = new AllTicketsViewModel
+            {
+                PageNumber = id,
+                Tickets = this.ticketService.GetAllUserTickets(userId, userRole, id, itemsPerPage),
+                ItemsPerPage = itemsPerPage,
+                ItemsCount = this.ticketService.GetUserTicketsCount(userId, userRole),
+            };
 
             return this.View(model);
         }

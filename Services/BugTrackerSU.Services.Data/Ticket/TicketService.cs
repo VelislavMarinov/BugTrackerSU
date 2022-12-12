@@ -16,16 +16,19 @@
         private readonly IDeletableEntityRepository<Project> projectRepository;
         private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
         private readonly IDeletableEntityRepository<Ticket> ticketRepository;
+
         private readonly ITicketHistoryService ticketHistoryService;
 
         public TicketService(
             IDeletableEntityRepository<Project> projectRepository,
             IDeletableEntityRepository<ApplicationUser> userRepository,
-            IDeletableEntityRepository<Ticket> ticketRepository)
+            IDeletableEntityRepository<Ticket> ticketRepository,
+            ITicketHistoryService ticketHistoryService)
         {
             this.projectRepository = projectRepository;
             this.userRepository = userRepository;
             this.ticketRepository = ticketRepository;
+            this.ticketHistoryService = ticketHistoryService;
         }
 
         public async Task CreateTicketAsync(CreateTicketViewModel model, string userId)
@@ -61,12 +64,15 @@
             throw new NotImplementedException();
         }
 
-        public List<TicketViewModel> GetAllUserTickets(string userId, string role)
+        public List<TicketViewModel> GetAllUserTickets(string userId, string role, int pageNumber, int itemsPerPage)
         {
             if (role == "Administrator")
             {
                 var adminTickets = this.ticketRepository
                .All()
+               .OrderByDescending(x => x.Id)
+               .Skip((pageNumber - 1) * itemsPerPage)
+               .Take(itemsPerPage)
                .Select(x => new TicketViewModel
                {
                    Title = x.Title,
@@ -84,6 +90,9 @@
                 var projectManagerTickets = this.ticketRepository
                .All()
                .Where(x => x.Project.ProjectManagerId == userId)
+               .OrderByDescending(x => x.Id)
+               .Skip((pageNumber - 1) * itemsPerPage)
+               .Take(itemsPerPage)
                .Select(x => new TicketViewModel
                {
                    Title = x.Title,
@@ -99,6 +108,9 @@
             var tickets = this.ticketRepository
                 .All()
                 .Where(x => x.AssignedDeveloperId == userId || x.TicketSubmitterId == userId)
+                .OrderByDescending(x => x.Id)
+                .Skip((pageNumber - 1) * itemsPerPage)
+                .Take(itemsPerPage)
                 .Select(x => new TicketViewModel
                 {
                     Title = x.Title,
@@ -141,6 +153,29 @@
                 .FirstOrDefault();
 
             return ticketDetails;
+        }
+
+        public int GetUserTicketsCount(string userId, string userRole)
+        {
+            if (userRole == "Administrator")
+            {
+                int adminTicketsCount = this.ticketRepository.All().Count();
+
+                return adminTicketsCount;
+            }
+            else if (userRole == "Project Manager")
+            {
+                int managerTicketsCount = this.ticketRepository.All().Where(x => x.Project.ProjectManagerId == userId).Count();
+
+                return managerTicketsCount;
+            }
+
+            int count = this.ticketRepository
+                .All()
+                .Where(x => x.TicketSubmitterId == userId || x.AssignedDeveloperId == userId)
+                .Count();
+
+            return count;
         }
     }
 }
