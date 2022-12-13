@@ -1,0 +1,33 @@
+﻿@using BugTrackerSU.Web.ViewModels.Posts
+@model AllPostsViewModel
+
+@{
+    this.ViewData["Title"] = "Posts";
+}
+
+<nav aria-label="breadcrumb" class="main-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><strong>@this.ViewData["Title"]</strong></li>
+    </ol>
+</nav>
+
+
+<div class="col-xl-10 col-md-10 col-sm-10 col-10 offset-1">
+    <div class="text-center">
+        <a asp-controller="Forums" asp-action="Create" class="btn btn-outline-secondary m-4">Create new category</a>
+        <a asp-controller="Posts" asp-action="Create" class="btn btn-outline-secondary m-4">Create new post</a>
+    </div>
+    <div class="list-group">
+    @foreach (var post in Model.Posts)
+    {                
+        <a href="/Forums/Category/@post.Title" class="list-group-item list-group-item-action ">
+            <p class="mb-1">@post.Content</p>
+        </a>
+        <br />
+    }
+    </div>
+</div>
+
+
+<partial name="_PostsPagingPartial" model="@Model" />

@@ -89,10 +89,13 @@
             return post;
         }
 
-        public List<PostViewModel> GetPosts()
+        public List<PostViewModel> GetPosts(int pageNumber, int itemsPerPage)
         {
             var post = this.postRepository
                .All()
+               .OrderByDescending(x => x.Id)
+               .Skip((pageNumber - 1) * itemsPerPage)
+               .Take(itemsPerPage)
                .Select(x => new PostViewModel
                {
                    Id = x.Id,

@@ -49,5 +49,18 @@
 
             return this.Redirect("/Home/Index");
         }
+
+        [HttpGet]
+        public IActionResult All(int id = 1)
+        {
+            var itemsPerPage = 5;
+
+            var model = new AllPostsViewModel()
+            {
+                Posts = this.postService.GetPosts(id, itemsPerPage),
+            };
+
+            return this.View(model);
+        }
     }
 }
