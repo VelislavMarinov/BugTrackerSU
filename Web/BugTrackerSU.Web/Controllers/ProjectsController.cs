@@ -1,5 +1,6 @@
 ﻿namespace BugTrackerSU.Web.Controllers
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -56,7 +57,12 @@
 
             var userId = this.User.GetId();
 
-            await this.projectService.CreateProjectAsync(model, userId);
+            if(model.AllUsers.Any(x => x.Selected == true))
+            {
+                Console.WriteLine("Hello");
+            }
+
+            //await this.projectService.CreateProjectAsync(model, userId);
 
             return this.Redirect("/Home/Index");
         }

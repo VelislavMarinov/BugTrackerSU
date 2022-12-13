@@ -8,6 +8,8 @@
 
     public interface IProjectService
     {
+        List<ProjectViewModel> GetAllProjects();
+
         int GetUserProjectsCount(string userId, string userRole);
 
         Task CreateProjectAsync(CreateProjectViewModel model, string userId);

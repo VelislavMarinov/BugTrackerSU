@@ -183,5 +183,20 @@
 
             return count;
         }
+
+        public List<ProjectViewModel> GetAllProjects()
+        {
+            var projects = this.projectRepository.All()
+                .Select(x => new ProjectViewModel
+                {
+                    ProjectId = x.Id,
+                    Title = x.Title,
+                    Descripiton = x.Description,
+                    CreatedOn = x.CreatedOn,
+                })
+                .ToList();
+
+            return projects;
+        }
     }
 }
