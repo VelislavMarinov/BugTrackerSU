@@ -23,11 +23,37 @@
             {
                 AddedByUserId = userId,
                 Content = model.Content,
-                TicketId = model.TicketId,
             };
+
+            if (model.TicketId == null)
+            {
+                comment.PostId = (int)model.PostId;
+            }
+            else
+            {
+                comment.TicketId = (int)model.TicketId;
+            }
 
             await this.commentRepository.AddAsync(comment);
             await this.commentRepository.SaveChangesAsync();
+        }
+
+        public List<CommentViewModel> GetCommentsByPostId(int postId)
+        {
+            var model = this.commentRepository
+                .All()
+                .Where(x => x.PostId == postId)
+                .Select(x => new CommentViewModel
+                {
+                    CommentId = x.Id,
+                    TicketId = x.TicketId,
+                    Content = x.Content,
+                    CreatedOn = x.CreatedOn,
+                    UserId = x.AddedByUserId,
+                })
+                .ToList();
+
+            return model;
         }
 
         public List<CommentViewModel> GetCommentsByTicketId(int ticketId)
