@@ -1,0 +1,105 @@
+﻿@using BugTrackerSU.Web.ViewModels.Projects
+@model ProjectDetailsViewModel
+
+@{
+    this.ViewData["Title"] = "Project details";
+}
+
+
+<nav aria-label="breadcrumb" class="main-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/Projects/MyProjects">My Projects</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><strong>@this.ViewData["Title"]</strong></li>
+    </ol>
+</nav>
+
+
+
+<div class="jumbotron p-md-2 text-white rounded bg-dark">
+        <div class="col-md-6 px-0">
+          <h6 class="display-4 font-italic">@Model.Title</h6>
+          <p class="lead my-3">@Model.Description</p>
+        </div>
+</div>
+
+<div class="row mb-2 border-bottom-0">
+<div class="col-sm-7">
+        <div class="card shadow">
+            <div class="card-header">
+              <h4 class="mb-0">Tickets for this Project</h4>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <tr>
+                      <th scope="col">Title</th>
+                      <th scope="col">Submiter Name</th>
+                      <th scope="col">Developer Name</th>
+                      <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                      @foreach (var ticket in Model.Tickets)
+                       {
+
+                          <td>@ticket.Title</td>
+                          <td>@ticket.SubmiterName</td>
+                          <td>@ticket.DeveloperName</td>
+                          <td>
+                              <a asp-controller="Tickets"
+                                 asp-action="TicketDetails"
+                                 asp-route-id="@ticket.TicketId"
+                                 class="btn btn-primary">
+                                 View More
+                              </a>
+                          </td>
+
+                       }
+
+                 </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="card-footer py-4">
+             
+            </div>
+          </div>
+     </div>
+
+      <div class="col-md-5">
+          <div class="card shadow ">
+            <div class="card-header">
+              <h4 class="mb-0">Assigned Personnel</h4>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <tr>
+                      <th scope="col">User Name</th>
+                      <th scope="col">Role</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                      @foreach (var user in Model.AssingedUsers)
+                       {
+                          <td>@user.UserName</td>
+                          <td>@user.RoleName</td>
+                       }
+
+                 </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="card-footer py-4">
+             
+            </div>
+          </div>
+        </div>
+</div>

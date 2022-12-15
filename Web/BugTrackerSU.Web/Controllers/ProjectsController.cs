@@ -67,6 +67,7 @@
             return this.Redirect("/Home/Index");
         }
 
+        [HttpGet]
         public IActionResult MyProjects(int id = 1)
         {
             var itemsPerPage = 5;
