@@ -1,17 +1,16 @@
 ﻿@using BugTrackerSU.Common
 @using BugTrackerSU.Web.ViewModels.Search
-
 @model SearchProjectFormModel
 
-@{
-    this.ViewData["Title"] = "Search for a Project";
-}
 
+@{
+    this.ViewData["Title"] = "Search for a Ticket";
+}
 
 <nav aria-label="breadcrumb" class="main-breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item"><a href="/Projects/MyProjects">My Projects</a></li>
+        <li class="breadcrumb-item"><a href="/Tickets/MyTickets">My Tickets</a></li>
         <li class="breadcrumb-item active" aria-current="page"><strong>@this.ViewData["Title"]</strong></li>
     </ol>
 </nav>
@@ -32,7 +31,7 @@
         <div class="offset-lg-2 col-lg-8 col-sm-12 offset-xl-3 col-xl-6">
             <form method="post">
                 <div class="form-group">
-                    <label asp-for="Keyword">Search for an Project title using a keyword</label>
+                    <label asp-for="Keyword">Search for an article title using a keyword</label>
                     <input asp-for="Keyword" class="form-control" placeholder="Enter a word" />
                 </div>
                 <div class="text-center pt-2">
@@ -42,4 +41,3 @@
         </div>
     </div>
 </div>
-

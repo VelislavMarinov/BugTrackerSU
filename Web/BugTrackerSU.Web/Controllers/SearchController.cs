@@ -46,5 +46,40 @@
                 return this.View();
             }
         }
+
+        [HttpGet]
+        public IActionResult SearchTicket() => this.View();
+
+        [HttpPost]
+        public IActionResult SearchTicket(SearchTicketFormModel model)
+        {
+            var userId = this.User.GetId();
+
+            var userRole = string.Empty;
+
+            if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+            {
+                userRole = GlobalConstants.AdministratorRoleName;
+            }
+
+            if (this.User.IsInRole(GlobalConstants.ProjectManagerRoleName))
+            {
+                userRole = GlobalConstants.ProjectManagerRoleName;
+            }
+
+            var tickets = this.searchService.SearchForTicketByKeyword(model.Keyword, userId, userRole);
+
+            if (tickets.Any())
+            {
+                model.Tickets = tickets;
+                model.Keyword = string.Empty;
+                return this.View("FoundTicket", model);
+            }
+            else
+            {
+                this.TempData["Message"] = "There was no Ticket title found with the given keyword.";
+                return this.View();
+            }
+        }
     }
 }
