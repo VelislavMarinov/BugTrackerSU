@@ -9,9 +9,9 @@
 
     public interface ISearchService
     {
-        IEnumerable<ProjectViewModel> SearchForProjectByKeyword(string keyword);
+        IEnumerable<ProjectViewModel> SearchForProjectByKeyword(string keyword, string userId, string userRole);
 
-        IEnumerable<TicketViewModel> SearchForTicketByKeyword(string keyword);
+        IEnumerable<TicketViewModel> SearchForTicketByKeyword(string keyword, string userId, string userRole);
 
         IEnumerable<UserViewModel> SearchForUserByKeyword(string keyword);
 

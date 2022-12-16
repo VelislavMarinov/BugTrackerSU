@@ -1,0 +1,77 @@
+﻿@using BugTrackerSU.Common
+@using BugTrackerSU.Web.ViewModels.Search
+@model SearchProjectFormModel
+
+
+@{
+    this.ViewData["Title"] = "Search for a Project";
+}
+
+<nav aria-label="breadcrumb" class="main-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/Projects/MyProjects">My Projects</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><strong>@this.ViewData["Title"]</strong></li>
+    </ol>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="offset-lg-2 col-lg-8 col-sm-12 offset-xl-3 col-xl-6">
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="Keyword">Search for an article title using a keyword</label>
+                    <input asp-for="Keyword" class="form-control" placeholder="Enter a word" />
+                </div>
+                <div class="text-center pt-2">
+                    <input class="btn btn-outline-secondary" type="submit" value="Search" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<br />
+<div class="table-responsive-md">
+    <table class="table table-striped table-dark table-hover border">
+      <thead>
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Description</th>
+          <th scope="col">Creation date</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+       @foreach (var project in Model.Projects)
+       {
+         <tr>
+          <td>@project.Title</td>
+          <td>@project.Descripiton</td>
+          <td>@project.CreatedOn</td>
+          <td>
+              <a asp-controller="Projects"
+                 asp-action="Project"
+                 asp-route-id="@project.ProjectId"
+                 class="btn btn-primary">
+                 View More
+              </a>
+            @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName) || 
+                  this.User.IsInRole(GlobalConstants.ProjectManagerRoleName) ||
+                 this.User.IsInRole(GlobalConstants.SubmitterRoleName))
+            {
+               <a asp-controller="Tickets"
+                 asp-action="Create"
+                 asp-route-id="@project.ProjectId"
+                 class="btn btn-primary">
+                 Create Ticket
+              </a>
+            }
+          </td>
+         </tr>
+       }
+      </tbody>
+    </table>
+</div>
+
+</div>

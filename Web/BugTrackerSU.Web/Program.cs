@@ -12,6 +12,7 @@
     using BugTrackerSU.Services.Data.Comment;
     using BugTrackerSU.Services.Data.Post;
     using BugTrackerSU.Services.Data.Project;
+    using BugTrackerSU.Services.Data.Search;
     using BugTrackerSU.Services.Data.Ticket;
     using BugTrackerSU.Services.Data.TicketHistory;
     using BugTrackerSU.Services.Data.User;
@@ -77,6 +78,7 @@
             services.AddTransient<ICommentService, CommentService>();
             services.AddTransient<ITicketHistoryService, TicketHistoryService>();
             services.AddTransient<IPostService, PostService>();
+            services.AddTransient<ISearchService, SearchService>();
         }
 
         private static void Configure(WebApplication app)
