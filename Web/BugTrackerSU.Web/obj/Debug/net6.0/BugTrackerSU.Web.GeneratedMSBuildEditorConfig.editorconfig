@@ -75,12 +75,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdHNcX1Byb2plY3RzUGFnaW5nUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Велислав/Desktop/SoftUni/BugTrackerSU/Web/BugTrackerSU.Web/Views/Search/FoundPost.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VhcmNoXEZvdW5kUG9zdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Велислав/Desktop/SoftUni/BugTrackerSU/Web/BugTrackerSU.Web/Views/Search/FoundProject.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VhcmNoXEZvdW5kUHJvamVjdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Велислав/Desktop/SoftUni/BugTrackerSU/Web/BugTrackerSU.Web/Views/Search/FoundTicket.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VhcmNoXEZvdW5kVGlja2V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Велислав/Desktop/SoftUni/BugTrackerSU/Web/BugTrackerSU.Web/Views/Search/SearchPost.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VhcmNoXFNlYXJjaFBvc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Велислав/Desktop/SoftUni/BugTrackerSU/Web/BugTrackerSU.Web/Views/Search/SearchProject.cshtml]

@@ -81,5 +81,27 @@
                 return this.View();
             }
         }
+
+        [HttpGet]
+        public IActionResult SearchPost() => this.View();
+
+        [HttpPost]
+        public IActionResult SearchPost(SearchPostFormModel model)
+        {
+
+            var posts = this.searchService.SearchForPostByKeyword(model.Keyword);
+
+            if (posts.Any())
+            {
+                model.Posts = posts;
+                model.Keyword = string.Empty;
+                return this.View("FoundPost", model);
+            }
+            else
+            {
+                this.TempData["Message"] = "There was no Post title found with the given keyword.";
+                return this.View();
+            }
+        }
     }
 }

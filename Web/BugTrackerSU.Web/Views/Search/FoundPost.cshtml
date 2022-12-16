@@ -1,16 +1,16 @@
 ﻿@using BugTrackerSU.Common
 @using BugTrackerSU.Web.ViewModels.Search
-@model SearchTicketFormModel
+@model SearchPostFormModel
 
 
 @{
-    this.ViewData["Title"] = "Search for a Ticket";
+    this.ViewData["Title"] = "Search for a post";
 }
 
 <nav aria-label="breadcrumb" class="main-breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item"><a href="/Tickets/MyTickets">My Tickets</a></li>
+        <li class="breadcrumb-item"><a href="/Posts/All">All Posts</a></li>
         <li class="breadcrumb-item active" aria-current="page"><strong>@this.ViewData["Title"]</strong></li>
     </ol>
 </nav>
@@ -33,31 +33,18 @@
 </div>
 
 <br />
-<table class="table table-striped table-dark">
-  <thead>
-    <tr>
-      <th scope="col">Title</th>
-      <th scope="col">Description</th>
-      <th scope="col">Creation date</th>
-      <th scope="col">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-   @foreach (var ticket in Model.Tickets)
-   {
-     <tr>
-      <td>@ticket.Title</td>
-      <td>@ticket.Description</td>
-      <td>@ticket.CreatedOn.ToString()</td>
-      <td>
-          <a asp-controller="Tickets"
-             asp-action="TicketDetails"
-             asp-route-id="@ticket.TicketId"
-             class="btn btn-primary">
-             View More
-          </a>
-      </td>
-     </tr>
-   }
-  </tbody>
-</table>
+<div class="col-xl-10 col-md-10 col-sm-10 col-10 offset-1">
+    <div class="text-center">
+        <a asp-controller="Forums" asp-action="Create" class="btn btn-outline-secondary m-4">Create new category</a>
+        <a asp-controller="Posts" asp-action="Create" class="btn btn-outline-secondary m-4">Create new post</a>
+    </div>
+    <div class="list-group">
+    @foreach (var post in Model.Posts)
+    {                
+        <a href="/Forums/Category/@post.Title" class="list-group-item list-group-item-action ">
+            <p class="mb-1">@post.Content</p>
+        </a>
+        <br />
+    }
+    </div>
+</div>
