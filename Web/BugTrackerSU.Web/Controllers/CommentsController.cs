@@ -31,6 +31,7 @@
             var model = this.commentService.GetCommentsByPostId(postId, id, itemsPerPage);
             model.ItemsPerPage = itemsPerPage;
             model.PageNumber = id;
+            model.ItemsCount = this.commentService.GetCommentsCountByPostId(postId);
 
             return this.View(model);
         }

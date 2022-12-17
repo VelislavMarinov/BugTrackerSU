@@ -56,7 +56,6 @@
 
             this.ticketRepository.Update(ticket);
             await this.ticketRepository.SaveChangesAsync();
-            throw new NotImplementedException();
         }
 
         public List<TicketViewModel> GetAllUserTickets(string userId, string role, int pageNumber, int itemsPerPage)
@@ -70,6 +69,7 @@
                .Take(itemsPerPage)
                .Select(x => new TicketViewModel
                {
+                   ProjectId = x.ProjectId,
                    Title = x.Title,
                    Description = x.Description,
                    TicketId = x.Id,
@@ -90,6 +90,7 @@
                .Take(itemsPerPage)
                .Select(x => new TicketViewModel
                {
+                   ProjectId = x.ProjectId,
                    Title = x.Title,
                    Description = x.Description,
                    TicketId = x.Id,
@@ -108,6 +109,7 @@
                 .Take(itemsPerPage)
                 .Select(x => new TicketViewModel
                 {
+                    ProjectId = x.ProjectId,
                     Title = x.Title,
                     Description = x.Description,
                     TicketId = x.Id,

@@ -25,6 +25,9 @@
         [Display(Name = "Assign developer")]
         public string DeveloperId { get; set; }
 
+        [Display(Name = "Assign submiter")]
+        public string Submiter { get; set; }
+
         [Required(ErrorMessage = "The field is required")]
         [Display(Name = "Status of ticket")]
         public TicketStatus Status { get; set; }

@@ -10,5 +10,7 @@
         Task CreatePostCommentAsync(CreatePostCommentFormModel model, string userId);
 
         PostCommentsViewModel GetCommentsByPostId(int postId, int pageNumber, int itemPerPage);
+
+        int GetCommentsCountByPostId(int postId);
     }
 }

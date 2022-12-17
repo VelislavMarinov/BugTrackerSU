@@ -14,8 +14,6 @@
 
     public class TicketsController : BaseController
     {
-        private readonly IUserService userService;
-
         private readonly IProjectService projectService;
 
         private readonly ITicketService ticketService;
@@ -25,13 +23,12 @@
             IProjectService projectService,
             ITicketService ticketService)
         {
-            this.userService = userService;
             this.projectService = projectService;
             this.ticketService = ticketService;
         }
 
         [HttpGet]
-        [Authorize(Roles = GlobalConstants.SubmitterRoleName)]
+        [Authorize(Roles = GlobalConstants.AdminManagerSubmiterRolesAuthorization)]
         public IActionResult Create(int id)
         {
             var userId = this.User.GetId();
@@ -46,7 +43,8 @@
             return this.View(model);
         }
 
-        [Authorize(Roles = GlobalConstants.SubmitterRoleName)]
+        [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdminManagerSubmiterRolesAuthorization)]
         public async Task<IActionResult> Create(int id, CreateTicketViewModel model)
         {
             if (!this.ModelState.IsValid)
@@ -92,6 +90,38 @@
             };
 
             return this.View(model);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = GlobalConstants.AdminManagerSubmiterRolesAuthorization)]
+        public IActionResult Edit(int projectId, int ticketId)
+        {
+            var userId = this.User.GetId();
+
+            var model = new EditTicketViewModel
+            {
+                AsignedProjectDevelopers = this.projectService.GetProjectAssignedDevelopers(projectId),
+            };
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdminManagerSubmiterRolesAuthorization)]
+        public async Task<IActionResult> Edit(int projectId, int ticketId, EditTicketViewModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                model.AsignedProjectDevelopers = this.projectService.GetProjectAssignedUsers(projectId);
+
+                return this.View(model);
+            }
+
+            var userId = this.User.GetId();
+
+            await this.ticketService.EditTicketAsync(model, userId);
+
+            return this.Redirect($"/Tickets/Ticket?{ticketId}");
         }
 
         [HttpGet]

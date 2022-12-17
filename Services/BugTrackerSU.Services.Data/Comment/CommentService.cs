@@ -67,5 +67,7 @@
 
             return model;
         }
+
+        public int GetCommentsCountByPostId(int postId) => this.commentRepository.All().Where(x => x.PostId == postId).Count();
     }
 }

@@ -4,6 +4,14 @@
 
     public class TicketViewModel
     {
+        public int ProjectId { get; set; }
+
+        public string ProjectManagerId { get; set; }
+
+        public string SubmiterId { get; set; }
+
+        public string DeveloperId { get; set; }
+
         public int TicketId { get; set; }
 
         public string Title { get; set; }

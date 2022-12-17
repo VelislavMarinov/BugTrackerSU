@@ -11,5 +11,7 @@
         public const string SubmitterRoleName = "Submitter";
 
         public const string DeveloperRoleName = "Developer";
+
+        public const string AdminManagerSubmiterRolesAuthorization = $"{AdministratorRoleName},{ProjectManagerRoleName}";
     }
 }
