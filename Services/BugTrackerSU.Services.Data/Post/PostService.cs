@@ -68,24 +68,6 @@
                })
                .FirstOrDefault();
 
-            var comments = this.commentRepository
-                .All()
-                .Where(x => x.PostId == post.Id)
-                .Select(x => new CommentViewModel
-                {
-                    CommentId = x.Id,
-                    Content = x.Content,
-                    CreatedOn = x.CreatedOn,
-                    UserName = x.AddedByUser.UserName,
-                    UserId = x.AddedByUserId,
-                })
-                .ToList();
-
-            if (post != null)
-            {
-                post.Comments = comments;
-            }
-
             return post;
         }
 

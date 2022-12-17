@@ -57,12 +57,7 @@
 
             var userId = this.User.GetId();
 
-            if(model.AllUsers.Any(x => x.Selected == true))
-            {
-                Console.WriteLine("Hello");
-            }
-
-            //await this.projectService.CreateProjectAsync(model, userId);
+            await this.projectService.CreateProjectAsync(model, userId);
 
             return this.Redirect("/Home/Index");
         }

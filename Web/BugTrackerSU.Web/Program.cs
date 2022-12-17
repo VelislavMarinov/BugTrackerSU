@@ -14,7 +14,6 @@
     using BugTrackerSU.Services.Data.Project;
     using BugTrackerSU.Services.Data.Search;
     using BugTrackerSU.Services.Data.Ticket;
-    using BugTrackerSU.Services.Data.TicketHistory;
     using BugTrackerSU.Services.Data.User;
     using BugTrackerSU.Services.Mapping;
     using BugTrackerSU.Services.Messaging;
@@ -76,7 +75,6 @@
             services.AddTransient<IProjectService, ProjectService>();
             services.AddTransient<ITicketService, TicketService>();
             services.AddTransient<ICommentService, CommentService>();
-            services.AddTransient<ITicketHistoryService, TicketHistoryService>();
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<ISearchService, SearchService>();
         }

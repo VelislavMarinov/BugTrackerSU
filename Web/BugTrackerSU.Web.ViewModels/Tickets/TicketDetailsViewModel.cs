@@ -28,10 +28,7 @@
 
         public DateTime UpdatedOn { get; set; }
 
-        public List<CommentViewModel> Comments { get; set; }
-
         public TicketHistoryViewModel TicketHistory { get; set; }
 
-        public CreateCommentViewModel CreateComment { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace BugTrackerSU.Data.Models
 {
     using System.ComponentModel.DataAnnotations;
-
+    using System.ComponentModel.DataAnnotations.Schema;
     using BugTrackerSU.Data.Common.Models;
 
     using static BugTrackerSU.Common.DataConstants;
@@ -12,16 +12,14 @@
         [MaxLength(CommentContentMaxLength)]
         public string Content { get; set; }
 
-        public int TicketId { get; set; }
-
-        public virtual Ticket Ticket { get; set; }
-
         [Required]
         public string AddedByUserId { get; set; }
 
+        [Required]
         public int PostId { get; set; }
 
-        public Post Post { get; set; }
+        [ForeignKey(nameof(PostId))]
+        public virtual Post Post { get; set; }
 
         public virtual ApplicationUser AddedByUser { get; set; }
     }

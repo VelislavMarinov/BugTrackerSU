@@ -45,5 +45,7 @@ namespace BugTrackerSU.Data.Models
         public virtual ICollection<Ticket> Tickets { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
+
+        public virtual ICollection<MinorTask> Tasks { get; set; }
     }
 }

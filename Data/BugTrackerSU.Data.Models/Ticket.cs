@@ -11,9 +11,9 @@
     {
         public Ticket()
         {
-            this.Comments = new List<Comment>();
-            this.History = new List<TicketHistory>();
+            this.Tasks = new List<MinorTask>();
         }
+
 
         [Required]
         [MaxLength(TicketTitleMaxLength)]
@@ -46,12 +46,10 @@
         [MaxLength(TicketPriorityMaxLength)]
         public string Priority { get; set; }
 
-        public virtual ICollection<Comment> Comments { get; set; }
-
         [Required]
         [MaxLength(TicketTypeMaxLength)]
         public string TicketType { get; set; }
 
-        public virtual ICollection<TicketHistory> History { get; set; }
+        public ICollection<MinorTask> Tasks { get; set; }
     }
 }

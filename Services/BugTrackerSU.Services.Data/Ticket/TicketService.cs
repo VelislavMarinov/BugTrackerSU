@@ -7,7 +7,6 @@
 
     using BugTrackerSU.Data.Common.Repositories;
     using BugTrackerSU.Data.Models;
-    using BugTrackerSU.Services.Data.TicketHistory;
     using BugTrackerSU.Web.ViewModels.Comments;
     using BugTrackerSU.Web.ViewModels.Tickets;
     using Microsoft.EntityFrameworkCore;
@@ -18,18 +17,15 @@
         private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
         private readonly IDeletableEntityRepository<Ticket> ticketRepository;
 
-        private readonly ITicketHistoryService ticketHistoryService;
 
         public TicketService(
             IDeletableEntityRepository<Project> projectRepository,
             IDeletableEntityRepository<ApplicationUser> userRepository,
-            IDeletableEntityRepository<Ticket> ticketRepository,
-            ITicketHistoryService ticketHistoryService)
+            IDeletableEntityRepository<Ticket> ticketRepository)
         {
             this.projectRepository = projectRepository;
             this.userRepository = userRepository;
             this.ticketRepository = ticketRepository;
-            this.ticketHistoryService = ticketHistoryService;
         }
 
         public async Task CreateTicketAsync(CreateTicketViewModel model, string userId)
@@ -52,8 +48,6 @@
 
         public async Task EditTicketAsync(EditTicketViewModel model, string userId)
         {
-            await this.ticketHistoryService.CreateTicketHistoryAsync(model.TicketId, model);
-
             var ticket = this.ticketRepository.All().Where(x => x.Id == model.TicketId).FirstOrDefault();
             ticket.AssignedDeveloperId = model.DeveloperId;
             ticket.Priority = model.Priority.ToString();
@@ -128,7 +122,6 @@
         {
             var ticketDetails = this.ticketRepository
                 .All()
-                .Include(x => x.Comments)
                 .Where(x => x.Id == ticketId)
                 .Select(x => new TicketDetailsViewModel
                 {
@@ -141,16 +134,6 @@
                     TicketType = x.TicketType,
                     CreatedOn = x.CreatedOn,
                     UpdatedOn = (DateTime)x.ModifiedOn,
-                    Comments = x.Comments
-                                 .Select(c => new CommentViewModel
-                                 {
-                                    CommentId = c.Id,
-                                    Content = c.Content,
-                                    TicketId = x.Id,
-                                    UserId = c.AddedByUserId,
-                                    UserName = c.AddedByUser.UserName,
-                                 })
-                                 .ToList(),
                 })
                 .FirstOrDefault();
 

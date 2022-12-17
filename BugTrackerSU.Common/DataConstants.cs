@@ -25,8 +25,16 @@
         public const int TicketTypeMinLength = 3;
         public const int TicketTypeMaxLength = 50;
 
-        // TicketHistory
-        public const int TicketDeveloperNameMaxLength = 64;
+        // Task
+        public const int TaskTitleMinLength = 4;
+        public const int TaskTitleMaxLength = 40;
+
+        public const int TaskContentMinLength = 4;
+        public const int TaskContentMaxLength = 496;
+
+        public const int TaskTypeMinLength = 4;
+        public const int TaskTypeMaxLength = 50;
+
 
         // Comment
         public const int CommentContentMinLength = 4;

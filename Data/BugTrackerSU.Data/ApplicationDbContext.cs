@@ -30,13 +30,13 @@
 
         public DbSet<Ticket> Tickets { get; set; }
 
-        public DbSet<TicketHistory> TicketsHistories { get; set; }
-
         public DbSet<Comment> Comments { get; set; }
 
         public DbSet<ApplicationUserProject> ApplicationUsersProjects { get; set; }
 
         public DbSet<Post> Posts { get; set; }
+
+        public DbSet<MinorTask> MinorTasks { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
@@ -63,6 +63,10 @@
 
             // Needed for Identity models configuration
             base.OnModelCreating(builder);
+
+            builder.Entity<Post>()
+               .HasMany(c => c.Comments)
+               .WithOne(e => e.Post);
 
             this.ConfigureUserIdentityRelations(builder);
 

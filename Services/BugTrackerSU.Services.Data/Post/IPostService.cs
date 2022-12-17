@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-
+    using BugTrackerSU.Web.ViewModels.Comments;
     using BugTrackerSU.Web.ViewModels.Posts;
 
     public interface IPostService

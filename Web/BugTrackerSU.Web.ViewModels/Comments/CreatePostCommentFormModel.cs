@@ -12,7 +12,6 @@
         [MaxLength(CommentContentMaxLength, ErrorMessage = "The content must have maximum {1} letters")]
         public string Content { get; set; }
 
-        [Required]
         public int PostId { get; set; }
     }
 }

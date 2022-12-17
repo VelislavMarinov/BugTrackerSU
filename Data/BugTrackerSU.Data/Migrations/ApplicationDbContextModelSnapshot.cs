@@ -212,9 +212,6 @@ namespace BugTrackerSU.Data.Migrations
                     b.Property<int>("PostId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TicketId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AddedByUserId");
@@ -223,9 +220,65 @@ namespace BugTrackerSU.Data.Migrations
 
                     b.HasIndex("PostId");
 
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("BugTrackerSU.Data.Models.MinorTask", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(496)
+                        .HasColumnType("nvarchar(496)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Finished")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Started")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("TicketId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("IsDeleted");
+
                     b.HasIndex("TicketId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("MinorTasks");
                 });
 
             modelBuilder.Entity("BugTrackerSU.Data.Models.Post", b =>
@@ -421,74 +474,6 @@ namespace BugTrackerSU.Data.Migrations
                     b.ToTable("Tickets");
                 });
 
-            modelBuilder.Entity("BugTrackerSU.Data.Models.TicketHistory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("AssignedDeveloperNewValue")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("AssignedDeveloperOldValue")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("TicketId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TicketPriorityNewValue")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("TicketPriorityOldValue")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("TicketStatusNewValue")
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
-
-                    b.Property<string>("TicketStatusOldValue")
-                        .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
-
-                    b.Property<string>("TicketTypeNewValue")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("TicketTypeOldValue")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("TicketId");
-
-                    b.ToTable("TicketsHistories");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -628,15 +613,22 @@ namespace BugTrackerSU.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("BugTrackerSU.Data.Models.Ticket", "Ticket")
-                        .WithMany("Comments")
-                        .HasForeignKey("TicketId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("AddedByUser");
 
                     b.Navigation("Post");
+                });
+
+            modelBuilder.Entity("BugTrackerSU.Data.Models.MinorTask", b =>
+                {
+                    b.HasOne("BugTrackerSU.Data.Models.ApplicationUser", null)
+                        .WithMany("Tasks")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("BugTrackerSU.Data.Models.Ticket", "Ticket")
+                        .WithMany("Tasks")
+                        .HasForeignKey("TicketId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Ticket");
                 });
@@ -696,17 +688,6 @@ namespace BugTrackerSU.Data.Migrations
                     b.Navigation("Project");
 
                     b.Navigation("TicketSubmitter");
-                });
-
-            modelBuilder.Entity("BugTrackerSU.Data.Models.TicketHistory", b =>
-                {
-                    b.HasOne("BugTrackerSU.Data.Models.Ticket", "Ticket")
-                        .WithMany("History")
-                        .HasForeignKey("TicketId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Ticket");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -772,6 +753,8 @@ namespace BugTrackerSU.Data.Migrations
 
                     b.Navigation("Roles");
 
+                    b.Navigation("Tasks");
+
                     b.Navigation("Tickets");
 
                     b.Navigation("UserProjects");
@@ -793,9 +776,7 @@ namespace BugTrackerSU.Data.Migrations
 
             modelBuilder.Entity("BugTrackerSU.Data.Models.Ticket", b =>
                 {
-                    b.Navigation("Comments");
-
-                    b.Navigation("History");
+                    b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618
         }

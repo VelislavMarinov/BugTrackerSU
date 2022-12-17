@@ -6,7 +6,7 @@
     {
         public int CommentId { get; set; }
 
-        public int TicketId { get; set; }
+        public int PostId { get; set; }
 
         public string Content { get; set; }
 
