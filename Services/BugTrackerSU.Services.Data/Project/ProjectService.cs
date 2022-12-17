@@ -151,6 +151,7 @@
                 {
                     Description = x.Description,
                     Title = x.Title,
+                    ProjectManager = x.ProjectManager.UserName,
                     Tickets = x.ProjectTickets.Select(p => new TicketViewModel
                     {
                         TicketStatus = p.Status.ToString(),

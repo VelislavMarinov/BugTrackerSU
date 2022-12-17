@@ -10,6 +10,7 @@
     using BugTrackerSU.Services.Data.TicketHistory;
     using BugTrackerSU.Web.ViewModels.Comments;
     using BugTrackerSU.Web.ViewModels.Tickets;
+    using Microsoft.EntityFrameworkCore;
 
     public class TicketService : ITicketService
     {
@@ -127,6 +128,7 @@
         {
             var ticketDetails = this.ticketRepository
                 .All()
+                .Include(x => x.Comments)
                 .Where(x => x.Id == ticketId)
                 .Select(x => new TicketDetailsViewModel
                 {

@@ -17,6 +17,8 @@
 
         public string Description { get; set; }
 
+        public string ProjectManager { get; set; }
+
         public List<TicketViewModel> Tickets { get; set; }
 
         public List<UserViewModel> AssingedUsers { get; set; }

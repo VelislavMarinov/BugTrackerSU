@@ -17,32 +17,40 @@
             this.commentRepository = commentRepository;
         }
 
-        public async Task CreateCommentAsync(CreateCommentViewModel model, string userId)
+        public async Task CreateTicketCommentAsync(CreateTicketCommentFormModel model, string userId)
         {
             var comment = new Comment
             {
                 AddedByUserId = userId,
                 Content = model.Content,
+                TicketId = model.TicketId,
             };
-
-            if (model.TicketId == null)
-            {
-                comment.PostId = (int)model.PostId;
-            }
-            else
-            {
-                comment.TicketId = (int)model.TicketId;
-            }
 
             await this.commentRepository.AddAsync(comment);
             await this.commentRepository.SaveChangesAsync();
         }
 
-        public List<CommentViewModel> GetCommentsByPostId(int postId)
+        public async Task CreatePostCommentAsync(CreatePostCommentFormModel model, string userId)
+        {
+            var comment = new Comment
+            {
+                AddedByUserId = userId,
+                Content = model.Content,
+                TicketId = model.PostId,
+            };
+
+            await this.commentRepository.AddAsync(comment);
+            await this.commentRepository.SaveChangesAsync();
+        }
+
+        public List<CommentViewModel> GetCommentsByPostId(int postId, int pageNumber, int itemsPerPage)
         {
             var model = this.commentRepository
                 .All()
                 .Where(x => x.PostId == postId)
+                .OrderByDescending(x => x.Id)
+                .Skip((pageNumber - 1) * itemsPerPage)
+                .Take(itemsPerPage)
                 .Select(x => new CommentViewModel
                 {
                     CommentId = x.Id,
@@ -56,11 +64,14 @@
             return model;
         }
 
-        public List<CommentViewModel> GetCommentsByTicketId(int ticketId)
+        public List<CommentViewModel> GetCommentsByTicketId(int ticketId, int pageNumber, int itemsPerPage)
         {
             var model = this.commentRepository
                 .All()
                 .Where(x => x.TicketId == ticketId)
+                .OrderByDescending(x => x.Id)
+                .Skip((pageNumber - 1) * itemsPerPage)
+                .Take(itemsPerPage)
                 .Select(x => new CommentViewModel
                 {
                     CommentId = x.Id,

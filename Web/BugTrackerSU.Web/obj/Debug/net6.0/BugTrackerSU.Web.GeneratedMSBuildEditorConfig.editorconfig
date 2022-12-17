@@ -127,6 +127,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlja2V0c1xNeVRpY2tldHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Велислав/Desktop/SoftUni/BugTrackerSU/Web/BugTrackerSU.Web/Views/Tickets/Ticket.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlja2V0c1xUaWNrZXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Велислав/Desktop/SoftUni/BugTrackerSU/Web/BugTrackerSU.Web/Views/Tickets/_TicketsPagingPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlja2V0c1xfVGlja2V0c1BhZ2luZ1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

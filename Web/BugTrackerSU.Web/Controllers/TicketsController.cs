@@ -93,5 +93,13 @@
 
             return this.View(model);
         }
+
+        [HttpGet]
+        public IActionResult Ticket(int id)
+        {
+            var model = this.ticketService.GetTicketDetailsById(id);
+
+            return this.View(model);
+        }
     }
 }

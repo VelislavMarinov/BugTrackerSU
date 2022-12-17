@@ -7,10 +7,12 @@
 
     public interface ICommentService
     {
-        Task CreateCommentAsync(CreateCommentViewModel model, string userId);
+        Task CreateTicketCommentAsync(CreateTicketCommentFormModel model, string userId);
 
-        List<CommentViewModel> GetCommentsByTicketId(int ticketId);
+        Task CreatePostCommentAsync(CreatePostCommentFormModel model, string userId);
 
-        List<CommentViewModel> GetCommentsByPostId(int postId);
+        List<CommentViewModel> GetCommentsByTicketId(int ticketId, int pageNumber, int itemPerPage);
+
+        List<CommentViewModel> GetCommentsByPostId(int postId, int pageNumber, int itemPerPage);
     }
 }
