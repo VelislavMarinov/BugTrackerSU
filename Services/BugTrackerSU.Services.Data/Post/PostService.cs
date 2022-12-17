@@ -130,5 +130,7 @@
 
             return post;
         }
+
+        public int GetPostsCount() => this.postRepository.All().Count();
     }
 }

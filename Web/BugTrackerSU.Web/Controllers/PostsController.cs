@@ -53,10 +53,13 @@
         [HttpGet]
         public IActionResult All(int id = 1)
         {
-            var itemsPerPage = 5;
+            var itemsPerPage = 2;
 
             var model = new AllPostsViewModel()
             {
+                PageNumber = id,
+                ItemsPerPage = itemsPerPage,
+                ItemsCount = this.postService.GetPostsCount(),
                 Posts = this.postService.GetPosts(id, itemsPerPage),
             };
 

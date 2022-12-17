@@ -16,5 +16,7 @@
         Task CreatePostAsync(CreatePostViewModel model, string userId);
 
         PostViewModel GetPostById(int id);
+
+        int GetPostsCount();
     }
 }

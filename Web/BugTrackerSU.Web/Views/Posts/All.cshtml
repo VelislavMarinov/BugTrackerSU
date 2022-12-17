@@ -12,22 +12,44 @@
     </ol>
 </nav>
 
+<section class="bg-dark">
+  <div class="container position-relative my-5 py-5">
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-12 col-lg-10">
+        <div class="card text-dark">
 
-<div class="col-xl-10 col-md-10 col-sm-10 col-10 offset-1">
-    <div class="text-center">
-        <a asp-controller="Forums" asp-action="Create" class="btn btn-outline-secondary m-4">Create new category</a>
-        <a asp-controller="Posts" asp-action="Create" class="btn btn-outline-secondary m-4">Create new post</a>
+        <div class= "card-body align">
+            <h4 class="mb-0">Recent Posts</h4>
+            <p class="fw-light mb-4 pb-2">Latest Posts section by users</p>
+        </div>
+
+          <hr class="my-0" />
+
+        @foreach (var post in Model.Posts)
+       {   
+          <div class="card-body p-4">
+                <div class="d-fle mb-2 ">
+                     <h5 class="fw-bold mb-1"><i class="fas fa-newspaper"></i> @post.Title</h5>
+                     <p class="mb-0"> <strong>Added by:</strong> @post.AddedByUserUserName</p>
+                     <p class="mb-0"> <strong>About Project:</strong> @post.ProjectName</p>
+                     <p class="mb-0"><strong>Created on:</strong> @post.CreatedOn.ToString("MM/dd/yyyy")</p>
+                      <a asp-controller="" asp-action="" asp-route-id="" >View Comments </a>
+                </div>
+
+                <p class="mb-0">
+                 <strong>Content:</strong> @post.Content 
+                </p>
+              </div>
+            
+          <hr class="my-0" />
+        }
+
+
+
+         </div> 
+      </div>
     </div>
-    <div class="list-group">
-    @foreach (var post in Model.Posts)
-    {                
-        <a href="/Forums/Category/@post.Title" class="list-group-item list-group-item-action ">
-            <p class="mb-1">@post.Content</p>
-        </a>
-        <br />
-    }
-    </div>
-</div>
-
-
-<partial name="_PostsPagingPartial" model="@Model" />
+    <br />
+    <partial name="_PostsPagingPartial" model="@Model" />
+  </div>
+</section>
