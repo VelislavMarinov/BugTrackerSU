@@ -1,10 +1,13 @@
 ﻿namespace BugTrackerSU.Web.Controllers
 {
     using System.Threading.Tasks;
-    using BugTrackerSu.Web;
+
+    using BugTrackerSU.Common;
     using BugTrackerSU.Services.Data.Post;
     using BugTrackerSU.Services.Data.Project;
+    using BugTrackerSu.Web;
     using BugTrackerSU.Web.ViewModels.Posts;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     public class PostsController : BaseController
@@ -23,6 +26,7 @@
         }
 
         [HttpGet]
+        [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
         public IActionResult Create()
         {
             var model = new CreatePostViewModel()
@@ -34,6 +38,7 @@
         }
 
         [HttpPost]
+        [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
         public async Task<IActionResult> Create(CreatePostViewModel model)
         {
             if (!this.ModelState.IsValid)
@@ -47,13 +52,14 @@
 
             await this.postService.CreatePostAsync(model, userId);
 
-            return this.Redirect("/Home/Index");
+            return this.Redirect("/Post/All");
         }
 
         [HttpGet]
+        [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
         public IActionResult All(int id = 1)
         {
-            var itemsPerPage = 2;
+            var itemsPerPage = 4;
 
             var model = new AllPostsViewModel()
             {

@@ -27,6 +27,7 @@
         {
             this.projectService = projectService;
             this.ticketService = ticketService;
+            this.userService = userService;
         }
 
         [HttpGet]
@@ -34,6 +35,13 @@
         public IActionResult Create(int id)
         {
             var userId = this.User.GetId();
+
+            var chekUser = this.ticketService.ChekIfUserIsAuthorizedToCreateTicket(id, userId, this.userService.GetUserRole(this.User));
+
+            if (chekUser == false)
+            {
+                return this.Redirect("/");
+            }
 
             var model = new CreateTicketViewModel
             {
@@ -48,6 +56,15 @@
         [Authorize(Roles = GlobalConstants.AdminManagerSubmiterRolesAuthorization)]
         public async Task<IActionResult> Create(int id, CreateTicketViewModel model)
         {
+            var userId = this.User.GetId();
+
+            var chekUser = this.ticketService.ChekIfUserIsAuthorizedToCreateTicket(id, userId, this.userService.GetUserRole(this.User));
+
+            if (chekUser == false)
+            {
+                return this.Redirect("/");
+            }
+
             if (!this.ModelState.IsValid)
             {
                 model.AsignedProjectDevelopers = this.projectService.GetProjectAssignedUsers(id);
@@ -55,13 +72,11 @@
                 return this.View(model);
             }
 
-            var userId = this.User.GetId();
-
             model.ProjectId = id;
 
             await this.ticketService.CreateTicketAsync(model, userId);
 
-            return this.Redirect("/Home/Index");
+            return this.Redirect("/Tickets/MyTickets");
         }
 
         [HttpGet]
@@ -70,16 +85,7 @@
         {
             var itemsPerPage = 5;
 
-            var userRole = string.Empty;
-
-            if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
-            {
-                userRole = GlobalConstants.AdministratorRoleName;
-            }
-            else if (this.User.IsInRole(GlobalConstants.ProjectManagerRoleName))
-            {
-                userRole = GlobalConstants.ProjectManagerRoleName;
-            }
+            var userRole = this.userService.GetUserRole(this.User);
 
             var userId = this.User.GetId();
 

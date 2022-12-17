@@ -1,4 +1,6 @@
-﻿@using BugTrackerSU.Web.ViewModels.Projects
+﻿@using BugTrackerSU.Common
+@using BugTrackerSU.Web.ViewModels.Projects
+@using BugTrackerSu.Web
 @model ProjectDetailsViewModel
 
 @{
@@ -37,7 +39,6 @@
             <div class="table-responsive">
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
-                  <tr>
                     <tr>
                       <th scope="col">Title</th>
                       <th scope="col">Submiter Name</th>
@@ -46,25 +47,31 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
                       @foreach (var ticket in Model.Tickets)
                        {
-
+                          <tr>
                           <td>@ticket.Title</td>
                           <td>@ticket.SubmiterName</td>
                           <td>@ticket.DeveloperName</td>
                           <td>
-                              <a asp-controller="Tickets"
-                                 asp-action="TicketDetails"
-                                 asp-route-id="@ticket.TicketId"
-                                 class="btn btn-primary">
-                                 View More
-                              </a>
+                               @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName) 
+                                  || @ticket.ProjectManagerId == this.User.GetId()
+                                  || @ticket.SubmiterName == this.User.GetId()
+                                  || @ticket.DeveloperId == this.User.GetId())
+                                {        
+                                     <a asp-controller="Tickets"
+                                     asp-action="Edit"
+                                     asp-route-projectId="@ticket.ProjectId"
+                                     asp-route-ticketId="@ticket.TicketId"
+                                     class="btn btn-primary">
+                                     Edit
+                                  </a>
+                                 }
                           </td>
+                          </tr>
 
                        }
 
-                 </tr>
                 </tbody>
               </table>
             </div>
@@ -83,21 +90,21 @@
             <div class="table-responsive">
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
-                  <tr>
-                    <tr>
+                   <tr>
                       <th scope="col">User Name</th>
                       <th scope="col">Role</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+
                       @foreach (var user in Model.AssingedUsers)
                        {
+                          <tr>
                           <td>@user.UserName</td>
                           <td>@user.RoleName</td>
+                         </tr>
                        }
 
-                 </tr>
                 </tbody>
               </table>
             </div>

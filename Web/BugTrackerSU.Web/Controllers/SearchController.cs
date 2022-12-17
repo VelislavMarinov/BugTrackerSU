@@ -4,17 +4,25 @@
 
     using BugTrackerSU.Common;
     using BugTrackerSU.Services.Data.Search;
+    using BugTrackerSU.Services.Data.User;
     using BugTrackerSu.Web;
     using BugTrackerSU.Web.ViewModels.Search;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
     public class SearchController : BaseController
     {
         private readonly ISearchService searchService;
 
-        public SearchController(ISearchService searchService)
+        private readonly IUserService userService;
+
+        public SearchController(
+            ISearchService searchService,
+            IUserService userService)
         {
             this.searchService = searchService;
+            this.userService = userService;
         }
 
         [HttpGet]
@@ -25,12 +33,7 @@
         {
             var userId = this.User.GetId();
 
-            var userRole = string.Empty;
-
-            if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
-            {
-                userRole = GlobalConstants.AdministratorRoleName;
-            }
+            var userRole = this.userService.GetUserRole(this.User);
 
             var projects = this.searchService.SearchForProjectByKeyword(model.Keyword, userId, userRole);
 
@@ -55,17 +58,7 @@
         {
             var userId = this.User.GetId();
 
-            var userRole = string.Empty;
-
-            if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
-            {
-                userRole = GlobalConstants.AdministratorRoleName;
-            }
-
-            if (this.User.IsInRole(GlobalConstants.ProjectManagerRoleName))
-            {
-                userRole = GlobalConstants.ProjectManagerRoleName;
-            }
+            var userRole = this.userService.GetUserRole(this.User);
 
             var tickets = this.searchService.SearchForTicketByKeyword(model.Keyword, userId, userRole);
 

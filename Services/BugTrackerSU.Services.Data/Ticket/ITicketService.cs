@@ -17,6 +17,8 @@
 
         TicketDetailsViewModel GetTicketDetailsById(int ticketId);
 
-        bool ChekIfUserIsAuthorizedToEdit(string userId, string role);
+        bool ChekIfUserIsAuthorizedToEdit(int ticketId, string userId, string role);
+
+        bool ChekIfUserIsAuthorizedToCreateTicket(int projectId, string userId, string role);
     }
 }

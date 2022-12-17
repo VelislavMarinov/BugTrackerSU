@@ -12,7 +12,7 @@
 
         public string UserName { get; set; }
 
-        public string UserId { get; set; }
+        public string AddedByUserId { get; set; }
 
         public DateTime CreatedOn { get; set; }
     }

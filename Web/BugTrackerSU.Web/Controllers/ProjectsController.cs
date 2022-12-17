@@ -63,18 +63,14 @@
         }
 
         [HttpGet]
+        [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
         public IActionResult MyProjects(int id = 1)
         {
             var itemsPerPage = 5;
 
             var userId = this.User.GetId();
 
-            var userRole = string.Empty;
-
-            if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
-            {
-                userRole = GlobalConstants.AdministratorRoleName;
-            }
+            var userRole = this.userService.GetUserRole(this.User);
 
             var model = new AllProjectsViewModel
             {
@@ -87,6 +83,8 @@
             return this.View(model);
         }
 
+        [HttpGet]
+        [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
         public IActionResult Project(int id)
         {
             if (!this.projectService.ChekIfProjectIsValid(id))

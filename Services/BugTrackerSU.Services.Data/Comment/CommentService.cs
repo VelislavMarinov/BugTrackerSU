@@ -36,6 +36,17 @@
             await this.commentRepository.SaveChangesAsync();
         }
 
+        public async Task DeleteCommentAsync(int commentId)
+        {
+            var comment = this.commentRepository
+               .All()
+               .Where(x => x.Id == commentId)
+               .FirstOrDefault();
+
+            this.commentRepository.Delete(comment);
+            await this.commentRepository.SaveChangesAsync();
+        }
+
         public PostCommentsViewModel GetCommentsByPostId(int postId, int pageNumber, int itemsPerPage)
         {
             var comments = this.commentRepository
@@ -49,7 +60,7 @@
                     CommentId = x.Id,
                     Content = x.Content,
                     CreatedOn = x.CreatedOn,
-                    UserId = x.AddedByUserId,
+                    AddedByUserId = x.AddedByUserId,
                     PostId = x.PostId,
                     UserName = x.AddedByUser.UserName,
                 })

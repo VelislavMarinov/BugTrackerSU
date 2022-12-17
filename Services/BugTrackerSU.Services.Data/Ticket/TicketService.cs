@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using BugTrackerSU.Common;
     using BugTrackerSU.Data.Common.Repositories;
     using BugTrackerSU.Data.Models;
     using BugTrackerSU.Web.ViewModels.Comments;
@@ -26,6 +27,41 @@
             this.projectRepository = projectRepository;
             this.userRepository = userRepository;
             this.ticketRepository = ticketRepository;
+        }
+
+        public bool ChekIfUserIsAuthorizedToCreateTicket(int projectId, string userId, string role)
+        {
+            if (role == GlobalConstants.AdministratorRoleName)
+            {
+                return true;
+            }
+            else if (role == GlobalConstants.DeveloperRoleName)
+            {
+                return false;
+            }
+            else if (role == GlobalConstants.SubmitterRoleName)
+            {
+                var chekIfProjectContainsUser = this.projectRepository
+                    .All()
+                    .Where(x => x.Id == projectId)
+                    .Where(x => x.ProjectUsers.Any(x => x.ApplicationUserId == userId))
+                    .FirstOrDefault();
+            }
+
+            var project = this.projectRepository
+                .All()
+                .Where(x => x.Id == projectId)
+                .Where(x => x.ProjectManagerId == userId)
+                .FirstOrDefault();
+
+            if (project == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         public bool ChekIfUserIsAuthorizedToEdit(int ticketId, string userId, string role)
@@ -100,6 +136,8 @@
                    TicketId = x.Id,
                    CreatedOn = x.CreatedOn,
                    DeveloperId = x.AssignedDeveloperId,
+                   SubmiterName = x.TicketSubmitter.UserName,
+                   DeveloperName = x.AssignedDeveloper.UserName,
                    SubmiterId = x.AssignedDeveloperId,
                    ProjectManagerId = x.Project.ProjectManagerId,
                })

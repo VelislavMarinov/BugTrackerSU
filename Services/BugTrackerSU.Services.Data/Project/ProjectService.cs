@@ -121,18 +121,17 @@
         {
             var role = this.roleRepository.All().Where(x => x.Name == GlobalConstants.DeveloperRoleName).FirstOrDefault();
 
-            var users = this.userProjectRepository.
-                All()
-                .Include(x => x.ApplicationUser.Roles)
-                .Where(x => x.ProjectId == projectId &&
-                 x.ApplicationUser.Roles.Any(u => u.RoleId == role.Id))
+            var users = this.userProjectRepository
+                .All()
+                .Where(x => x.ProjectId == projectId)
                 .Select(x => x.ApplicationUser)
-                .Select(x => new UserViewModel
+                .Select(u => new UserViewModel
                 {
-                    Id = x.Id,
-                    UserName = x.UserName,
-                })
-                .ToList();
+                    Id = u.Id,
+                    UserName = u.UserName,
+                    RoleName = role.Name,
+
+                }).ToList();
 
             return users;
         }
@@ -154,12 +153,16 @@
                     ProjectManager = x.ProjectManager.UserName,
                     Tickets = x.ProjectTickets.Select(p => new TicketViewModel
                     {
-                        TicketStatus = p.Status.ToString(),
+                        ProjectId = p.ProjectId,
                         Title = p.Title,
-                        DeveloperName = p.AssignedDeveloper.UserName,
-                        SubmiterName = p.TicketSubmitter.UserName,
                         Description = p.Description,
+                        TicketId = p.Id,
                         CreatedOn = p.CreatedOn,
+                        DeveloperId = p.AssignedDeveloperId,
+                        SubmiterName = p.TicketSubmitter.UserName,
+                        DeveloperName = p.AssignedDeveloper.UserName,
+                        SubmiterId = p.AssignedDeveloperId,
+                        ProjectManagerId = p.Project.ProjectManagerId,
                     }).ToList(),
                     AssingedUsers = this.GetProjectAssignedDevelopers(projectId),
                 })

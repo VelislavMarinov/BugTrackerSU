@@ -1,12 +1,14 @@
 ﻿namespace BugTrackerSU.Web.Controllers
 {
+    using System.Threading.Tasks;
+
+    using BugTrackerSU.Common;
     using BugTrackerSU.Services.Data.Comment;
+    using BugTrackerSU.Services.Data.Post;
     using BugTrackerSu.Web;
     using BugTrackerSU.Web.ViewModels.Comments;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using BugTrackerSU.Services.Data.Post;
-    using System;
-    using System.Threading.Tasks;
 
     public class CommentsController : BaseController
     {
@@ -22,11 +24,10 @@
         }
 
         [HttpGet]
+        [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
         public IActionResult PostComments(int id = 1, int postId = 0)
         {
             var itemsPerPage = 3;
-
-            Console.WriteLine(postId);
 
             var model = this.commentService.GetCommentsByPostId(postId, id, itemsPerPage);
             model.ItemsPerPage = itemsPerPage;
@@ -37,11 +38,12 @@
         }
 
         [HttpPost]
+        [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
         public async Task<IActionResult> CreatePostComment(PostCommentsViewModel model)
         {
             if (!this.ModelState.IsValid)
             {
-                return this.Redirect($"/Comments/PostComments/1/{model.CreatePostCommentFormModel.PostId}");
+                return this.Redirect($"/Comments/PostComments?postId={model.CreatePostCommentFormModel.PostId}");
             }
 
             var userId = this.User.GetId();
@@ -49,6 +51,13 @@
             await this.commentService.CreatePostCommentAsync(model.CreatePostCommentFormModel, userId);
 
             return this.Redirect($"/Comments/PostComments?postId={model.CreatePostCommentFormModel.PostId}");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int commentId, int postId)
+        {
+            await this.commentService.DeleteCommentAsync(commentId);
+            return this.RedirectToAction("PostComments", "Comments", new { postId = postId });
         }
     }
 }
