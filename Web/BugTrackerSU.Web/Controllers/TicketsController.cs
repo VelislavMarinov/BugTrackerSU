@@ -18,6 +18,8 @@
 
         private readonly ITicketService ticketService;
 
+        private readonly IUserService userService;
+
         public TicketsController(
             IUserService userService,
             IProjectService projectService,
@@ -38,7 +40,6 @@
                 AsignedProjectDevelopers = this.projectService.GetProjectAssignedDevelopers(id),
                 ProjectId = id,
             };
-            Console.WriteLine(model.AsignedProjectDevelopers.Count);
 
             return this.View(model);
         }
@@ -64,6 +65,7 @@
         }
 
         [HttpGet]
+        [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
         public IActionResult MyTickets(int id = 1)
         {
             var itemsPerPage = 5;
@@ -93,10 +95,15 @@
         }
 
         [HttpGet]
-        [Authorize(Roles = GlobalConstants.AdminManagerSubmiterRolesAuthorization)]
+        [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
         public IActionResult Edit(int projectId, int ticketId)
         {
-            var userId = this.User.GetId();
+            var chekUser = this.ticketService.ChekIfUserIsAuthorizedToEdit(ticketId, this.User.GetId(), this.userService.GetUserRole(this.User));
+
+            if (chekUser == false)
+            {
+                return this.Redirect("/");
+            }
 
             var model = new EditTicketViewModel
             {
@@ -107,17 +114,24 @@
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdminManagerSubmiterRolesAuthorization)]
+        [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
         public async Task<IActionResult> Edit(int projectId, int ticketId, EditTicketViewModel model)
         {
+            var userId = this.User.GetId();
+
+            var chekUser = this.ticketService.ChekIfUserIsAuthorizedToEdit(ticketId, userId, this.userService.GetUserRole(this.User));
+
+            if (chekUser == false)
+            {
+                return this.Redirect("/");
+            }
+
             if (!this.ModelState.IsValid)
             {
                 model.AsignedProjectDevelopers = this.projectService.GetProjectAssignedUsers(projectId);
 
                 return this.View(model);
             }
-
-            var userId = this.User.GetId();
 
             await this.ticketService.EditTicketAsync(model, userId);
 

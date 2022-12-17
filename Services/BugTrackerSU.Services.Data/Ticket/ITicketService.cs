@@ -16,5 +16,7 @@
         Task EditTicketAsync(EditTicketViewModel model, string userId);
 
         TicketDetailsViewModel GetTicketDetailsById(int ticketId);
+
+        bool ChekIfUserIsAuthorizedToEdit(string userId, string role);
     }
 }

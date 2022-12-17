@@ -2,8 +2,10 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
+    using BugTrackerSU.Common;
     using BugTrackerSU.Data.Common.Repositories;
     using BugTrackerSU.Data.Models;
     using BugTrackerSU.Web.ViewModels.Administration.Dashboard;
@@ -54,6 +56,26 @@
             };
 
             return model;
+        }
+
+        public string GetUserRole(ClaimsPrincipal user)
+        {
+            if (user.IsInRole(GlobalConstants.ProjectManagerRoleName))
+            {
+                return GlobalConstants.ProjectManagerRoleName;
+            }
+            else if (user.IsInRole(GlobalConstants.SubmitterRoleName))
+            {
+                return GlobalConstants.SubmitterRoleName;
+            }
+            else if (user.IsInRole(GlobalConstants.DeveloperRoleName))
+            {
+                return GlobalConstants.DeveloperRoleName;
+            }
+            else
+            {
+                return GlobalConstants.AdministratorRoleName;
+            }
         }
 
         public async Task SetUserRole(string userId, string roleId)

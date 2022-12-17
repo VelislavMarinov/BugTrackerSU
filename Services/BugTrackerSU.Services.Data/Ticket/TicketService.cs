@@ -28,6 +28,31 @@
             this.ticketRepository = ticketRepository;
         }
 
+        public bool ChekIfUserIsAuthorizedToEdit(int ticketId, string userId, string role)
+        {
+            if (role == "Administrator")
+            {
+                return true;
+            }
+
+            var ticket = this.ticketRepository
+                .All()
+                .Where(x => x.Id == ticketId)
+                .Where(x => x.TicketSubmitterId == userId
+                || x.AssignedDeveloperId == userId
+                || x.Project.ProjectManagerId == userId)
+                .FirstOrDefault();
+
+            if (ticket == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         public async Task CreateTicketAsync(CreateTicketViewModel model, string userId)
         {
             var ticket = new Ticket
@@ -74,6 +99,9 @@
                    Description = x.Description,
                    TicketId = x.Id,
                    CreatedOn = x.CreatedOn,
+                   DeveloperId = x.AssignedDeveloperId,
+                   SubmiterId = x.AssignedDeveloperId,
+                   ProjectManagerId = x.Project.ProjectManagerId,
                })
                .ToList();
 
@@ -95,6 +123,9 @@
                    Description = x.Description,
                    TicketId = x.Id,
                    CreatedOn = x.CreatedOn,
+                   DeveloperId = x.AssignedDeveloperId,
+                   SubmiterId = x.AssignedDeveloperId,
+                   ProjectManagerId = x.Project.ProjectManagerId,
                })
                .ToList();
 
@@ -114,6 +145,9 @@
                     Description = x.Description,
                     TicketId = x.Id,
                     CreatedOn = x.CreatedOn,
+                    DeveloperId = x.AssignedDeveloperId,
+                    SubmiterId = x.AssignedDeveloperId,
+                    ProjectManagerId = x.Project.ProjectManagerId,
                 })
                 .ToList();
 
