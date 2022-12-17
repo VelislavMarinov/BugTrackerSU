@@ -33,7 +33,7 @@
                      <p class="mb-0"> <strong>Added by:</strong> @post.AddedByUserUserName</p>
                      <p class="mb-0"> <strong>About Project:</strong> @post.ProjectName</p>
                      <p class="mb-0"><strong>Created on:</strong> @post.CreatedOn.ToString("MM/dd/yyyy")</p>
-                      <a asp-controller="" asp-action="" asp-route-id="" >View Comments </a>
+                      <a asp-controller="Comments" asp-action="PostComments" asp-route-postId="@post.Id" >View Comments </a>
                 </div>
 
                 <p class="mb-0">
