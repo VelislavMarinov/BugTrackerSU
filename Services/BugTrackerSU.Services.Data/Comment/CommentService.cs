@@ -1,5 +1,6 @@
 ﻿namespace BugTrackerSU.Services.Data.Comment
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -50,6 +51,7 @@
                     CreatedOn = x.CreatedOn,
                     UserId = x.AddedByUserId,
                     PostId = x.PostId,
+                    UserName = x.AddedByUser.UserName,
                 })
                 .ToList();
 

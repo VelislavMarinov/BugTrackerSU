@@ -24,11 +24,13 @@
         [HttpGet]
         public IActionResult PostComments(int id = 1, int postId = 0)
         {
-            var itemsPerPage = 5;
+            var itemsPerPage = 3;
 
             Console.WriteLine(postId);
 
             var model = this.commentService.GetCommentsByPostId(postId, id, itemsPerPage);
+            model.ItemsPerPage = itemsPerPage;
+            model.PageNumber = id;
 
             return this.View(model);
         }
@@ -38,16 +40,14 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return this.PostComments(1, model.PostViewModel.Id);
+                return this.Redirect($"/Comments/PostComments/1/{model.CreatePostCommentFormModel.PostId}");
             }
-
-            Console.WriteLine($"{model.PostViewModel.Id} {model.CreatePostCommentFormModel.Content}");
 
             var userId = this.User.GetId();
 
             await this.commentService.CreatePostCommentAsync(model.CreatePostCommentFormModel, userId);
 
-            return this.PostComments(1, model.PostViewModel.Id);
+            return this.Redirect($"/Comments/PostComments?postId={model.CreatePostCommentFormModel.PostId}");
         }
     }
 }
