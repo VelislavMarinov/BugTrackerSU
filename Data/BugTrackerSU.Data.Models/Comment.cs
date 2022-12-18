@@ -13,13 +13,13 @@
         public string Content { get; set; }
 
         [Required]
-        public string AddedByUserId { get; set; }
-
-        [Required]
         public int PostId { get; set; }
 
         [ForeignKey(nameof(PostId))]
         public virtual Post Post { get; set; }
+
+        [Required]
+        public string AddedByUserId { get; set; }
 
         public virtual ApplicationUser AddedByUser { get; set; }
     }

@@ -31,5 +31,10 @@
         [Required]
         [MaxLength(TaskTypeMaxLength)]
         public string Type { get; set; }
+
+        [Required]
+        public string AddedByUserId { get; set; }
+
+        public virtual ApplicationUser AddedByUser { get; set; }
     }
 }

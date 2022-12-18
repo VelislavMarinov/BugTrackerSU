@@ -8,5 +8,6 @@
     {
         Task CreateMinorTaskAsync(CreateMinorTaskFormModel model, string userId);
 
+        bool ChekIfUserIsAuthorizedToCreateTask(int ticketId, string userId, string role);
     }
 }

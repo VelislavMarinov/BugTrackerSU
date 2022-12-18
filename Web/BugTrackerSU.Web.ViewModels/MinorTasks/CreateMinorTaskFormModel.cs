@@ -20,7 +20,7 @@
 
         [Required(ErrorMessage = "The field is required")]
         [Display(Name = "Type of Task")]
-        public TaskType TicketType { get; set; }
+        public TaskType TaskType { get; set; }
 
         public int TicketId { get; set; }
     }
