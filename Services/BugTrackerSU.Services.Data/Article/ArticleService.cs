@@ -1,5 +1,6 @@
 ﻿namespace BugTrackerSU.Services.Data.Article
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -12,9 +13,14 @@
 
         private readonly IDeletableEntityRepository<Article> articleRepository;
 
-        public ArticleService(IDeletableEntityRepository<Article> articleRepository)
+        private readonly IDeletableEntityRepository<Category> categoryRepository;
+
+        public ArticleService(
+            IDeletableEntityRepository<Article> articleRepository,
+            IDeletableEntityRepository<Category> categoryRepository)
         {
             this.articleRepository = articleRepository;
+            this.categoryRepository = categoryRepository;
         }
 
         public int ArticlesCountByCategoryId(int categoryId) => this.articleRepository.All().Where(x => x.CategoryId == categoryId).Count();
@@ -88,6 +94,20 @@
             };
 
             return model;
+        }
+
+        public ICollection<ArticleCategoryViewModel> GetAllCategories()
+        {
+            var categories = this.categoryRepository
+                .All()
+                .Select(x => new ArticleCategoryViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                })
+                .ToList();
+
+            return categories;
         }
     }
 }

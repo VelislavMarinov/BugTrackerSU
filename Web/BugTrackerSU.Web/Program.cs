@@ -9,6 +9,7 @@
     using BugTrackerSU.Data.Repositories;
     using BugTrackerSU.Data.Seeding;
     using BugTrackerSU.Services.Data;
+    using BugTrackerSU.Services.Data.Article;
     using BugTrackerSU.Services.Data.Category;
     using BugTrackerSU.Services.Data.Comment;
     using BugTrackerSU.Services.Data.MinorTask;
@@ -81,6 +82,7 @@
             services.AddTransient<ISearchService, SearchService>();
             services.AddTransient<IMinorTaskService, MinorTaskService>();
             services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IArticleService, ArticleService>();
         }
 
         private static void Configure(WebApplication app)

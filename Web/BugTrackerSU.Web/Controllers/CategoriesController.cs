@@ -62,14 +62,12 @@
         [HttpPost]
         public async Task<IActionResult> Edit(int id, EditCategoryFormModel model)
         {
-            var userId = this.User.GetId();
-
             if (!this.ModelState.IsValid)
             {
                 return this.View(model);
             }
 
-            await this.categoryService.EditCategoryAsync(model, id, userId);
+            await this.categoryService.EditCategoryAsync(model, id);
 
             return this.RedirectToAction("All", "Categories");
         }

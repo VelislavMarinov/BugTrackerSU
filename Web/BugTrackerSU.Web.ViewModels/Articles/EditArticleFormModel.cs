@@ -34,6 +34,6 @@
         [Url]
         public string VideoUrl { get; set; }
 
-        public ICollection<CategoryViewModel> Categories { get; set; }
+        public ICollection<ArticleCategoryViewModel> Categories { get; set; }
     }
 }
