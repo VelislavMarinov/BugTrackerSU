@@ -43,12 +43,13 @@
 
         }
 
-        public async Task EditCategoryAsync(EditCategoryFormModel model, int categoryId, string userId)
+        public async Task EditCategoryAsync(EditCategoryFormModel model, int categoryId)
         {
             var category = this.categoryRepository
                 .All()
                 .Where(x => x.Id == categoryId)
                 .FirstOrDefault();
+
             category.Name = model.Name;
             category.Description = model.Description;
             category.ImageUrl = model.ImageUrl;
@@ -61,6 +62,9 @@
         {
             var categories = this.categoryRepository
                 .All()
+                .OrderByDescending(x => x.Id)
+                .Skip((pageNumber - 1) * itemsPerPage)
+                .Take(itemsPerPage)
                 .Select(x => new CategoryViewModel
                 {
                     Id = x.Id,
