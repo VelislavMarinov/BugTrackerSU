@@ -63,6 +63,7 @@
                 .All()
                 .Select(x => new CategoryViewModel
                 {
+                    Id = x.Id,
                     Name = x.Name,
                     Description = x.Description,
                     ImageUrl = x.ImageUrl,
