@@ -1,17 +1,58 @@
 ﻿@using BugTrackerSU.Web.ViewModels.Tickets
 @model TicketDetailsViewModel
 
-<div class="u-repeater u-repeater-1">
-            <div class="u-align-left u-container-style u-custom-item u-list-item u-palette-4-base u-repeater-item">
-              <div class="u-container-layout u-similar-container u-valign-middle u-container-layout-1">
-              </div>
-            </div>
-            <div class="u-align-left u-black u-container-style u-custom-item u-list-item u-repeater-item">
-              <div class="u-container-layout u-similar-container u-valign-middle u-container-layout-2"><span class="u-custom-item u-file-icon u-icon u-icon-rounded u-palette-4-base u-icon-2" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction=""><img src="data:image/png;base64,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" alt=""></span>
-                <h2 class="u-custom-font u-font-montserrat u-text u-text-4">02</h2>
-                <h5 class="u-custom-font u-font-montserrat u-text u-text-5">Design projects</h5>
-                <p class="u-text u-text-6"> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit</p>
-                <a href="https://nicepage.com/website-builder" class="u-border-none u-btn u-button-style u-custom-item u-hover-palette-4-light-2 u-palette-4-base u-btn-2"> read more</a>
-              </div>
-      </div>
-</div>
+@{
+    this.ViewData["Title"] = "Ticket Details";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/Tickets/MyTickets">My Tickets</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><strong>@this.ViewData["Title"]</strong></li>
+    </ol>
+</nav>
+
+
+
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h3 class="box-title mt-5">Ticket Info</h3>
+        <div class="table-responsive">
+            <table class="table  table-product">
+                <tbody>
+                    <tr>
+                        <td width="390">Title:</td>
+                        <td>@Model.Title</td>
+                    </tr>
+                    <tr>
+                        <td>Ticket Description:</td>
+                        <td>@Model.TicketDescription</td>
+                    </tr>
+                    <tr>
+                        <td>Submitter Name:</td>
+                        <td>@Model.SubmitterName</td>
+                    </tr>
+                    <tr>
+                        <td>Developer Name</td>
+                        <td>@Model.DeveloperName</td>
+                    </tr>
+                    <tr>
+                        <td>Priority:</td>
+                        <td>@Model.TicketPriority</td>
+                    </tr>
+                    <tr>
+                        <td>Status: </td>
+                        <td>@Model.TicketStatus</td>
+                    </tr>
+                    <tr>
+                        <td>Type: </td>
+                        <td>@Model.TicketType</td>
+                    </tr>
+                    <tr>
+                        <td>CreatedOn: </td>
+                        <td>@Model.CreatedOn.ToString("mm-dd-yyyy")</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>

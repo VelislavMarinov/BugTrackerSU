@@ -59,6 +59,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWlub3JUYXNrc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Велислав/Desktop/SoftUni/BugTrackerSU/Web/BugTrackerSU.Web/Views/MinorTasks/TicketTasks.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWlub3JUYXNrc1xUaWNrZXRUYXNrcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Велислав/Desktop/SoftUni/BugTrackerSU/Web/BugTrackerSU.Web/Views/MinorTasks/_TicketTasksPagingPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWlub3JUYXNrc1xfVGlja2V0VGFza3NQYWdpbmdQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Велислав/Desktop/SoftUni/BugTrackerSU/Web/BugTrackerSU.Web/Views/Posts/All.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9zdHNcQWxsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

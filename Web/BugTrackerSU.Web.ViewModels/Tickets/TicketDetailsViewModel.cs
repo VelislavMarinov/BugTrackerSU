@@ -4,7 +4,6 @@
     using System.Collections.Generic;
 
     using BugTrackerSU.Web.ViewModels.Comments;
-    using BugTrackerSU.Web.ViewModels.TicketsHistory;
 
     public class TicketDetailsViewModel
     {
@@ -27,8 +26,6 @@
         public DateTime CreatedOn { get; set; }
 
         public DateTime UpdatedOn { get; set; }
-
-        public TicketHistoryViewModel TicketHistory { get; set; }
 
     }
 }

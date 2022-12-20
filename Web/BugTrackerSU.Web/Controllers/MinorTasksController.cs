@@ -9,6 +9,7 @@
     using BugTrackerSU.Web.ViewModels.MinorTasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using BugTrackerSU.Services.Data.Ticket;
 
     public class MinorTasksController : BaseController
     {
@@ -16,23 +17,27 @@
 
         private readonly IUserService userService;
 
+        private readonly ITicketService ticketService;
+
         public MinorTasksController(
             IMinorTaskService minorTaskService,
-            IUserService userService)
+            IUserService userService,
+            ITicketService ticketService)
         {
             this.minorTaskService = minorTaskService;
             this.userService = userService;
+            this.ticketService = ticketService;
         }
 
         [HttpGet]
         [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
         public IActionResult Create(int ticketId)
         {
-            var chekUser = this.minorTaskService.ChekIfUserIsAuthorizedToCreateTask(ticketId, this.User.GetId(), this.userService.GetUserRole(this.User));
+            var chekUser = this.minorTaskService.ChekIfUserIsAuthorizedToCreateOrSeeTask(ticketId, this.User.GetId(), this.userService.GetUserRole(this.User));
 
             if (chekUser == false)
             {
-                return this.Redirect("/");
+                return this.BadRequest();
             }
 
             var model = new CreateMinorTaskFormModel();
@@ -47,11 +52,11 @@
         {
             var userId = this.User.GetId();
 
-            var chekUser = this.minorTaskService.ChekIfUserIsAuthorizedToCreateTask(model.TicketId, userId, this.userService.GetUserRole(this.User));
+            var chekUser = this.minorTaskService.ChekIfUserIsAuthorizedToCreateOrSeeTask(model.TicketId, userId, this.userService.GetUserRole(this.User));
 
             if (chekUser == false)
             {
-                return this.Redirect("/");
+                return this.BadRequest();
             }
 
             if (!this.ModelState.IsValid)
@@ -63,5 +68,50 @@
 
             return this.Redirect("/MinorTasks/TicketTasks");
         }
+
+        [HttpGet]
+        [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
+        public IActionResult TicketTasks(int ticketId, int id = 1)
+        {
+            var itemsPerPage = 4;
+
+            var userId = this.User.GetId();
+
+            var chekUser = this.minorTaskService.ChekIfUserIsAuthorizedToCreateOrSeeTask(id, userId, this.userService.GetUserRole(this.User));
+
+            if (chekUser == false)
+            {
+                return this.BadRequest();
+            }
+
+            var model = new AllMinorTaskViewModel()
+            {
+                TicketInfo = this.ticketService.GetTicketById(ticketId),
+                TicketId = ticketId,
+                PageNumber = id,
+                ItemsPerPage = itemsPerPage,
+                ItemsCount = this.minorTaskService.GetTicketTasksCount(ticketId),
+                Tasks = this.minorTaskService.GetTicketTasksById(ticketId ,id, itemsPerPage),
+            };
+
+            return this.View(model);
+        }
+
+        [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
+        public async Task<IActionResult> StartTask(int taskId)
+        {
+            await this.minorTaskService.StartTask(taskId);
+
+            return this.Redirect("/Tickets/MyTickets");
+        }
+
+        [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
+        public async Task<IActionResult> FinishTask(int taskId)
+        {
+            await this.minorTaskService.StartTask(taskId);
+
+            return this.Redirect("/Tickets/MyTickets");
+        }
+
     }
 }

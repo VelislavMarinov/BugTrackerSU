@@ -1,4 +1,7 @@
 ﻿@using BugTrackerSU.Common
+@using BugTrackerSU.Data.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,16 +26,20 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                    <div class="navbar-nav flex-grow-1">    
-                      <div class="dropdown">
-                            <button class="btn text-light" type="button" id="dropdownMenuButton"  data-toggle="dropdown">
-                                <i class="fas fa-home"></i> Home
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        @if (this.SignInManager.IsSignedIn(this.User))
+                        {
+                            <div class="dropdown">
+                                <button class="btn text-light" type="button" id="dropdownMenuButton"  data-toggle="dropdown">
+                                    <i class="fas fa-home"></i> Home
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                                </div>
                             </div>
-                        </div>
-                        <div class="dropdown">
+
+
+                            <div class="dropdown">
                                 <button class="btn text-light" type="button" id="dropdownMenuButton"  data-toggle="dropdown">
                                     <i class="fas fa-project-diagram"></i> Projects
                                 </button>
@@ -41,8 +48,8 @@
                                     <a class="dropdown-item" asp-area="" asp-controller="Search" asp-action="SearchProject">Search for Project</a>
                                     <a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="Create">Create Project</a>
                                 </div>
-                        </div>
-                        <div class="dropdown">
+                            </div>
+                            <div class="dropdown">
                                 <button class="btn text-light" type="button" id="dropdownMenuButton"  data-toggle="dropdown">
                                     <i class="fas fa-tasks"></i> Tickets
                                 </button>
@@ -50,18 +57,21 @@
                                     <a class="dropdown-item " asp-area="" asp-controller="Tickets" asp-action="MyTickets" asp-route-id="" >My Tickets</a>
                                     <a class="dropdown-item" asp-area="" asp-controller="Search" asp-action="SearchTicket">Search for Ticket</a>
                                 </div>
-                        </div>
-                        <div class="dropdown">
+                            </div>
+                            <div class="dropdown">
                                 <button class="btn text-light" type="button" id="dropdownMenuButton"  data-toggle="dropdown">
-                                   <i class="fas fa-pager"></i> Posts
+                                    <i class="fas fa-pager"></i> Posts
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item " asp-area="" asp-controller="Posts" asp-action="All" >All Posts</a>
                                     <a class="dropdown-item" asp-area="" asp-controller="Search" asp-action="SearchPost">Search for Post</a>
                                     <a class="dropdown-item" asp-area="" asp-controller="Posts" asp-action="Create">Create Post</a>
                                 </div>
-                        </div>
-                      </div>
+                            </div>
+
+                        }
+                    </div>
+                      
                     
                     <partial name="_LoginPartial" />
                 </div>

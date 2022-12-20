@@ -65,6 +65,12 @@
              class="btn btn-primary">
              Create Task
              </a>
+             <a asp-controller="MinorTasks"
+             asp-action="TicketTasks"
+             asp-route-ticketId="@ticket.TicketId"
+             class="btn btn-primary">
+             Ticket Tasks
+             </a>
         }
       </td>
      </tr>

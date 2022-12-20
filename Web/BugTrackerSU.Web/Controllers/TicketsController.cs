@@ -62,7 +62,7 @@
 
             if (chekUser == false)
             {
-                return this.Redirect("/");
+                return this.BadRequest();
             }
 
             if (!this.ModelState.IsValid)
@@ -108,7 +108,7 @@
 
             if (chekUser == false)
             {
-                return this.Redirect("/");
+                return this.BadRequest();
             }
 
             var model = new EditTicketViewModel
@@ -129,7 +129,7 @@
 
             if (chekUser == false)
             {
-                return this.Redirect("/");
+                return this.BadRequest();
             }
 
             if (!this.ModelState.IsValid)

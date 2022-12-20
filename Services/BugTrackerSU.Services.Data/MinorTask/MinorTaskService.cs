@@ -1,10 +1,12 @@
 ﻿namespace BugTrackerSU.Services.Data.MinorTask
 {
-    using System.Threading.Tasks;
-    using BugTrackerSU.Data.Models;
-    using BugTrackerSU.Data.Common.Repositories;
-    using BugTrackerSU.Web.ViewModels.MinorTasks;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
+
+    using BugTrackerSU.Data.Common.Repositories;
+    using BugTrackerSU.Data.Models;
+    using BugTrackerSU.Web.ViewModels.MinorTasks;
 
     public class MinorTaskService : IMinorTaskService
     {
@@ -20,7 +22,7 @@
             this.ticketRepository = ticketRepository;
         }
 
-        public bool ChekIfUserIsAuthorizedToCreateTask(int ticketId, string userId, string role)
+        public bool ChekIfUserIsAuthorizedToCreateOrSeeTask(int ticketId, string userId, string role)
         {
             if (role == "Administrator")
             {
@@ -59,6 +61,47 @@
             };
 
             await this.minorTaskRepository.AddAsync(task);
+            await this.minorTaskRepository.SaveChangesAsync();
+        }
+
+        public async Task FinishTask(int taskId)
+        {
+            var task = this.minorTaskRepository.All().Where(x => x.Id == taskId).FirstOrDefault();
+            task.Finished = true;
+
+            this.minorTaskRepository.Update(task);
+            await this.minorTaskRepository.SaveChangesAsync();
+        }
+
+        public List<MinorTaskViewModel> GetTicketTasksById(int ticketId, int pageNumber, int itemsPerPage)
+        {
+            var model = this.minorTaskRepository
+                .All()
+                .Where(x => x.TicketId == ticketId)
+                .OrderByDescending(x => x.Id)
+                .Skip((pageNumber - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .Select(x => new MinorTaskViewModel
+                {
+                    TaskType = x.Type,
+                    Title = x.Title,
+                    Content = x.Content,
+                    Finished = x.Finished,
+                    Started = x.Started,
+                })
+                .ToList();
+
+            return model;
+        }
+
+        public int GetTicketTasksCount(int ticketId) => this.minorTaskRepository.All().Where(x => x.TicketId == ticketId).Count();
+
+        public async Task StartTask(int taskId)
+        {
+            var task = this.minorTaskRepository.All().Where(x => x.Id == taskId).FirstOrDefault();
+            task.Started = true;
+
+            this.minorTaskRepository.Update(task);
             await this.minorTaskRepository.SaveChangesAsync();
         }
     }

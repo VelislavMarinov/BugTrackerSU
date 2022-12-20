@@ -202,16 +202,37 @@
                     Title = x.Title,
                     TicketDescription = x.Description,
                     DeveloperName = x.AssignedDeveloper.UserName,
+                    SubmitterName = x.TicketSubmitter.UserName,
                     TicketId = ticketId,
                     TicketPriority = x.Priority,
                     TicketStatus = x.Status,
                     TicketType = x.TicketType,
                     CreatedOn = x.CreatedOn,
-                    UpdatedOn = (DateTime)x.ModifiedOn,
                 })
                 .FirstOrDefault();
 
             return ticketDetails;
+        }
+
+        public TicketViewModel GetTicketById(int ticketId)
+        {
+            var ticket = this.ticketRepository
+                .All()
+                .Where(x => x.Id == ticketId)
+                .Select(x => new TicketViewModel
+                {
+                    ProjectId = x.ProjectId,
+                    Title = x.Title,
+                    Description = x.Description,
+                    TicketId = x.Id,
+                    CreatedOn = x.CreatedOn,
+                    DeveloperId = x.AssignedDeveloperId,
+                    SubmiterId = x.AssignedDeveloperId,
+                    ProjectManagerId = x.Project.ProjectManagerId,
+                })
+                .FirstOrDefault();
+
+            return ticket;
         }
 
         public int GetUserTicketsCount(string userId, string userRole)
