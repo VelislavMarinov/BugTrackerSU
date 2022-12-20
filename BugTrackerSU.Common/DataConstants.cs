@@ -2,6 +2,20 @@
 {
     public class DataConstants
     {
+        // Category
+        public const int CategoryNameMinLength = 4;
+        public const int CategoryNameMaxLength = 64;
+
+        public const int CategoryDescriptionMinLength = 12;
+        public const int CategoryDescriptionMaxLength = 4096;
+
+        // Article
+        public const int ArticleNameMinLength = 4;
+        public const int ArticleNameMaxLength = 64;
+
+        public const int ArticleDescriptionMinLength = 12;
+        public const int ArticleDescriptionMaxLength = 4096;
+
         // Project - "DataModel"
         public const int ProjectTitleMinLength = 4;
         public const int ProjectTitleMaxLength = 64;
@@ -34,7 +48,6 @@
 
         public const int TaskTypeMinLength = 4;
         public const int TaskTypeMaxLength = 50;
-
 
         // Comment
         public const int CommentContentMinLength = 4;

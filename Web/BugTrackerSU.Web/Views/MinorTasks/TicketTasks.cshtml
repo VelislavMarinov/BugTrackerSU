@@ -1,0 +1,85 @@
+﻿@using BugTrackerSU.Web.ViewModels.MinorTasks
+
+@model AllMinorTaskViewModel
+
+@{
+    this.ViewData["Title"] = "Ticket Tasks";
+}
+
+
+<nav aria-label="breadcrumb" class="main-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/Tickets/MyTickets">My Tickets</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><strong>@this.ViewData["Title"]</strong></li>
+    </ol>
+</nav>
+
+<div class="card text-dark">
+    <div class="card-body p-4">
+                <div class="d-fle mb-2 ">
+                     <h4 class="fw-bold mb-1"><i class="fas fa-project-diagram"></i> @Model.TicketInfo.Title</h4>
+                </div>
+                            <a asp-controller="Tickets"
+                             asp-action="Ticket"
+                             asp-route-ticketId="@Model.TicketId"
+                             class="btn btn-primary">
+                             Ticket Details
+                            </a>
+                            <a asp-controller="MinorTasks"
+                             asp-action="Create"
+                             asp-route-ticketId="@Model.TicketId"
+                             class="btn btn-primary">
+                             Create Task
+                            </a>
+    </div>
+</div> 
+
+<div class="container mt-5 mb-5">
+    <div class="d-flex justify-content-center row">
+        <div class="d-flex flex-column col-md-8">
+    @foreach (var task in Model.Tasks)
+    {
+       
+                <div class="card mb-1">
+                  <div class="card-header">
+                    <h5>Title: @task.Title</h5>
+                  </div>
+                  <div class="card-body">
+                    <p class="card-text">Added by: @task.AddebyUser</p>
+                    <p class="card-text">Content With supporting text below as a natural lead-in to additional content.</p>
+                    @if(task.TaskType == "Task")
+                    {
+                        @if (task.Started == false)
+                        {
+                            <a asp-controller="MinorTasks"
+                            asp-action="TaskStarted"
+                            asp-route-ticketId="@task.TaskId"
+                            class="btn btn-primary">
+                            Start Task
+                            </a>
+                        } 
+                        else if (task.Finished == false)
+                        {
+                            <a asp-controller="MinorTasks"
+                             asp-action="TaskFinished"
+                             asp-route-ticketId="@task.TaskId"
+                             class="btn btn-primary">
+                             Finished
+                            </a>
+                        } else
+                        {
+                            <strong>Task Finished.</strong>
+                        }
+                    }
+                  </div>
+                </div>
+
+
+     }
+    </div>
+    </div>
+    </div>
+
+
+    <partial name="_TicketTasksPagingPartial" model="@Model" />

@@ -20,6 +20,8 @@ namespace BugTrackerSU.Data.Models
             this.Tickets = new List<Ticket>();
             this.Comments = new List<Comment>();
             this.Posts = new List<Post>();
+            this.Articles = new List<Article>();
+            this.Categories = new List<Category>();
         }
 
         // Audit info
@@ -47,5 +49,9 @@ namespace BugTrackerSU.Data.Models
         public virtual ICollection<Comment> Comments { get; set; }
 
         public virtual ICollection<MinorTask> Tasks { get; set; }
+
+        public virtual ICollection<Article> Articles { get; set; }
+
+        public virtual ICollection<Category> Categories { get; set; }
     }
 }
