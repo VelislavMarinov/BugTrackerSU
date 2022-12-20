@@ -18,7 +18,7 @@
 
         public int CategoriesCount() => this.categoryRepository.All().Count();
 
-        public async Task Create(CreateCategoryFormModel model, string userId)
+        public async Task CreateCategoryAsync(CreateCategoryFormModel model, string userId)
         {
             var category = new Category
             {
@@ -28,6 +28,32 @@
             };
 
             await this.categoryRepository.AddAsync(category);
+            await this.categoryRepository.SaveChangesAsync();
+        }
+
+        public async Task DeleteCategoryAsync(int categoryId)
+        {
+            var category = this.categoryRepository
+                .All()
+                .Where(x => x.Id == categoryId)
+                .FirstOrDefault();
+
+            this.categoryRepository.Delete(category);
+            await this.categoryRepository.SaveChangesAsync();
+
+        }
+
+        public async Task EditCategoryAsync(EditCategoryFormModel model, int categoryId, string userId)
+        {
+            var category = this.categoryRepository
+                .All()
+                .Where(x => x.Id == categoryId)
+                .FirstOrDefault();
+            category.Name = model.Name;
+            category.Description = model.Description;
+            category.ImageUrl = model.ImageUrl;
+
+            this.categoryRepository.Update(category);
             await this.categoryRepository.SaveChangesAsync();
         }
 
