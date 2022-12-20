@@ -7,5 +7,9 @@
     public interface ICategoryService
     {
         Task Create(CreateCategoryFormModel model, string userId);
+
+        AllCategoriesViewModel GetAllCategories(int pageNumber, int itemsPerPage);
+
+        int CategoriesCount();
     }
 }

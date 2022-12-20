@@ -1,8 +1,9 @@
 ﻿namespace BugTrackerSU.Web.Controllers
 {
     using System.Threading.Tasks;
-    using BugTrackerSu.Web;
+
     using BugTrackerSU.Services.Data.Category;
+    using BugTrackerSu.Web;
     using BugTrackerSU.Web.ViewModels.Categories;
     using Microsoft.AspNetCore.Mvc;
 
@@ -38,6 +39,16 @@
             await this.categoryService.Create(model, userId);
 
             return this.Redirect("/");
+        }
+
+        [HttpGet]
+        public IActionResult Categories(int id = 1)
+        {
+            var itemsPerPage = 4;
+
+            var model = this.categoryService.GetAllCategories(id, itemsPerPage);
+
+            return this.View(model);
         }
 
     }
