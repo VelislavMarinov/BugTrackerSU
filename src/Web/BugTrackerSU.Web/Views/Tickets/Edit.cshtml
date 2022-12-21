@@ -6,14 +6,23 @@
     ViewData["Title"] = "Edit Ticket";
 }
 
+<nav aria-label="breadcrumb" class="main-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/Tickets/MyTickets">My Tickets</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><strong>@this.ViewData["Title"]</strong></li>
+    </ol>
+</nav>
+
 
 <div class="container">
-    <div class="row">
-        <div class="col-sm-12 offset-lg-2 col-lg-10 offset-xl-1 col-xl-10">
-            <h1 class="text-center">@ViewData["Title"]</h1>
-            <form method="post">
+          <div class="row justify-content-center">
+            <div class="col-xl-8 col-md-6">
+              <form method="post" class="bg-dark  rounded-5 shadow-5-strong p-5">
+                <h1 class="text-center text-light">@ViewData["Title"]</h1>\
+                <br />
                 <div class="form-group">
-                    <label asp-for="DeveloperId"></label>
+                    <label asp-for="DeveloperId" class="text-light"></label>
                     <select asp-for="DeveloperId" class="form-control">
                      @foreach (var developer in Model.AsignedProjectDevelopers)
                      {
@@ -22,7 +31,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                   <label asp-for="TicketType" ></label>
+                   <label asp-for="TicketType" class="text-light" ></label>
                      <select asp-for="TicketType" class="form-control">
                         @foreach (int choice in Enum.GetValues(typeof(TicketType)))
                           {
@@ -31,7 +40,7 @@
                  </select>
                 </div>
                 <div class="form-group">
-                     <label asp-for="Status" ></label>
+                     <label asp-for="Status" class="text-light" ></label>
                       <select asp-for="Status" class="form-control">
                         @foreach (int choice in Enum.GetValues(typeof(TicketStatus)))
                         {
@@ -40,7 +49,7 @@
                  </select>
                 </div>
                 <div class="form-group">
-                     <label asp-for="Priority" ></label>
+                     <label asp-for="Priority" class="text-light" ></label>
                       <select asp-for="Priority" class="form-control">
                         @foreach (int choice in Enum.GetValues(typeof(TicketPriority)))
                         {
@@ -48,8 +57,9 @@
                         }
                  </select>
                 </div>
-                <input type="submit" class="btn btn-info" value="@ViewData["Title"]" />
-            </form>
+
+                <button type="submit" class="btn btn-primary btn-block">@ViewData["Title"]</button>
+              </form>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
