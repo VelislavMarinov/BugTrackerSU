@@ -1,0 +1,64 @@
+﻿@using BugTrackerSU.Web.ViewModels.Articles
+@using BugTrackerSU.Web.ViewModels.Categories
+@model CreateArticleFormModel
+
+@{
+    ViewData["Title"] = "Create Article";
+}
+
+<nav aria-label="breadcrumb" class="main-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/Articles/All">Articles</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><strong>@this.ViewData["Title"]</strong></li>
+    </ol>
+</nav>
+
+<div class="container">
+          <div class="row justify-content-center">
+            <div class="col-xl-8 col-md-6">
+              <form method="post" class="bg-dark  rounded-5 shadow-5-strong p-5">
+                <h1 class="text-center text-light">@ViewData["Title"]</h1>\
+                <br />
+                <!-- Name input -->
+                <div class="form-outline mb-4">
+                  <label asp-for="Name" class="text-light"></label>
+                  <input asp-for="Name" placeholder="Category Name" class="form-control">
+                  <span asp-validation-for="Name" class="text-danger small"></span>
+                <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 88.8px;"></div><div class="form-notch-trailing"></div></div></div>
+
+                <!-- Description input -->
+                 <div class="form-outline mb-4">
+                  <label asp-for="Description" class="text-light"></label>
+                  <input asp-for="Description" placeholder="Category Description" class="form-control">
+                  <span asp-validation-for="Description" class="text-danger small"></span>
+                <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 88.8px;"></div><div class="form-notch-trailing"></div></div></div>
+
+                <!-- Image Url -->
+                 <div class="form-outline mb-4">
+                  <label asp-for="ImageUrl" class="text-light"></label>
+                  <input asp-for="ImageUrl" placeholder="Category Image Url" class="form-control">
+                  <span asp-validation-for="ImageUrl" class="text-danger small"></span>
+                <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 88.8px;"></div><div class="form-notch-trailing"></div></div></div>
+
+                <!-- Video Url -->
+                <div class="form-outline mb-4">
+                  <label asp-for="VideoUrl" class="text-light"></label>
+                  <input asp-for="VideoUrl" placeholder="Category Image Url" class="form-control">
+                  <span asp-validation-for="VideoUrl" class="text-danger small"></span>
+                <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 88.8px;"></div><div class="form-notch-trailing"></div></div></div>
+
+                 <div class="form-group">
+                    <label asp-for="CategoryId" class="text-light"></label>
+                    <select asp-for="CategoryId" class="form-control">
+                     @foreach (var category in Model.Categories)
+                     {
+                        <option value="@category.Id">@category.Name</option>
+                     }
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">@ViewData["Title"]</button>
+              </form>
+            </div>
+          </div>
+        </div>

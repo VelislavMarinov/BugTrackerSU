@@ -1,0 +1,79 @@
+﻿@using BugTrackerSU.Data.Models.Enums
+@using BugTrackerSU.Web.ViewModels.Tickets
+@model CreateTicketViewModel
+
+@{
+    ViewData["Title"] = "Create Ticket";
+}
+
+<nav aria-label="breadcrumb" class="main-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/Posts/All">All Posts</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><strong>@this.ViewData["Title"]</strong></li>
+    </ol>
+</nav>
+
+
+<div class="container">
+          <div class="row justify-content-center">
+            <div class="col-xl-8 col-md-6">
+              <form method="post" class="bg-dark  rounded-5 shadow-5-strong p-5">
+                <h1 class="text-center text-light">@ViewData["Title"]</h1>\
+                <br />
+                <!-- Title input -->
+                <div class="form-outline mb-4">
+                  <label asp-for="Title" class="text-light"></label>
+                  <input asp-for="Title" placeholder="Post Title" class="form-control">
+                  <span asp-validation-for="Title" class="text-danger small"></span>
+                <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 88.8px;"></div><div class="form-notch-trailing"></div></div></div>
+
+                <!-- Content input -->
+                 <div class="form-outline mb-4">
+                  <label asp-for="Description" class="text-light"></label>
+                  <input asp-for="Description" placeholder="Ticket Description" class="form-control">
+                  <span asp-validation-for="Description" class="text-danger small"></span>
+                <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 88.8px;"></div><div class="form-notch-trailing"></div></div></div>
+
+                <div class="form-group">
+                    <label asp-for="DeveloperId" class="text-light"></label>
+                    <select asp-for="DeveloperId" class="form-control">
+                     @foreach (var developer in Model.AsignedProjectDevelopers)
+                     {
+                        <option value="@developer.Id">@developer.UserName</option>
+                     }
+                    </select>
+                </div>
+                <div class="form-group">
+                   <label asp-for="TicketType" class="text-light" ></label>
+                     <select asp-for="TicketType" class="form-control">
+                        @foreach (int choice in Enum.GetValues(typeof(TicketType)))
+                          {
+                              <option value="@choice">@Enum.GetName(typeof(TicketType), choice)</option>
+                          }
+                 </select>
+                </div>
+                <div class="form-group">
+                     <label asp-for="Status" class="text-light" ></label>
+                      <select asp-for="Status" class="form-control">
+                        @foreach (int choice in Enum.GetValues(typeof(TicketStatus)))
+                        {
+                            <option value="@choice">@Enum.GetName(typeof(TicketStatus), choice)</option>
+                        }
+                 </select>
+                </div>
+                <div class="form-group">
+                     <label asp-for="Priority" class="text-light" ></label>
+                      <select asp-for="Priority" class="form-control">
+                        @foreach (int choice in Enum.GetValues(typeof(TicketPriority)))
+                        {
+                            <option value="@choice">@Enum.GetName(typeof(TicketPriority), choice)</option>
+                        }
+                 </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">@ViewData["Title"]</button>
+              </form>
+            </div>
+          </div>
+        </div>
