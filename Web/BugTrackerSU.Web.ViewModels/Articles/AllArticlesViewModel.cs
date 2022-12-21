@@ -5,5 +5,7 @@
     public class AllArticlesViewModel : PagingViewModel
     {
         public ICollection<ArticleViewModel> Articles { get; set; }
+
+        public ICollection<ArticleCategoryViewModel> Categories { get; set; }
     }
 }

@@ -18,5 +18,7 @@
         Task DeleteArticleAsync(int articleId);
 
         int ArticlesCountByCategoryId(int categoryId);
+
+        int ArticlesCount();
     }
 }

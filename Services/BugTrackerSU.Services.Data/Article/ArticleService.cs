@@ -72,6 +72,9 @@
         {
             var articles = this.articleRepository
                 .All()
+                .OrderByDescending(x => x.Id)
+                .Skip((pageNumber - 1) * itemsPerPage)
+                .Take(itemsPerPage)
                 .Where(x => x.CategoryId == categoryId)
                 .Select(x => new ArticleViewModel
                 {
@@ -87,7 +90,39 @@
 
             var model = new AllArticlesViewModel
             {
+                Categories = this.GetAllCategories(),
                 ItemsCount = this.ArticlesCountByCategoryId(categoryId),
+                PageNumber = pageNumber,
+                ItemsPerPage = itemsPerPage,
+                Articles = articles,
+            };
+
+            return model;
+        }
+
+        public AllArticlesViewModel GetAllArticles(int pageNumber, int itemsPerPage)
+        {
+            var articles = this.articleRepository
+                .All()
+                .OrderByDescending(x => x.Id)
+                .Skip((pageNumber - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .Select(x => new ArticleViewModel
+                {
+                    Name = x.Name,
+                    Description = x.Description,
+                    ImageUrl = x.ImageUrl,
+                    VideoUrl = x.VideoUrl,
+                    CreatedBy = x.AddedByUser.UserName,
+                    CategoryName = x.Category.Name,
+                    Id = x.Id,
+                })
+                .ToList();
+
+            var model = new AllArticlesViewModel
+            {
+                Categories = this.GetAllCategories(),
+                ItemsCount = this.ArticlesCount(),
                 PageNumber = pageNumber,
                 ItemsPerPage = itemsPerPage,
                 Articles = articles,
@@ -109,5 +144,7 @@
 
             return categories;
         }
+
+        public int ArticlesCount() => this.articleRepository.All().Count();
     }
 }
