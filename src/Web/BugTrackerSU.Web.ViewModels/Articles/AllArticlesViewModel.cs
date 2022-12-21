@@ -7,5 +7,7 @@
         public ICollection<ArticleViewModel> Articles { get; set; }
 
         public ICollection<ArticleCategoryViewModel> Categories { get; set; }
+
+        public int CategoryId { get; set; }
     }
 }

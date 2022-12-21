@@ -78,6 +78,7 @@
                 .Where(x => x.CategoryId == categoryId)
                 .Select(x => new ArticleViewModel
                 {
+                    CreatedById = x.AddedByUserId,
                     Name = x.Name,
                     Description = x.Description,
                     ImageUrl = x.ImageUrl,
@@ -109,6 +110,7 @@
                 .Take(itemsPerPage)
                 .Select(x => new ArticleViewModel
                 {
+                    CreatedById = x.AddedByUserId,
                     Name = x.Name,
                     Description = x.Description,
                     ImageUrl = x.ImageUrl,

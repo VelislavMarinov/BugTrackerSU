@@ -10,9 +10,13 @@
 
         public string ImageUrl { get; set; }
 
+        public string ShortDescription => this.Description?.Length > 80 ? this.Description?.Substring(0, 80) + "…" : this.Description;
+
         public string CreatedBy { get; set; }
 
         public string VideoUrl { get; set; }
+
+        public string CreatedById { get; set; }
 
         public string CategoryName { get; set; }
     }

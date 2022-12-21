@@ -22,5 +22,7 @@
         int ArticlesCount();
 
         public AllArticlesViewModel GetAllArticles(int pageNumber, int itemsPerPage);
+
+        ArticleViewModel GetArticleById(int articleId);
     }
 }

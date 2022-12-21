@@ -44,7 +44,7 @@
         [HttpGet]
         public IActionResult All(int id = 1)
         {
-            var itemsPerPage = 4;
+            var itemsPerPage = 3;
 
             var model = this.categoryService.GetAllCategories(id, itemsPerPage);
 

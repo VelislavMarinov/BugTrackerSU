@@ -22,6 +22,7 @@
         {
             var category = new Category
             {
+                AddedByUserId = userId,
                 Name = model.Name,
                 Description = model.Description,
                 ImageUrl = model.ImageUrl,
