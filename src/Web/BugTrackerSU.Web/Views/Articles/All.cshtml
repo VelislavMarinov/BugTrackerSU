@@ -1,0 +1,92 @@
+﻿@using BugTrackerSU.Common
+@using BugTrackerSU.Web.ViewModels.Articles
+@using BugTrackerSu.Web
+@model AllArticlesViewModel
+
+@{
+    this.ViewData["Title"] = "All Articles";
+}
+
+<nav aria-label="breadcrumb" class="main-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><strong>@this.ViewData["Title"]</strong></li>
+    </ol>
+</nav>
+
+@if (this.TempData.ContainsKey("Message"))
+{
+    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+        <strong>@this.TempData["Message"]</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+<div class="container py-3">
+    <form>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label asp-for="CategoryId"></label>
+            <select asp-for="CategoryId" class="form-control">
+                <option value="@null">Show articles by category</option>
+               @foreach (var category in Model.Categories)
+                {
+                   <option value="@category.Id">@category.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+
+   </form>
+  <div class="card">
+    <div class="row ">
+  @foreach (var article in Model.Articles)
+ {
+     <div class="col-md-7 px-3">
+        <div class="card-block px-6">
+          <h4 class="card-title">@article.Name</h4>
+          <p class="card-text">
+            Category: @article.CategoryName
+          </p>
+          <p class="card-text">
+            @article.ShortDescription
+          </p>
+          <p class="card-text">
+            Added by: @article.CreatedBy
+          </p>
+
+          <br/>
+           <a asp-controller="Articles"
+             asp-action="Article"
+             asp-route-Id="@article.Id"
+             class="btn btn-primary">
+             Show more
+          </a>
+        @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName) 
+        || @article.CreatedById == this.User.GetId())
+        {        
+          <a asp-controller="Articles"
+             asp-action="Edit"
+             asp-route-id="@article.Id"
+             class="btn btn-primary">
+             Edit
+          </a>
+           <form class="align-content-lg-around" method="post" asp-controller="Articles" asp-action="Delete" asp-route-id="@article.Id">
+           <button class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal">Delete</button></form>
+        }
+        </div>
+     </div>
+
+      <div class="col-md-2">
+            <div id="CarouselTest">
+              <img width="450" height="300" class="d-block" src="@article.ImageUrl" alt="">
+            </div>
+      </div> 
+ }
+
+    </div>
+  </div>
+</div> 

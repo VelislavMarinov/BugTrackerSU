@@ -148,5 +148,26 @@
         }
 
         public int ArticlesCount() => this.articleRepository.All().Count();
+
+        public ArticleViewModel GetArticleById(int articleId)
+        {
+            var model = this.articleRepository
+                .All()
+                .Where(x => x.Id == articleId)
+                .Select(x => new ArticleViewModel
+                {
+                    CreatedById = x.AddedByUserId,
+                    Name = x.Name,
+                    Description = x.Description,
+                    ImageUrl = x.ImageUrl,
+                    VideoUrl = x.VideoUrl,
+                    CreatedBy = x.AddedByUser.UserName,
+                    CategoryName = x.Category.Name,
+                    Id = x.Id,
+                })
+                .FirstOrDefault();
+
+            return model;
+        }
     }
 }

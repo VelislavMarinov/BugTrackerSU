@@ -91,5 +91,12 @@
             return this.RedirectToAction("All", "Articles");
         }
 
+        [HttpGet]
+        public IActionResult Article(int id)
+        {
+            var article = this.articleService.GetArticleById(id);
+            return this.View(article);
+        }
+
     }
 }
