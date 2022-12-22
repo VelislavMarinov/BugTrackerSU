@@ -63,9 +63,16 @@
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var model = new EditCategoryFormModel();
+            try
+            {
+                var model = new EditCategoryFormModel();
 
-            return this.View(model);
+                return this.View(model);
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(ex.Message);
+            }
         }
 
         [HttpPost]
@@ -76,9 +83,16 @@
                 return this.View(model);
             }
 
-            await this.categoryService.EditCategoryAsync(model, id);
+            try
+            {
+                await this.categoryService.EditCategoryAsync(model, id);
 
-            return this.RedirectToAction("All", "Categories");
+                return this.RedirectToAction("All", "Categories");
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(ex.Message);
+            }
         }
 
         [HttpPost]

@@ -112,18 +112,32 @@
                 return this.BadRequest();
             }
 
-            var model = new EditTicketViewModel
+            try
             {
-                AsignedProjectDevelopers = this.projectService.GetProjectAssignedDevelopers(projectId),
-            };
+                var model = new EditTicketViewModel
+                {
+                    AsignedProjectDevelopers = this.projectService.GetProjectAssignedDevelopers(projectId),
+                };
 
-            return this.View(model);
+                return this.View(model);
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(ex.Message);
+            }
         }
 
         [HttpPost]
         [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
         public async Task<IActionResult> Edit(int projectId, int ticketId, EditTicketViewModel model)
         {
+            if (!this.ModelState.IsValid)
+            {
+                model.AsignedProjectDevelopers = this.projectService.GetProjectAssignedUsers(projectId);
+
+                return this.View(model);
+            }
+
             var userId = this.User.GetId();
 
             var chekUser = this.ticketService.ChekIfUserIsAuthorizedToEdit(ticketId, userId, this.userService.GetUserRole(this.User));
@@ -133,16 +147,16 @@
                 return this.BadRequest();
             }
 
-            if (!this.ModelState.IsValid)
+            try
             {
-                model.AsignedProjectDevelopers = this.projectService.GetProjectAssignedUsers(projectId);
+                await this.ticketService.EditTicketAsync(model, userId);
 
-                return this.View(model);
+                return this.Redirect($"/Tickets/Ticket?{ticketId}");
             }
-
-            await this.ticketService.EditTicketAsync(model, userId);
-
-            return this.Redirect($"/Tickets/Ticket?{ticketId}");
+            catch (Exception ex)
+            {
+                return this.NotFound(ex.Message);
+            }
         }
 
         [HttpGet]

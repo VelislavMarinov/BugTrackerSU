@@ -70,10 +70,17 @@
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var model = new EditArticleFormModel();
-            model.Categories = this.articleService.GetAllCategories();
+            try
+            {
+                var model = new EditArticleFormModel();
+                model.Categories = this.articleService.GetAllCategories();
 
-            return this.View(model);
+                return this.View(model);
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(ex.Message);
+            }
         }
 
         [HttpPost]
@@ -85,9 +92,16 @@
                 return this.View(model);
             }
 
-            await this.articleService.EditArticleAsync(model, id);
+            try
+            {
+                await this.articleService.EditArticleAsync(model, id);
 
-            return this.RedirectToAction("All", "Articles");
+                return this.RedirectToAction("All", "Articles");
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(ex.Message);
+            }
         }
 
         [HttpPost]
