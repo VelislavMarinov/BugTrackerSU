@@ -64,8 +64,15 @@
         [HttpPost]
         public async Task<IActionResult> Delete(int commentId, int postId)
         {
-            await this.commentService.DeleteCommentAsync(commentId);
-            return this.RedirectToAction("PostComments", "Comments", new { postId = postId });
+            try
+            {
+                await this.commentService.DeleteCommentAsync(commentId);
+                return this.RedirectToAction("PostComments", "Comments", new { postId = postId });
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
         }
     }
 }

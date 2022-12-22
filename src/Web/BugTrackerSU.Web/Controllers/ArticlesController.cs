@@ -107,9 +107,16 @@
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            await this.articleService.DeleteArticleAsync(id);
-            this.TempData["Message"] = "Article deleted successfully.";
-            return this.RedirectToAction("All", "Articles");
+            try
+            {
+                await this.articleService.DeleteArticleAsync(id);
+                this.TempData["Message"] = "Article deleted successfully.";
+                return this.RedirectToAction("All", "Articles");
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]

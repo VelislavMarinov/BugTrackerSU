@@ -98,9 +98,17 @@
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            await this.categoryService.DeleteCategoryAsync(id);
-            this.TempData["Message"] = "Category deleted successfully.";
-            return this.RedirectToAction("All", "Categories");
+
+            try
+            {
+                await this.categoryService.DeleteCategoryAsync(id);
+                this.TempData["Message"] = "Category deleted successfully.";
+                return this.RedirectToAction("All", "Categories");
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
         }
 
     }
