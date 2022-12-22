@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using BugTrackerSU.Common;
     using BugTrackerSU.Data.Common.Repositories;
     using BugTrackerSU.Data.Models;
     using BugTrackerSU.Web.ViewModels.Comments;
@@ -26,7 +26,17 @@
             this.commentRepository = commentRepository;
         }
 
-        public async Task CreatePostAsync(CreatePostViewModel model, string userId)
+        public bool ChekIfUserIsAuthorizedToEditPost(int postId, string userId, string roleName)
+        {
+            if (roleName == GlobalConstants.AdministratorRoleName)
+            {
+                return true;
+            }
+
+            return this.postRepository.All().Any(x => x.Id == postId && x.AddedByUserId == userId);
+        }
+
+        public async Task CreatePostAsync(CreatePostFormModel model, string userId)
         {
             var post = new Post
             {
@@ -48,6 +58,19 @@
                 .FirstOrDefault();
 
             this.postRepository.Delete(post);
+            await this.postRepository.SaveChangesAsync();
+        }
+
+        public async Task EditPostAsync(EditPostFormModel model, string userId)
+        {
+            var post = this.postRepository
+                .All()
+                .Where(x => x.Id == model.PostId)
+                .FirstOrDefault();
+            post.Title = model.Title;
+            post.Content = model.Content;
+
+            this.postRepository.Update(post);
             await this.postRepository.SaveChangesAsync();
         }
 

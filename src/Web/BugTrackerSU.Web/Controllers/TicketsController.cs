@@ -105,15 +105,15 @@
         [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
         public IActionResult Edit(int projectId, int ticketId)
         {
-            var chekUser = this.ticketService.ChekIfUserIsAuthorizedToEdit(ticketId, this.User.GetId(), this.userService.GetUserRole(this.User));
-
-            if (chekUser == false)
-            {
-                return this.BadRequest();
-            }
-
             try
             {
+                var chekUser = this.ticketService.ChekIfUserIsAuthorizedToEdit(ticketId, this.User.GetId(), this.userService.GetUserRole(this.User));
+
+                if (chekUser == false)
+                {
+                    return this.Forbid();
+                }
+
                 var model = new EditTicketViewModel
                 {
                     AsignedProjectDevelopers = this.projectService.GetProjectAssignedDevelopers(projectId),

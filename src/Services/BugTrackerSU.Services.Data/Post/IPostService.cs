@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using BugTrackerSU.Web.ViewModels.Comments;
     using BugTrackerSU.Web.ViewModels.Posts;
 
     public interface IPostService
@@ -13,9 +12,13 @@
 
         Task DeletePostAsync(int postId);
 
-        Task CreatePostAsync(CreatePostViewModel model, string userId);
+        Task CreatePostAsync(CreatePostFormModel model, string userId);
+
+        Task EditPostAsync(EditPostFormModel model, string userId);
 
         PostViewModel GetPostById(int id);
+
+        bool ChekIfUserIsAuthorizedToEditPost(int postId, string userId, string roleName);
 
         int GetPostsCount();
     }
