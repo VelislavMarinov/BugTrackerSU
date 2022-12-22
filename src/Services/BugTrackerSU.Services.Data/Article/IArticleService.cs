@@ -15,7 +15,7 @@
 
         Task EditArticleAsync(EditArticleFormModel model, int articleId);
 
-        Task DeleteArticleAsync(int articleId);
+        Task DeleteArticleAsync(int articleId, string userId, string userRole);
 
         int ArticlesCountByCategoryId(int categoryId);
 

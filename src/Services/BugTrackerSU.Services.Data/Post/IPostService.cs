@@ -10,7 +10,7 @@
 
         List<PostViewModel> GetPostsByProjectId(int projectId);
 
-        Task DeletePostAsync(int postId);
+        Task DeletePostAsync(int postId, string userId, string roleName);
 
         Task CreatePostAsync(CreatePostFormModel model, string userId);
 

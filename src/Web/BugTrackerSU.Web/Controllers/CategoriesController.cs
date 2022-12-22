@@ -1,23 +1,29 @@
 ﻿namespace BugTrackerSU.Web.Controllers
 {
+    using System;
     using System.Threading.Tasks;
 
     using BugTrackerSU.Common;
     using BugTrackerSU.Services.Data.Category;
+    using BugTrackerSU.Services.Data.User;
     using BugTrackerSu.Web;
     using BugTrackerSU.Web.ViewModels.Categories;
     using Microsoft.AspNetCore.Mvc;
-    using System;
 
     public class CategoriesController : BaseController
     {
         private readonly ICategoryService categoryService;
 
+        private readonly IUserService userService;
+
         private readonly int itemsPerPage = PagingConstants.CategoriesPagingItemsPerPage;
 
-        public CategoriesController(ICategoryService categoryService)
+        public CategoriesController(
+            ICategoryService categoryService,
+            IUserService userService)
         {
             this.categoryService = categoryService;
+            this.userService = userService;
         }
 
         [HttpGet]
@@ -101,7 +107,10 @@
 
             try
             {
-                await this.categoryService.DeleteCategoryAsync(id);
+                var userId = this.User.GetId();
+                var userRole = this.userService.GetUserRole(this.User);
+
+                await this.categoryService.DeleteCategoryAsync(id, userId, userRole);
                 this.TempData["Message"] = "Category deleted successfully.";
                 return this.RedirectToAction("All", "Categories");
             }

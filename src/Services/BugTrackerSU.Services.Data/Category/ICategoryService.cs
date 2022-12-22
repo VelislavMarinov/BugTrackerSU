@@ -12,7 +12,7 @@
 
         Task EditCategoryAsync(EditCategoryFormModel model, int categoryId);
 
-        Task DeleteCategoryAsync(int categoryId);
+        Task DeleteCategoryAsync(int categoryId, string userId, string userRole);
 
         int CategoriesCount();
     }

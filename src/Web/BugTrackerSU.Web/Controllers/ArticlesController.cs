@@ -1,23 +1,29 @@
 ﻿namespace BugTrackerSU.Web.Controllers
 {
-    using BugTrackerSu.Web;
-    using BugTrackerSU.Services.Data.Article;
-    using BugTrackerSU.Web.ViewModels.Articles;
-    using Microsoft.AspNetCore.Mvc;
+    using System;
     using System.Threading.Tasks;
 
     using BugTrackerSU.Common;
-    using System;
+    using BugTrackerSU.Services.Data.Article;
+    using BugTrackerSU.Services.Data.User;
+    using BugTrackerSu.Web;
+    using BugTrackerSU.Web.ViewModels.Articles;
+    using Microsoft.AspNetCore.Mvc;
 
     public class ArticlesController : BaseController
     {
         private readonly IArticleService articleService;
 
+        private readonly IUserService userService;
+
         private readonly int itemsPerPage = PagingConstants.ArticlesPagingItemsPerPage;
 
-        public ArticlesController(IArticleService articleService)
+        public ArticlesController(
+            IArticleService articleService,
+            IUserService userService)
         {
             this.articleService = articleService;
+            this.userService = userService;
         }
 
         [HttpGet]
@@ -109,7 +115,11 @@
         {
             try
             {
-                await this.articleService.DeleteArticleAsync(id);
+                var userId = this.User.GetId();
+
+                var userRole = this.userService.GetUserRole(this.User);
+
+                await this.articleService.DeleteArticleAsync(id, userId, userRole);
                 this.TempData["Message"] = "Article deleted successfully.";
                 return this.RedirectToAction("All", "Articles");
             }

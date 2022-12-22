@@ -50,15 +50,42 @@
             await this.postRepository.SaveChangesAsync();
         }
 
-        public async Task DeletePostAsync(int postId)
+        public async Task DeletePostAsync(int postId, string userId, string roleName)
         {
-            var post = this.postRepository
+            if (roleName == GlobalConstants.AdministratorRoleName)
+            {
+                var adminPost = this.postRepository
                 .All()
                 .Where(x => x.Id == postId)
                 .FirstOrDefault();
 
-            this.postRepository.Delete(post);
-            await this.postRepository.SaveChangesAsync();
+                if (adminPost == null)
+                {
+                    throw new NullReferenceException();
+                }
+                else
+                {
+                    this.postRepository.Delete(adminPost);
+                    await this.postRepository.SaveChangesAsync();
+                }
+            }
+            else
+            {
+                var userPost = this.postRepository
+                .All()
+                .Where(x => x.Id == postId && x.AddedByUserId == userId)
+                .FirstOrDefault();
+
+                if (userPost == null)
+                {
+                    throw new NullReferenceException();
+                }
+                else
+                {
+                    this.postRepository.Delete(userPost);
+                    await this.postRepository.SaveChangesAsync();
+                }
+            }
         }
 
         public async Task EditPostAsync(EditPostFormModel model, string userId)

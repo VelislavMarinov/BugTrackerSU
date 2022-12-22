@@ -1,8 +1,9 @@
 ﻿namespace BugTrackerSU.Services.Data.Category
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using BugTrackerSU.Common;
     using BugTrackerSU.Data.Common.Repositories;
     using BugTrackerSU.Data.Models;
     using BugTrackerSU.Web.ViewModels.Categories;
@@ -32,15 +33,42 @@
             await this.categoryRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteCategoryAsync(int categoryId)
+        public async Task DeleteCategoryAsync(int categoryId, string userId, string userRole)
         {
-            var category = this.categoryRepository
+            if (userRole == GlobalConstants.AdministratorRoleName)
+            {
+                var adminCategory = this.categoryRepository
                 .All()
                 .Where(x => x.Id == categoryId)
                 .FirstOrDefault();
 
-            this.categoryRepository.Delete(category);
-            await this.categoryRepository.SaveChangesAsync();
+                if (adminCategory == null)
+                {
+                    throw new NullReferenceException();
+                }
+                else
+                {
+                    this.categoryRepository.Delete(adminCategory);
+                    await this.categoryRepository.SaveChangesAsync();
+                }
+            }
+            else
+            {
+                var userCategory = this.categoryRepository
+               .All()
+               .Where(x => x.Id == categoryId && x.AddedByUserId == userId)
+               .FirstOrDefault();
+
+                if (userCategory == null)
+                {
+                    throw new NullReferenceException();
+                }
+                else
+                {
+                    this.categoryRepository.Delete(userCategory);
+                    await this.categoryRepository.SaveChangesAsync();
+                }
+            }
 
         }
 

@@ -1,9 +1,10 @@
 ﻿namespace BugTrackerSU.Services.Data.Article
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using BugTrackerSU.Common;
     using BugTrackerSU.Data.Common.Repositories;
     using BugTrackerSU.Data.Models;
     using BugTrackerSU.Web.ViewModels.Articles;
@@ -41,15 +42,42 @@
             await this.articleRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteArticleAsync(int articleId)
+        public async Task DeleteArticleAsync(int articleId, string userId, string userRole)
         {
-            var category = this.articleRepository
-                .All()
-                .Where(x => x.Id == articleId)
-                .FirstOrDefault();
+            if (userRole == GlobalConstants.AdministratorRoleName)
+            {
+                var adminArticle = this.articleRepository
+               .All()
+               .Where(x => x.Id == articleId)
+               .FirstOrDefault();
 
-            this.articleRepository.Delete(category);
-            await this.articleRepository.SaveChangesAsync();
+                if (adminArticle == null)
+                {
+                    throw new NullReferenceException(GlobalExceptions.CourseDoesNotExistExceptionMessage);
+                }
+                else
+                {
+                    this.articleRepository.Delete(adminArticle);
+                    await this.articleRepository.SaveChangesAsync();
+                }
+            }
+            else
+            {
+                var userArticle = this.articleRepository
+               .All()
+               .Where(x => x.Id == articleId && x.AddedByUserId == userId)
+               .FirstOrDefault();
+
+                if (userArticle == null)
+                {
+                    throw new NullReferenceException();
+                }
+                else
+                {
+                    this.articleRepository.Delete(userArticle);
+                    await this.articleRepository.SaveChangesAsync();
+                }
+            }
         }
 
         public async Task EditArticleAsync(EditArticleFormModel model, int articleId)

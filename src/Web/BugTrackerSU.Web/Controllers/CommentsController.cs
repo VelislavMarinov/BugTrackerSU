@@ -10,20 +10,26 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System;
+    using BugTrackerSU.Services.Data.User;
 
     public class CommentsController : BaseController
     {
         private readonly ICommentService commentService;
+
         private readonly IPostService postService;
+
+        private readonly IUserService userService;
 
         private readonly int itemsPerPage = PagingConstants.CommentsPagingItemsPerPage;
 
         public CommentsController(
             ICommentService commentService,
-            IPostService postService)
+            IPostService postService,
+            IUserService userService)
         {
             this.commentService = commentService;
             this.postService = postService;
+            this.userService = userService;
         }
 
         [HttpGet]
@@ -66,7 +72,10 @@
         {
             try
             {
-                await this.commentService.DeleteCommentAsync(commentId);
+                var userId = this.User.GetId();
+                var userRole = this.userService.GetUserRole(this.User);
+
+                await this.commentService.DeleteCommentAsync(commentId, userId, userRole);
                 return this.RedirectToAction("PostComments", "Comments", new { postId = postId });
             }
             catch (Exception ex)

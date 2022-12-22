@@ -127,5 +127,25 @@
 
             return this.View(model);
         }
+
+        [HttpPost]
+        [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
+        public async Task<IActionResult> Delete(int postId)
+        {
+            try
+            {
+                var userId = this.User.GetId();
+                var userRole = this.userService.GetUserRole(this.User);
+
+                await this.postService.DeletePostAsync(postId, userId, userRole);
+                this.TempData["Message"] = "Post deleted successfully.";
+                return this.RedirectToAction("All", "Posts");
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
+        }
+
     }
 }

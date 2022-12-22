@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using BugTrackerSU.Common;
     using BugTrackerSU.Data.Common.Repositories;
     using BugTrackerSU.Data.Models;
     using BugTrackerSU.Services.Data.Post;
@@ -36,15 +36,43 @@
             await this.commentRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteCommentAsync(int commentId)
+        public async Task DeleteCommentAsync(int commentId, string userId, string roleName)
         {
-            var comment = this.commentRepository
+            if (roleName == GlobalConstants.AdministratorRoleName)
+            {
+
+                var adminComment = this.commentRepository
+                   .All()
+                   .Where(x => x.Id == commentId)
+                   .FirstOrDefault();
+
+                if (adminComment == null)
+                {
+                    throw new NullReferenceException();
+                }
+                else
+                {
+                    this.commentRepository.Delete(adminComment);
+                    await this.commentRepository.SaveChangesAsync();
+                }
+            }
+            else
+            {
+                var userComment = this.commentRepository
                .All()
-               .Where(x => x.Id == commentId)
+               .Where(x => x.Id == commentId && x.AddedByUserId == userId)
                .FirstOrDefault();
 
-            this.commentRepository.Delete(comment);
-            await this.commentRepository.SaveChangesAsync();
+                if (userComment == null)
+                {
+                    throw new NullReferenceException();
+                }
+                else
+                {
+                    this.commentRepository.Delete(userComment);
+                    await this.commentRepository.SaveChangesAsync();
+                }
+            }
         }
 
         public PostCommentsViewModel GetCommentsByPostId(int postId, int pageNumber, int itemsPerPage)

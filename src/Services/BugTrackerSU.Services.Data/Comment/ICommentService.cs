@@ -11,7 +11,7 @@
 
         PostCommentsViewModel GetCommentsByPostId(int postId, int pageNumber, int itemPerPage);
 
-        Task DeleteCommentAsync(int postId);
+        Task DeleteCommentAsync(int postId, string userId, string roleName);
 
         int GetCommentsCountByPostId(int postId);
     }
