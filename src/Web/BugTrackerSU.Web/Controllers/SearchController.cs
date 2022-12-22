@@ -9,6 +9,7 @@
     using BugTrackerSU.Web.ViewModels.Search;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using System.Threading.Tasks;
 
     [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
     public class SearchController : BaseController
@@ -29,13 +30,13 @@
         public IActionResult SearchProject() => this.View();
 
         [HttpPost]
-        public IActionResult SearchProject(SearchProjectFormModel model)
+        public async Task<IActionResult> SearchProject(SearchProjectFormModel model)
         {
             var userId = this.User.GetId();
 
             var userRole = this.userService.GetUserRole(this.User);
 
-            var projects = this.searchService.SearchForProjectByKeyword(model.Keyword, userId, userRole);
+            var projects = await this.searchService.SearchForProjectByKeyword(model.Keyword, userId, userRole);
 
             if (projects.Any())
             {
@@ -54,13 +55,13 @@
         public IActionResult SearchTicket() => this.View();
 
         [HttpPost]
-        public IActionResult SearchTicket(SearchTicketFormModel model)
+        public async Task<IActionResult> SearchTicket(SearchTicketFormModel model)
         {
             var userId = this.User.GetId();
 
             var userRole = this.userService.GetUserRole(this.User);
 
-            var tickets = this.searchService.SearchForTicketByKeyword(model.Keyword, userId, userRole);
+            var tickets = await this.searchService.SearchForTicketByKeyword(model.Keyword, userId, userRole);
 
             if (tickets.Any())
             {
@@ -79,10 +80,10 @@
         public IActionResult SearchPost() => this.View();
 
         [HttpPost]
-        public IActionResult SearchPost(SearchPostFormModel model)
+        public async Task<IActionResult> SearchPost(SearchPostFormModel model)
         {
 
-            var posts = this.searchService.SearchForPostByKeyword(model.Keyword);
+            var posts = await this.searchService.SearchForPostByKeyword(model.Keyword);
 
             if (posts.Any())
             {

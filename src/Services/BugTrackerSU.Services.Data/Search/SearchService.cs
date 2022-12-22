@@ -2,7 +2,9 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
+    using BugTrackerSU.Common;
     using BugTrackerSU.Data.Common.Repositories;
     using BugTrackerSU.Data.Models;
     using BugTrackerSU.Web.ViewModels.Posts;
@@ -30,9 +32,9 @@
             this.userRepository = userRepository;
         }
 
-        public IEnumerable<PostViewModel> SearchForPostByKeyword(string keyword)
+        public async Task<IEnumerable<PostViewModel>> SearchForPostByKeyword(string keyword)
         {
-            var posts = this.postRepository
+            var posts = await this.postRepository
                 .All()
                 .Where(x => x.Title.Contains(keyword))
                 .Select(x => new PostViewModel
@@ -45,16 +47,17 @@
                     AddedByUserUserName = x.AddedByUser.UserName,
                     CreatedOn = x.CreatedOn,
                 })
-                .ToList();
+                .ToListAsync();
 
             return posts;
         }
 
-        public IEnumerable<ProjectViewModel> SearchForProjectByKeyword(string keyword, string userId, string userRole)
+        public async Task<IEnumerable<ProjectViewModel>> SearchForProjectByKeyword(string keyword, string userId, string userRole)
         {
-            if (userRole == "Administrator")
+            if (userRole == GlobalConstants.AdministratorRoleName)
             {
-                var adminProjects = this.projectRepository.All()
+                var adminProjects = await this.projectRepository
+                .All()
                 .Include(x => x.ProjectUsers)
                 .Where(x => x.Title.Contains(keyword))
                 .Select(x => new ProjectViewModel
@@ -64,12 +67,14 @@
                     ProjectId = x.Id,
                     CreatedOn = x.CreatedOn,
                 })
-                .ToList();
+                .ToListAsync();
 
                 return adminProjects;
             }
-
-            var projects = this.projectRepository.All()
+            else
+            {
+                var projects = await this.projectRepository
+                .All()
                 .Include(x => x.ProjectUsers)
                 .Where(x => x.ProjectUsers.Any(u => u.ApplicationUser.Id == userId) || x.ProjectManagerId == userId)
                 .Where(x => x.Title.Contains(keyword))
@@ -80,16 +85,17 @@
                     ProjectId = x.Id,
                     CreatedOn = x.CreatedOn,
                 })
-                .ToList();
+                .ToListAsync();
 
-            return projects;
+                return projects;
+            }
         }
 
-        public IEnumerable<TicketViewModel> SearchForTicketByKeyword(string keyword, string userId, string userRole)
+        public async Task<IEnumerable<TicketViewModel>> SearchForTicketByKeyword(string keyword, string userId, string userRole)
         {
-            if (userRole == "Administrator")
+            if (userRole == GlobalConstants.SubmitterRoleName)
             {
-                var adminTickets = this.ticketRepository
+                var adminTickets = await this.ticketRepository
                .All()
                .Where(x => x.Title.Contains(keyword))
                .Select(x => new TicketViewModel
@@ -99,14 +105,13 @@
                    TicketId = x.Id,
                    CreatedOn = x.CreatedOn,
                })
-               .ToList();
+               .ToListAsync();
 
                 return adminTickets;
             }
-
-            if (userRole == "Project Manager")
+            else if (userRole == GlobalConstants.ProjectManagerRoleName)
             {
-                var projectManagerTickets = this.ticketRepository
+                var projectManagerTickets = await this.ticketRepository
                .All()
                .Where(x => x.Project.ProjectManagerId == userId && x.Title.Contains(keyword))
                .Select(x => new TicketViewModel
@@ -116,28 +121,30 @@
                    TicketId = x.Id,
                    CreatedOn = x.CreatedOn,
                })
-               .ToList();
+               .ToListAsync();
 
                 return projectManagerTickets;
             }
+            else
+            {
+                var tickets = await this.ticketRepository
+               .All()
+               .Where(x => x.AssignedDeveloperId == userId || x.TicketSubmitterId == userId)
+               .Where(x => x.Title.Contains(keyword))
+               .Select(x => new TicketViewModel
+               {
+                   Title = x.Title,
+                   Description = x.Description,
+                   TicketId = x.Id,
+                   CreatedOn = x.CreatedOn,
+               })
+               .ToListAsync();
 
-            var tickets = this.ticketRepository
-                .All()
-                .Where(x => x.AssignedDeveloperId == userId || x.TicketSubmitterId == userId)
-                .Where(x => x.Title.Contains(keyword))
-                .Select(x => new TicketViewModel
-                {
-                    Title = x.Title,
-                    Description = x.Description,
-                    TicketId = x.Id,
-                    CreatedOn = x.CreatedOn,
-                })
-                .ToList();
-
-            return tickets;
+                return tickets;
+            }
         }
 
-        public IEnumerable<UserViewModel> SearchForUserByKeyword(string keyword)
+        public Task<IEnumerable<UserViewModel>> SearchForUserByKeyword(string keyword)
         {
             throw new System.NotImplementedException();
         }
