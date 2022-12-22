@@ -61,7 +61,7 @@
 
         public AllProjectsViewModel GetUserProjects(string userId, string userRole, int pageNumber, int itemsPerPage)
         {
-            if (userRole == "Administrator")
+            if (userRole == GlobalConstants.AdministratorRoleName)
             {
                 var adminProjects = this.projectRepository.All()
                 .Include(x => x.ProjectUsers)
@@ -143,8 +143,15 @@
                     Id = u.Id,
                     UserName = u.UserName,
                     RoleName = role.Name,
+                    RoleId = u.Roles.Where(r => r.UserId == u.Id).Select(r => r.RoleId).FirstOrDefault(),
 
-                }).ToList();
+                })
+                .ToList();
+
+            foreach (var user in users)
+            {
+                user.RoleName = this.roleRepository.All().Where(x => x.Id == user.RoleId).Select(x => x.Name).FirstOrDefault();
+            }
 
             return users;
         }
@@ -186,7 +193,7 @@
 
         public int GetUserProjectsCount(string userId, string userRole)
         {
-            if (userRole == "Administrator")
+            if (userRole == GlobalConstants.AdministratorRoleName)
             {
                 int adminProjectsCount = this.projectRepository.All().Count();
 

@@ -27,10 +27,10 @@
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             var model = new CreateArticleFormModel();
-            model.Categories = this.articleService.GetAllCategories();
+            model.Categories = await this.articleService.GetAllCategories();
 
             return this.View(model);
         }
@@ -40,7 +40,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                model.Categories = this.articleService.GetAllCategories();
+                model.Categories = await this.articleService.GetAllCategories();
                 return this.View(model);
             }
 
@@ -59,27 +59,27 @@
         }
 
         [HttpGet]
-        public IActionResult All(int id = 1)
+        public async Task<IActionResult> All(int id = 1)
         {
-            var model = this.articleService.GetAllArticles(id, this.itemsPerPage);
+            var model = await this.articleService.GetAllArticles(id, this.itemsPerPage);
 
             return this.View(model);
         }
 
-        public IActionResult ByCategory(int categoryId, int id = 1)
+        public async Task<IActionResult> ByCategory(int categoryId, int id = 1)
         {
-            var model = this.articleService.GetAllArticlesInCategory(categoryId, id, this.itemsPerPage);
+            var model = await this.articleService.GetAllArticlesInCategory(categoryId, id, this.itemsPerPage);
 
             return this.View(model);
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             try
             {
                 var model = new EditArticleFormModel();
-                model.Categories = this.articleService.GetAllCategories();
+                model.Categories = await this.articleService.GetAllCategories();
 
                 return this.View(model);
             }
@@ -94,7 +94,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                model.Categories = this.articleService.GetAllCategories();
+                model.Categories = await this.articleService.GetAllCategories();
                 return this.View(model);
             }
 

@@ -46,21 +46,32 @@
                     .Where(x => x.Id == projectId)
                     .Where(x => x.ProjectUsers.Any(x => x.ApplicationUserId == userId))
                     .FirstOrDefault();
-            }
 
-            var project = this.projectRepository
+                if (chekIfProjectContainsUser == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                var project = this.projectRepository
                 .All()
                 .Where(x => x.Id == projectId)
                 .Where(x => x.ProjectManagerId == userId)
                 .FirstOrDefault();
 
-            if (project == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
+                if (project == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
         }
 

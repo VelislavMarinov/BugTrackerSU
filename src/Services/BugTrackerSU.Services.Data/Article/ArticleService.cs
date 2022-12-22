@@ -4,10 +4,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using BugTrackerSU.Common;
     using BugTrackerSU.Data.Common.Repositories;
     using BugTrackerSU.Data.Models;
     using BugTrackerSU.Web.ViewModels.Articles;
+    using Microsoft.EntityFrameworkCore;
 
     public class ArticleService : IArticleService
     {
@@ -24,7 +26,7 @@
             this.categoryRepository = categoryRepository;
         }
 
-        public int ArticlesCountByCategoryId(int categoryId) => this.articleRepository.All().Where(x => x.CategoryId == categoryId).Count();
+        public async Task<int> ArticlesCountByCategoryId(int categoryId) => await this.articleRepository.All().Where(x => x.CategoryId == categoryId).CountAsync();
 
         public async Task CreateArticleAsync(CreateArticleFormModel model, string userId)
         {
@@ -131,9 +133,9 @@
 
         }
 
-        public AllArticlesViewModel GetAllArticlesInCategory(int categoryId, int pageNumber, int itemsPerPage)
+        public async Task<AllArticlesViewModel> GetAllArticlesInCategory(int categoryId, int pageNumber, int itemsPerPage)
         {
-            var articles = this.articleRepository
+            var articles = await this.articleRepository
                 .All()
                 .OrderByDescending(x => x.Id)
                 .Skip((pageNumber - 1) * itemsPerPage)
@@ -150,12 +152,12 @@
                     CategoryName = x.Category.Name,
                     Id = x.Id,
                 })
-                .ToList();
+                .ToListAsync();
 
             var model = new AllArticlesViewModel
             {
-                Categories = this.GetAllCategories(),
-                ItemsCount = this.ArticlesCountByCategoryId(categoryId),
+                Categories = await this.GetAllCategories(),
+                ItemsCount = await this.ArticlesCountByCategoryId(categoryId),
                 PageNumber = pageNumber,
                 ItemsPerPage = itemsPerPage,
                 Articles = articles,
@@ -165,9 +167,9 @@
             return model;
         }
 
-        public AllArticlesViewModel GetAllArticles(int pageNumber, int itemsPerPage)
+        public async Task<AllArticlesViewModel> GetAllArticles(int pageNumber, int itemsPerPage)
         {
-            var articles = this.articleRepository
+            var articles = await this.articleRepository
                 .All()
                 .OrderByDescending(x => x.Id)
                 .Skip((pageNumber - 1) * itemsPerPage)
@@ -183,12 +185,12 @@
                     CategoryName = x.Category.Name,
                     Id = x.Id,
                 })
-                .ToList();
+                .ToListAsync();
 
             var model = new AllArticlesViewModel
             {
-                Categories = this.GetAllCategories(),
-                ItemsCount = this.ArticlesCount(),
+                Categories = await this.GetAllCategories(),
+                ItemsCount = await this.ArticlesCount(),
                 PageNumber = pageNumber,
                 ItemsPerPage = itemsPerPage,
                 Articles = articles,
@@ -197,25 +199,25 @@
             return model;
         }
 
-        public ICollection<ArticleCategoryViewModel> GetAllCategories()
+        public async Task<ICollection<ArticleCategoryViewModel>> GetAllCategories()
         {
-            var categories = this.categoryRepository
+            var categories = await this.categoryRepository
                 .All()
                 .Select(x => new ArticleCategoryViewModel
                 {
                     Id = x.Id,
                     Name = x.Name,
                 })
-                .ToList();
+                .ToListAsync();
 
             return categories;
         }
 
-        public int ArticlesCount() => this.articleRepository.All().Count();
+        public async Task<int> ArticlesCount() => await this.articleRepository.All().CountAsync();
 
-        public ArticleViewModel GetArticleById(int articleId)
+        public async Task<ArticleViewModel> GetArticleById(int articleId)
         {
-            var model = this.articleRepository
+            var model = await this.articleRepository
                 .All()
                 .Where(x => x.Id == articleId)
                 .Select(x => new ArticleViewModel
@@ -229,7 +231,7 @@
                     CategoryName = x.Category.Name,
                     Id = x.Id,
                 })
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             return model;
         }
