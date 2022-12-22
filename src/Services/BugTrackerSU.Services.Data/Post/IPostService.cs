@@ -7,7 +7,7 @@
 
     public interface IPostService
     {
-        List<PostViewModel> GetPosts(int pageNumber, int itemsPerPage);
+        AllPostsViewModel GetPosts(int pageNumber, int itemsPerPage);
 
         List<PostViewModel> GetPostsByProjectId(int projectId);
 

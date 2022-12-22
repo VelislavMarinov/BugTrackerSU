@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
 
+    using BugTrackerSU.Common;
+
     public class AllArticlesViewModel : PagingViewModel
     {
         public ICollection<ArticleViewModel> Articles { get; set; }

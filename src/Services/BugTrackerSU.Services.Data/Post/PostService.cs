@@ -71,7 +71,7 @@
             return post;
         }
 
-        public List<PostViewModel> GetPosts(int pageNumber, int itemsPerPage)
+        public AllPostsViewModel GetPosts(int pageNumber, int itemsPerPage)
         {
             var post = this.postRepository
                .All()
@@ -90,7 +90,15 @@
                })
                .ToList();
 
-            return post;
+            var model = new AllPostsViewModel()
+            {
+                PageNumber = pageNumber,
+                ItemsPerPage = itemsPerPage,
+                ItemsCount = this.GetPostsCount(),
+                Posts = post,
+            };
+
+            return model;
         }
 
         public List<PostViewModel> GetPostsByProjectId(int projectId)

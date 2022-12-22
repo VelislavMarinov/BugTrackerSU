@@ -119,9 +119,9 @@
             await this.ticketRepository.SaveChangesAsync();
         }
 
-        public List<TicketViewModel> GetAllUserTickets(string userId, string role, int pageNumber, int itemsPerPage)
+        public AllTicketsViewModel GetAllUserTickets(string userId, string userRole, int pageNumber, int itemsPerPage)
         {
-            if (role == "Administrator")
+            if (userRole == "Administrator")
             {
                 var adminTickets = this.ticketRepository
                .All()
@@ -143,10 +143,18 @@
                })
                .ToList();
 
-                return adminTickets;
+                var adminModel = new AllTicketsViewModel
+                {
+                    PageNumber = pageNumber,
+                    Tickets = adminTickets,
+                    ItemsPerPage = itemsPerPage,
+                    ItemsCount = this.GetUserTicketsCount(userId, userRole),
+                };
+
+                return adminModel;
             }
 
-            if (role == "Project Manager")
+            if (userRole == "Project Manager")
             {
                 var projectManagerTickets = this.ticketRepository
                .All()
@@ -167,7 +175,15 @@
                })
                .ToList();
 
-                return projectManagerTickets;
+                var projectMangerModel = new AllTicketsViewModel
+                {
+                    PageNumber = pageNumber,
+                    Tickets = projectManagerTickets,
+                    ItemsPerPage = itemsPerPage,
+                    ItemsCount = this.GetUserTicketsCount(userId, userRole),
+                };
+
+                return projectMangerModel;
             }
 
             var tickets = this.ticketRepository
@@ -189,7 +205,15 @@
                 })
                 .ToList();
 
-            return tickets;
+            var model = new AllTicketsViewModel
+            {
+                PageNumber = pageNumber,
+                Tickets = tickets,
+                ItemsPerPage = itemsPerPage,
+                ItemsCount = this.GetUserTicketsCount(userId, userRole),
+            };
+
+            return model;
         }
 
         public TicketDetailsViewModel GetTicketDetailsById(int ticketId)

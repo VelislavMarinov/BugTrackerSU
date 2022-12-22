@@ -16,6 +16,8 @@
 
         private readonly IPostService postService;
 
+        private readonly int itemsPerPage = PagingConstants.PostsPagingItemsPerPage;
+
         public PostsController(
             IProjectService projectService,
             IPostService postService)
@@ -59,15 +61,7 @@
         [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
         public IActionResult All(int id = 1)
         {
-            var itemsPerPage = 4;
-
-            var model = new AllPostsViewModel()
-            {
-                PageNumber = id,
-                ItemsPerPage = itemsPerPage,
-                ItemsCount = this.postService.GetPostsCount(),
-                Posts = this.postService.GetPosts(id, itemsPerPage),
-            };
+            var model = this.postService.GetPosts(id, this.itemsPerPage);
 
             return this.View(model);
         }

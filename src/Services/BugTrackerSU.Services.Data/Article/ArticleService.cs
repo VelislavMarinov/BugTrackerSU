@@ -96,6 +96,7 @@
                 PageNumber = pageNumber,
                 ItemsPerPage = itemsPerPage,
                 Articles = articles,
+                CategoryId = categoryId,
             };
 
             return model;

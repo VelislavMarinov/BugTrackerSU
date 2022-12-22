@@ -4,12 +4,13 @@
 @model AllArticlesViewModel
 
 @{
-    this.ViewData["Title"] = "All Articles";
+    this.ViewData["Title"] = "Articles by category";
 }
 
 <nav aria-label="breadcrumb" class="main-breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/Articles/All">All Articles</a></li>
         <li class="breadcrumb-item active" aria-current="page"><strong>@this.ViewData["Title"]</strong></li>
     </ol>
 </nav>
@@ -25,7 +26,7 @@
 }
 
 <div class="container py-3">
-    <form asp-controller="Articles" asp-action="ByCategory">
+    <form method="post">
     <div class="form-row">
         <div class="form-group col-md-4">
             <label asp-for="CategoryId"></label>
@@ -91,4 +92,4 @@
   </div>
 </div> 
 
-<partial name="_AllArticlesPagingPartial" model="@Model" />
+    <partial name="_ArticlesByCategoryPagingPartial" model="@Model" />

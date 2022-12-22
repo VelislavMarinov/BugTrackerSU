@@ -11,7 +11,7 @@
 
         int GetUserTicketsCount(string userId, string userRole);
 
-        List<TicketViewModel> GetAllUserTickets(string userId, string role, int pageNumber, int itemPerPage);
+        AllTicketsViewModel GetAllUserTickets(string userId, string role, int pageNumber, int itemPerPage);
 
         Task EditTicketAsync(EditTicketViewModel model, string userId);
 

@@ -11,7 +11,7 @@
 
         bool ChekIfUserIsAuthorizedToCreateOrSeeTask(int ticketId, string userId, string role);
 
-        List<MinorTaskViewModel> GetTicketTasksById(int ticketId, int pageNumber, int itemsPerPage);
+        AllMinorTaskViewModel GetTicketTasksById(int ticketId, int pageNumber, int itemsPerPage);
 
         int GetTicketTasksCount(int ticketId);
 

@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
 
+    using BugTrackerSU.Common;
     using BugTrackerSU.Services.Data.Category;
     using BugTrackerSu.Web;
     using BugTrackerSU.Web.ViewModels.Categories;
@@ -10,6 +11,8 @@
     public class CategoriesController : BaseController
     {
         private readonly ICategoryService categoryService;
+
+        private readonly int itemsPerPage = PagingConstants.CategoriesPagingItemsPerPage;
 
         public CategoriesController(ICategoryService categoryService)
         {
@@ -44,9 +47,7 @@
         [HttpGet]
         public IActionResult All(int id = 1)
         {
-            var itemsPerPage = 3;
-
-            var model = this.categoryService.GetAllCategories(id, itemsPerPage);
+            var model = this.categoryService.GetAllCategories(id, this.itemsPerPage);
 
             return this.View(model);
         }

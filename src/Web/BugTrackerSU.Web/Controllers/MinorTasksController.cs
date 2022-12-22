@@ -4,12 +4,12 @@
 
     using BugTrackerSU.Common;
     using BugTrackerSU.Services.Data.MinorTask;
+    using BugTrackerSU.Services.Data.Ticket;
     using BugTrackerSU.Services.Data.User;
     using BugTrackerSu.Web;
     using BugTrackerSU.Web.ViewModels.MinorTasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using BugTrackerSU.Services.Data.Ticket;
 
     public class MinorTasksController : BaseController
     {
@@ -18,6 +18,8 @@
         private readonly IUserService userService;
 
         private readonly ITicketService ticketService;
+
+        private readonly int itemsPerPage = PagingConstants.MinorTasksPagingItemsPerPage;
 
         public MinorTasksController(
             IMinorTaskService minorTaskService,
@@ -73,26 +75,16 @@
         [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
         public IActionResult TicketTasks(int ticketId, int id = 1)
         {
-            var itemsPerPage = 4;
-
             var userId = this.User.GetId();
 
             var chekUser = this.minorTaskService.ChekIfUserIsAuthorizedToCreateOrSeeTask(id, userId, this.userService.GetUserRole(this.User));
+
+            var model = this.minorTaskService.GetTicketTasksById(ticketId, id, this.itemsPerPage);
 
             if (chekUser == false)
             {
                 return this.BadRequest();
             }
-
-            var model = new AllMinorTaskViewModel()
-            {
-                TicketInfo = this.ticketService.GetTicketById(ticketId),
-                TicketId = ticketId,
-                PageNumber = id,
-                ItemsPerPage = itemsPerPage,
-                ItemsCount = this.minorTaskService.GetTicketTasksCount(ticketId),
-                Tasks = this.minorTaskService.GetTicketTasksById(ticketId ,id, itemsPerPage),
-            };
 
             return this.View(model);
         }

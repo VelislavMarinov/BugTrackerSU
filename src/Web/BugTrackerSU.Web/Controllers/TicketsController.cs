@@ -20,6 +20,8 @@
 
         private readonly IUserService userService;
 
+        private readonly int itemsPerPage = PagingConstants.TicketsPagingItemsPerPage;
+
         public TicketsController(
             IUserService userService,
             IProjectService projectService,
@@ -83,19 +85,11 @@
         [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
         public IActionResult MyTickets(int id = 1)
         {
-            var itemsPerPage = 5;
-
             var userRole = this.userService.GetUserRole(this.User);
 
             var userId = this.User.GetId();
 
-            var model = new AllTicketsViewModel
-            {
-                PageNumber = id,
-                Tickets = this.ticketService.GetAllUserTickets(userId, userRole, id, itemsPerPage),
-                ItemsPerPage = itemsPerPage,
-                ItemsCount = this.ticketService.GetUserTicketsCount(userId, userRole),
-            };
+            var model = this.ticketService.GetAllUserTickets(userId, userRole, id, this.itemsPerPage);
 
             return this.View(model);
         }

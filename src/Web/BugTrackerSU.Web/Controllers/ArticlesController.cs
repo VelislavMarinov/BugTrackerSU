@@ -6,9 +6,13 @@
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
 
+    using BugTrackerSU.Common;
+
     public class ArticlesController : BaseController
     {
         private readonly IArticleService articleService;
+
+        private readonly int itemsPerPage = PagingConstants.ArticlesPagingItemsPerPage;
 
         public ArticlesController(IArticleService articleService)
         {
@@ -43,19 +47,14 @@
         [HttpGet]
         public IActionResult All(int id = 1)
         {
-            var itemsPerPage = 5;
-
-            var model = this.articleService.GetAllArticles(id, itemsPerPage);
+            var model = this.articleService.GetAllArticles(id, this.itemsPerPage);
 
             return this.View(model);
         }
 
-        [HttpPost]
         public IActionResult ByCategory(int categoryId, int id = 1)
         {
-            var itemsPerPage = 5;
-
-            var model = this.articleService.GetAllArticlesInCategory(categoryId, id, itemsPerPage);
+            var model = this.articleService.GetAllArticlesInCategory(categoryId, id, this.itemsPerPage);
 
             return this.View(model);
         }

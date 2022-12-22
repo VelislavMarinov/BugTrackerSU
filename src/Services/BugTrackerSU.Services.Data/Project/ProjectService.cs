@@ -62,7 +62,7 @@
             await this.projectRepository.SaveChangesAsync();
         }
 
-        public List<ProjectViewModel> GetUserProjects(string userId, string userRole, int pageNumber, int itemsPerPage)
+        public AllProjectsViewModel GetUserProjects(string userId, string userRole, int pageNumber, int itemsPerPage)
         {
             if (userRole == "Administrator")
             {
@@ -80,7 +80,15 @@
                 })
                 .ToList();
 
-                return adminProjects;
+                var adminModel = new AllProjectsViewModel
+                {
+                    PageNumber = pageNumber,
+                    Projects = adminProjects,
+                    ItemsPerPage = itemsPerPage,
+                    ItemsCount = this.GetUserProjectsCount(userId, userRole),
+                };
+
+                return adminModel;
             }
 
             var projects = this.projectRepository.All()
@@ -98,7 +106,15 @@
                 })
                 .ToList();
 
-            return projects;
+            var model = new AllProjectsViewModel
+            {
+                PageNumber = pageNumber,
+                Projects = projects,
+                ItemsPerPage = itemsPerPage,
+                ItemsCount = this.GetUserProjectsCount(userId, userRole),
+            };
+
+            return model;
         }
 
         public List<UserViewModel> GetProjectAssignedUsers(int projectId)

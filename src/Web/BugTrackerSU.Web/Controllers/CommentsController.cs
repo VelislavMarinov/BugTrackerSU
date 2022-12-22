@@ -15,6 +15,8 @@
         private readonly ICommentService commentService;
         private readonly IPostService postService;
 
+        private readonly int itemsPerPage = PagingConstants.CommentsPagingItemsPerPage;
+
         public CommentsController(
             ICommentService commentService,
             IPostService postService)
@@ -27,9 +29,7 @@
         [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
         public IActionResult PostComments(int id = 1, int postId = 0)
         {
-            var itemsPerPage = 3;
-
-            var model = this.commentService.GetCommentsByPostId(postId, id, itemsPerPage);
+            var model = this.commentService.GetCommentsByPostId(postId, id, this.itemsPerPage);
             model.ItemsPerPage = itemsPerPage;
             model.PageNumber = id;
             model.ItemsCount = this.commentService.GetCommentsCountByPostId(postId);

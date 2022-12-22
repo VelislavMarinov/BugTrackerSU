@@ -18,6 +18,8 @@
 
         private readonly IProjectService projectService;
 
+        private readonly int itemsPerPage = PagingConstants.ProjectsPagingItemsPerPage;
+
         public ProjectsController(
             IUserService userService,
             IProjectService projectService)
@@ -66,19 +68,11 @@
         [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
         public IActionResult MyProjects(int id = 1)
         {
-            var itemsPerPage = 5;
-
             var userId = this.User.GetId();
 
             var userRole = this.userService.GetUserRole(this.User);
 
-            var model = new AllProjectsViewModel
-            {
-                PageNumber = id,
-                Projects = this.projectService.GetUserProjects(userId, userRole, id, itemsPerPage),
-                ItemsPerPage = itemsPerPage,
-                ItemsCount = this.projectService.GetUserProjectsCount(userId, userRole),
-            };
+            var model = this.projectService.GetUserProjects(userId, userRole, id, this.itemsPerPage);
 
             return this.View(model);
         }
