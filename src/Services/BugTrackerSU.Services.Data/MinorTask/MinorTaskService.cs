@@ -3,11 +3,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using BugTrackerSU.Common;
     using BugTrackerSU.Data.Common.Repositories;
     using BugTrackerSU.Data.Models;
     using BugTrackerSU.Services.Data.Ticket;
     using BugTrackerSU.Web.ViewModels.MinorTasks;
+    using Microsoft.EntityFrameworkCore;
 
     public class MinorTaskService : IMinorTaskService
     {
@@ -27,20 +28,20 @@
             this.ticketService = ticketService;
         }
 
-        public bool ChekIfUserIsAuthorizedToCreateOrSeeTask(int ticketId, string userId, string role)
+        public async Task<bool> ChekIfUserIsAuthorizedToCreateOrSeeTask(int ticketId, string userId, string role)
         {
-            if (role == "Administrator")
+            if (role == GlobalConstants.AdministratorRoleName)
             {
                 return true;
             }
 
-            var ticket = this.ticketRepository
+            var ticket = await this.ticketRepository
                 .All()
                 .Where(x => x.Id == ticketId)
                 .Where(x => x.TicketSubmitterId == userId
                 || x.AssignedDeveloperId == userId
                 || x.Project.ProjectManagerId == userId)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             if (ticket == null)
             {
@@ -78,9 +79,9 @@
             await this.minorTaskRepository.SaveChangesAsync();
         }
 
-        public AllMinorTaskViewModel GetTicketTasksById(int ticketId, int pageNumber, int itemsPerPage)
+        public async Task<AllMinorTaskViewModel> GetTicketTasksById(int ticketId, int pageNumber, int itemsPerPage)
         {
-            var tasks = this.minorTaskRepository
+            var tasks = await this.minorTaskRepository
                 .All()
                 .Where(x => x.TicketId == ticketId)
                 .OrderByDescending(x => x.Id)
@@ -94,7 +95,7 @@
                     Finished = x.Finished,
                     Started = x.Started,
                 })
-                .ToList();
+                .ToListAsync();
 
 
             var model = new AllMinorTaskViewModel()
@@ -103,14 +104,14 @@
                 TicketId = ticketId,
                 PageNumber = pageNumber,
                 ItemsPerPage = itemsPerPage,
-                ItemsCount = this.GetTicketTasksCount(ticketId),
+                ItemsCount = await this.GetTicketTasksCount(ticketId),
                 Tasks = tasks,
             };
 
             return model;
         }
 
-        public int GetTicketTasksCount(int ticketId) => this.minorTaskRepository.All().Where(x => x.TicketId == ticketId).Count();
+        public async Task<int> GetTicketTasksCount(int ticketId) => await this.minorTaskRepository.All().Where(x => x.TicketId == ticketId).CountAsync();
 
         public async Task StartTask(int taskId)
         {

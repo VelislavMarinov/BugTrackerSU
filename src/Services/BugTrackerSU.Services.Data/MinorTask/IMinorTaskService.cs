@@ -9,11 +9,11 @@
     {
         Task CreateMinorTaskAsync(CreateMinorTaskFormModel model, string userId);
 
-        bool ChekIfUserIsAuthorizedToCreateOrSeeTask(int ticketId, string userId, string role);
+        Task<bool> ChekIfUserIsAuthorizedToCreateOrSeeTask(int ticketId, string userId, string role);
 
-        AllMinorTaskViewModel GetTicketTasksById(int ticketId, int pageNumber, int itemsPerPage);
+        Task<AllMinorTaskViewModel> GetTicketTasksById(int ticketId, int pageNumber, int itemsPerPage);
 
-        int GetTicketTasksCount(int ticketId);
+        Task<int> GetTicketTasksCount(int ticketId);
 
         Task StartTask(int taskId);
 

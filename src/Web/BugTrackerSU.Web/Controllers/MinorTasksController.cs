@@ -1,5 +1,6 @@
 ﻿namespace BugTrackerSU.Web.Controllers
 {
+    using System;
     using System.Threading.Tasks;
 
     using BugTrackerSU.Common;
@@ -10,7 +11,6 @@
     using BugTrackerSU.Web.ViewModels.MinorTasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System;
 
     public class MinorTasksController : BaseController
     {
@@ -34,9 +34,9 @@
 
         [HttpGet]
         [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
-        public IActionResult Create(int ticketId)
+        public async Task<IActionResult> Create(int ticketId)
         {
-            var chekUser = this.minorTaskService.ChekIfUserIsAuthorizedToCreateOrSeeTask(ticketId, this.User.GetId(), this.userService.GetUserRole(this.User));
+            var chekUser = await this.minorTaskService.ChekIfUserIsAuthorizedToCreateOrSeeTask(ticketId, this.User.GetId(), this.userService.GetUserRole(this.User));
 
             if (chekUser == false)
             {
@@ -60,7 +60,7 @@
 
             var userId = this.User.GetId();
 
-            var chekUser = this.minorTaskService.ChekIfUserIsAuthorizedToCreateOrSeeTask(model.TicketId, userId, this.userService.GetUserRole(this.User));
+            var chekUser = await this.minorTaskService.ChekIfUserIsAuthorizedToCreateOrSeeTask(model.TicketId, userId, this.userService.GetUserRole(this.User));
 
             if (chekUser == false)
             {
@@ -82,13 +82,13 @@
 
         [HttpGet]
         [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
-        public IActionResult TicketTasks(int ticketId, int id = 1)
+        public async Task<IActionResult> TicketTasks(int ticketId, int id = 1)
         {
             var userId = this.User.GetId();
 
-            var chekUser = this.minorTaskService.ChekIfUserIsAuthorizedToCreateOrSeeTask(id, userId, this.userService.GetUserRole(this.User));
+            var chekUser = await this.minorTaskService.ChekIfUserIsAuthorizedToCreateOrSeeTask(id, userId, this.userService.GetUserRole(this.User));
 
-            var model = this.minorTaskService.GetTicketTasksById(ticketId, id, this.itemsPerPage);
+            var model = await this.minorTaskService.GetTicketTasksById(ticketId, id, this.itemsPerPage);
 
             if (chekUser == false)
             {
@@ -103,7 +103,7 @@
         {
             await this.minorTaskService.StartTask(taskId);
 
-            return this.Redirect("/Tickets/MyTickets");
+            return this.RedirectToAction("MyTickets", "Tickets");
         }
 
         [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
@@ -111,8 +111,7 @@
         {
             await this.minorTaskService.StartTask(taskId);
 
-            return this.Redirect("/Tickets/MyTickets");
+            return this.RedirectToAction("MyTickets", "Tickets");
         }
-
     }
 }
