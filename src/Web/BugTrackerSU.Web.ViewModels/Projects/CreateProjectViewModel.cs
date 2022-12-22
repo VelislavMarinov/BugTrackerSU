@@ -20,5 +20,8 @@
         public string Description { get; set; }
 
         public List<UserViewModel> AllUsers { get; set; }
+
+        [Required]
+        public List<string> UserIds { get; set; }
     }
 }

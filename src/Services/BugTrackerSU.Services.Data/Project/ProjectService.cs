@@ -41,20 +41,17 @@
                 ProjectManagerId = userId,
             };
 
-            foreach (var modelUser in model.AllUsers)
+            foreach (var ids in model.UserIds)
             {
-                if (modelUser.Selected == true)
+                var user = this.userRepository.All().Where(x => x.Id == ids).FirstOrDefault();
+                if (user != null)
                 {
-                    var user = this.userRepository.All().Where(x => x.Id == modelUser.Id).FirstOrDefault();
-                    if (user != null)
+                    var userProject = new ApplicationUserProject
                     {
-                        var userProject = new ApplicationUserProject
-                        {
-                            Project = project,
-                            ApplicationUser = user,
-                        };
-                        project.ProjectUsers.Add(userProject);
-                    }
+                        Project = project,
+                        ApplicationUser = user,
+                    };
+                    project.ProjectUsers.Add(userProject);
                 }
             }
 

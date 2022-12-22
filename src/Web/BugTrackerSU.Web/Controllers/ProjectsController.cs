@@ -29,7 +29,7 @@
         }
 
         [HttpGet]
-        [Authorize(Roles = GlobalConstants.ProjectManagerRoleName)]
+        [Authorize(Roles = GlobalConstants.AdminProjectMangerRolesAuthorization)]
         public IActionResult Create()
         {
             var users = this.userService.GetAllUsersAndRoles().Users;
@@ -40,10 +40,11 @@
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.ProjectManagerRoleName)]
+        [Authorize(Roles = GlobalConstants.AdminProjectMangerRolesAuthorization)]
         public async Task<IActionResult> Create(CreateProjectViewModel model)
         {
-            if (!model.AllUsers.Any(x => x.Selected))
+
+            if (!model.UserIds.Any())
             {
                 model.AllUsers = this.userService.GetAllUsersAndRoles().Users;
 
