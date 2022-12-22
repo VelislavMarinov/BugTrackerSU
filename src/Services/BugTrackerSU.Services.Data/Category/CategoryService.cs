@@ -3,10 +3,12 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+
     using BugTrackerSU.Common;
     using BugTrackerSU.Data.Common.Repositories;
     using BugTrackerSU.Data.Models;
     using BugTrackerSU.Web.ViewModels.Categories;
+    using Microsoft.EntityFrameworkCore;
 
     public class CategoryService : ICategoryService
     {
@@ -17,7 +19,7 @@
            this.categoryRepository = categoryRepository;
         }
 
-        public int CategoriesCount() => this.categoryRepository.All().Count();
+        public async Task<int> CategoriesCount() => await this.categoryRepository.All().CountAsync();
 
         public async Task CreateCategoryAsync(CreateCategoryFormModel model, string userId)
         {
@@ -118,9 +120,9 @@
             }
         }
 
-        public AllCategoriesViewModel GetAllCategories(int pageNumber, int itemsPerPage)
+        public async Task<AllCategoriesViewModel> GetAllCategories(int pageNumber, int itemsPerPage)
         {
-            var categories = this.categoryRepository
+            var categories = await this.categoryRepository
                 .All()
                 .OrderByDescending(x => x.Id)
                 .Skip((pageNumber - 1) * itemsPerPage)
@@ -133,14 +135,14 @@
                     ImageUrl = x.ImageUrl,
                     AddedBy = x.AddedByUser.UserName,
                 })
-                .ToList();
+                .ToListAsync();
 
             var model = new AllCategoriesViewModel
             {
                 Categories = categories,
                 PageNumber = pageNumber,
                 ItemsPerPage = itemsPerPage,
-                ItemsCount = this.CategoriesCount(),
+                ItemsCount = await this.CategoriesCount(),
             };
 
             return model;

@@ -59,9 +59,9 @@
         }
 
         [HttpGet]
-        public IActionResult All(int id = 1)
+        public async Task<IActionResult> All(int id = 1)
         {
-            var model = this.categoryService.GetAllCategories(id, this.itemsPerPage);
+            var model = await this.categoryService.GetAllCategories(id, this.itemsPerPage);
 
             return this.View(model);
         }

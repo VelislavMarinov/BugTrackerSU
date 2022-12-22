@@ -8,12 +8,12 @@
     {
         Task CreateCategoryAsync(CreateCategoryFormModel model, string userId);
 
-        AllCategoriesViewModel GetAllCategories(int pageNumber, int itemsPerPage);
+        Task<AllCategoriesViewModel> GetAllCategories(int pageNumber, int itemsPerPage);
 
         Task EditCategoryAsync(EditCategoryFormModel model, int categoryId, string userId, string roleId);
 
         Task DeleteCategoryAsync(int categoryId, string userId, string userRole);
 
-        int CategoriesCount();
+        Task<int> CategoriesCount();
     }
 }
