@@ -9,10 +9,10 @@
     {
         Task CreatePostCommentAsync(CreatePostCommentFormModel model, string userId);
 
-        PostCommentsViewModel GetCommentsByPostId(int postId, int pageNumber, int itemPerPage);
+        Task<PostCommentsViewModel> GetCommentsByPostId(int postId, int pageNumber, int itemPerPage);
 
         Task DeleteCommentAsync(int postId, string userId, string roleName);
 
-        int GetCommentsCountByPostId(int postId);
+        Task<int> GetCommentsCountByPostId(int postId);
     }
 }

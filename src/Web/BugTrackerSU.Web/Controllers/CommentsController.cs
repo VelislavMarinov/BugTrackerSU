@@ -1,16 +1,16 @@
 ﻿namespace BugTrackerSU.Web.Controllers
 {
+    using System;
     using System.Threading.Tasks;
 
     using BugTrackerSU.Common;
     using BugTrackerSU.Services.Data.Comment;
     using BugTrackerSU.Services.Data.Post;
+    using BugTrackerSU.Services.Data.User;
     using BugTrackerSu.Web;
     using BugTrackerSU.Web.ViewModels.Comments;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System;
-    using BugTrackerSU.Services.Data.User;
 
     public class CommentsController : BaseController
     {
@@ -34,12 +34,12 @@
 
         [HttpGet]
         [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
-        public IActionResult PostComments(int id = 1, int postId = 0)
+        public async Task<IActionResult> PostComments(int id = 1, int postId = 0)
         {
-            var model = this.commentService.GetCommentsByPostId(postId, id, this.itemsPerPage);
+            var model = await this.commentService.GetCommentsByPostId(postId, id, this.itemsPerPage);
             model.ItemsPerPage = this.itemsPerPage;
             model.PageNumber = id;
-            model.ItemsCount = this.commentService.GetCommentsCountByPostId(postId);
+            model.ItemsCount = await this.commentService.GetCommentsCountByPostId(postId);
 
             return this.View(model);
         }

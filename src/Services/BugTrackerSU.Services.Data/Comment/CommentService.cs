@@ -9,6 +9,7 @@
     using BugTrackerSU.Data.Models;
     using BugTrackerSU.Services.Data.Post;
     using BugTrackerSU.Web.ViewModels.Comments;
+    using Microsoft.EntityFrameworkCore;
 
     public class CommentService : ICommentService
     {
@@ -75,9 +76,9 @@
             }
         }
 
-        public PostCommentsViewModel GetCommentsByPostId(int postId, int pageNumber, int itemsPerPage)
+        public async Task<PostCommentsViewModel> GetCommentsByPostId(int postId, int pageNumber, int itemsPerPage)
         {
-            var comments = this.commentRepository
+            var comments = await this.commentRepository
                 .All()
                 .Where(x => x.PostId == postId)
                 .OrderByDescending(x => x.Id)
@@ -92,7 +93,7 @@
                     PostId = x.PostId,
                     UserName = x.AddedByUser.UserName,
                 })
-                .ToList();
+                .ToListAsync();
 
             var model = new PostCommentsViewModel
             {
@@ -107,6 +108,6 @@
             return model;
         }
 
-        public int GetCommentsCountByPostId(int postId) => this.commentRepository.All().Where(x => x.PostId == postId).Count();
+        public async Task<int> GetCommentsCountByPostId(int postId) => await this.commentRepository.All().Where(x => x.PostId == postId).CountAsync();
     }
 }
