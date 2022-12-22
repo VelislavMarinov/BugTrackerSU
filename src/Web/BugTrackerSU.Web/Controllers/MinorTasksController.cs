@@ -10,6 +10,7 @@
     using BugTrackerSU.Web.ViewModels.MinorTasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using System;
 
     public class MinorTasksController : BaseController
     {
@@ -52,6 +53,11 @@
         [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
         public async Task<IActionResult> Create(CreateMinorTaskFormModel model)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
             var userId = this.User.GetId();
 
             var chekUser = this.minorTaskService.ChekIfUserIsAuthorizedToCreateOrSeeTask(model.TicketId, userId, this.userService.GetUserRole(this.User));
@@ -61,14 +67,17 @@
                 return this.BadRequest();
             }
 
-            if (!this.ModelState.IsValid)
+            try
             {
-                return this.View(model);
+                await this.minorTaskService.CreateMinorTaskAsync(model, userId);
+
+                return this.Redirect("/MinorTasks/TicketTasks");
             }
+            catch (Exception ex)
+            {
 
-            await this.minorTaskService.CreateMinorTaskAsync(model, userId);
-
-            return this.Redirect("/MinorTasks/TicketTasks");
+                return this.BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]

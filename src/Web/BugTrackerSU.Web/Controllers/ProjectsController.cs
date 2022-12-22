@@ -43,7 +43,6 @@
         [Authorize(Roles = GlobalConstants.AdminProjectMangerRolesAuthorization)]
         public async Task<IActionResult> Create(CreateProjectViewModel model)
         {
-
             if (!model.UserIds.Any())
             {
                 model.AllUsers = this.userService.GetAllUsersAndRoles().Users;
@@ -58,11 +57,18 @@
                 return this.View(model);
             }
 
-            var userId = this.User.GetId();
+            try
+            {
+                var userId = this.User.GetId();
 
-            await this.projectService.CreateProjectAsync(model, userId);
+                await this.projectService.CreateProjectAsync(model, userId);
 
-            return this.Redirect("/Home/Index");
+                return this.Redirect("/Home/Index");
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]

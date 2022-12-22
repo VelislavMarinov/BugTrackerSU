@@ -7,25 +7,35 @@
     ViewData["Title"] = "Create Task";
 }
 
+<nav aria-label="breadcrumb" class="main-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/Tickets/MyTickets">My Tickets</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><strong>@this.ViewData["Title"]</strong></li>
+    </ol>
+</nav>
 
 <div class="container">
-    <div class="row">
-        <div class="col-sm-12 offset-lg-2 col-lg-10 offset-xl-1 col-xl-10">
-            <h1 class="text-center">@ViewData["Title"]</h1>
-            <form method="post">
+          <div class="row justify-content-center">
+            <div class="col-xl-8 col-md-6">
+              <form method="post" class="bg-dark  rounded-5 shadow-5-strong p-5">
+                <h1 class="text-center text-light">@ViewData["Title"]</h1>\
+                <br />
+                <div class="form-outline mb-4">
+                  <label asp-for="Title" class="text-light"></label>
+                  <input asp-for="Title" placeholder="Task Name" class="form-control">
+                  <span asp-validation-for="Title" class="text-danger small"></span>
+                <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 88.8px;"></div><div class="form-notch-trailing"></div></div></div>
+
+                 <div class="form-outline mb-4">
+                  <label asp-for="TicketId" hidden></label>
+                  <label asp-for="Content" class="text-light"></label>
+                  <input asp-for="Content" placeholder="Task Content" class="form-control">
+                  <span asp-validation-for="Content" class="text-danger small"></span>
+                <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 88.8px;"></div><div class="form-notch-trailing"></div></div></div>
+
                 <div class="form-group">
-                    <label asp-for="Title"></label>
-                    <input asp-for="Title" class="form-control" placeholder="Task Title">
-                    <span asp-validation-for="Title" class="text-danger small"></span>
-                </div>
-                 <div class="form-group">
-                    <label asp-for="TicketId" hidden></label>
-                    <label asp-for="Content"></label>
-                    <input asp-for="Content" class="form-control" placeholder="Information about Task">
-                    <span asp-validation-for="Content" class="text-danger small"></span>
-                </div>
-                <div class="form-group">
-                   <label asp-for="TaskType" ></label>
+                   <label class="text-light" asp-for="TaskType" ></label>
                      <select asp-for="TaskType" class="form-control">
                         @foreach (int choice in Enum.GetValues(typeof(TaskType)))
                           {
@@ -33,8 +43,9 @@
                           }
                  </select>
                 </div>
-                <input type="submit" class="btn btn-info" value="@ViewData["Title"]" />
-            </form>
+
+                <button type="submit" class="btn btn-primary btn-block">@ViewData["Title"]</button>
+              </form>
+            </div>
+          </div>
         </div>
-    </div>
-</div

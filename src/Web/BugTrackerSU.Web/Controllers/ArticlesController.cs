@@ -7,6 +7,7 @@
     using System.Threading.Tasks;
 
     using BugTrackerSU.Common;
+    using System;
 
     public class ArticlesController : BaseController
     {
@@ -37,11 +38,18 @@
                 return this.View(model);
             }
 
-            var userId = this.User.GetId();
+            try
+            {
+                var userId = this.User.GetId();
 
-            await this.articleService.CreateArticleAsync(model, userId);
+                await this.articleService.CreateArticleAsync(model, userId);
 
-            return this.RedirectToAction("All", "Articles");
+                return this.RedirectToAction("All", "Articles");
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]

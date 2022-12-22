@@ -223,6 +223,9 @@
                 .Where(x => x.Id == ticketId)
                 .Select(x => new TicketDetailsViewModel
                 {
+                    ProjectId = x.ProjectId,
+                    DeveloperId = x.AssignedDeveloperId,
+                    SubmiterId = x.TicketSubmitterId,
                     Title = x.Title,
                     TicketDescription = x.Description,
                     DeveloperName = x.AssignedDeveloper.UserName,

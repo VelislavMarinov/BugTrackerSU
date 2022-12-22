@@ -9,6 +9,7 @@
     using BugTrackerSU.Web.ViewModels.Comments;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using System;
 
     public class CommentsController : BaseController
     {
@@ -30,7 +31,7 @@
         public IActionResult PostComments(int id = 1, int postId = 0)
         {
             var model = this.commentService.GetCommentsByPostId(postId, id, this.itemsPerPage);
-            model.ItemsPerPage = itemsPerPage;
+            model.ItemsPerPage = this.itemsPerPage;
             model.PageNumber = id;
             model.ItemsCount = this.commentService.GetCommentsCountByPostId(postId);
 
@@ -46,11 +47,18 @@
                 return this.Redirect($"/Comments/PostComments?postId={model.CreatePostCommentFormModel.PostId}");
             }
 
-            var userId = this.User.GetId();
+            try
+            {
+                var userId = this.User.GetId();
 
-            await this.commentService.CreatePostCommentAsync(model.CreatePostCommentFormModel, userId);
+                await this.commentService.CreatePostCommentAsync(model.CreatePostCommentFormModel, userId);
 
-            return this.Redirect($"/Comments/PostComments?postId={model.CreatePostCommentFormModel.PostId}");
+                return this.Redirect($"/Comments/PostComments?postId={model.CreatePostCommentFormModel.PostId}");
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]

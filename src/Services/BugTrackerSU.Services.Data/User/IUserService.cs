@@ -14,5 +14,7 @@
         string GetUserRole(ClaimsPrincipal user);
 
         Task SetUserRole(string userId, string roleId);
+
+        UserViewModel GetUser(string userId);
     }
 }

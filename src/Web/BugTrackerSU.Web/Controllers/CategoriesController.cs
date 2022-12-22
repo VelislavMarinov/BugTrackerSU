@@ -7,6 +7,7 @@
     using BugTrackerSu.Web;
     using BugTrackerSU.Web.ViewModels.Categories;
     using Microsoft.AspNetCore.Mvc;
+    using System;
 
     public class CategoriesController : BaseController
     {
@@ -37,11 +38,18 @@
                 return this.View(modelCreate);
             }
 
-            var userId = this.User.GetId();
+            try
+            {
+                var userId = this.User.GetId();
 
-            await this.categoryService.CreateCategoryAsync(model, userId);
+                await this.categoryService.CreateCategoryAsync(model, userId);
 
-            return this.RedirectToAction("All", "Categories");
+                return this.RedirectToAction("All", "Categories");
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]

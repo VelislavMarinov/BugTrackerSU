@@ -9,6 +9,7 @@
     using BugTrackerSU.Web.ViewModels.Posts;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using System;
 
     public class PostsController : BaseController
     {
@@ -50,11 +51,18 @@
                 return this.View(model);
             }
 
-            var userId = this.User.GetId();
+            try
+            {
+                var userId = this.User.GetId();
 
-            await this.postService.CreatePostAsync(model, userId);
+                await this.postService.CreatePostAsync(model, userId);
 
-            return this.Redirect("/Post/All");
+                return this.Redirect("/Post/All");
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]

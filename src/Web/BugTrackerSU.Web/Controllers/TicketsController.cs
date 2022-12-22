@@ -74,11 +74,18 @@
                 return this.View(model);
             }
 
-            model.ProjectId = id;
+            try
+            {
+                model.ProjectId = id;
 
-            await this.ticketService.CreateTicketAsync(model, userId);
+                await this.ticketService.CreateTicketAsync(model, userId);
 
-            return this.Redirect("/Tickets/MyTickets");
+                return this.Redirect("/Tickets/MyTickets");
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]

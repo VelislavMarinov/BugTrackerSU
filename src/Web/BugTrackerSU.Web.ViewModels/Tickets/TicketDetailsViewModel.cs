@@ -13,6 +13,14 @@
 
         public string TicketDescription { get; set; }
 
+        public int ProjectId { get; set; }
+
+        public string ProjectManagerId { get; set; }
+
+        public string SubmiterId { get; set; }
+
+        public string DeveloperId { get; set; }
+
         public string SubmitterName { get; set; }
 
         public string DeveloperName { get; set; }
@@ -26,6 +34,5 @@
         public DateTime CreatedOn { get; set; }
 
         public DateTime UpdatedOn { get; set; }
-
     }
 }

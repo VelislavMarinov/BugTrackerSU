@@ -1,6 +1,5 @@
 ﻿namespace BugTrackerSU.Services.Data.User
 {
-    using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -56,6 +55,21 @@
             };
 
             return model;
+        }
+
+        public UserViewModel GetUser(string userId)
+        {
+            var user = this.userRepository
+                .All()
+                .Where(x => x.Id == userId)
+                .Select(x => new UserViewModel
+                {
+                    UserName = x.UserName,
+                    Id = x.Id,
+                })
+                .FirstOrDefault();
+
+            return user;
         }
 
         public string GetUserRole(ClaimsPrincipal user)

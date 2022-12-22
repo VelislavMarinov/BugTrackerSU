@@ -3,7 +3,7 @@
 @model ManageRolesViewModel
 
 @{
-    this.ViewData["Title"] = "Manage Roles";
+    this.ViewData["Title"] = "Assign Roles";
 }
 
 <h1>@this.ViewData["Title"]</h1>
@@ -17,7 +17,10 @@
                 <option value="@null">Serach for user</option>
                @foreach (var user in Model.Users)
                 {
-                   <option value="@user.Id">@user.UserName</option>
+                    if(user.RoleId == null)
+                    {
+                     <option value="@user.Id">@user.UserName</option>   
+                    }
                 }
             </select>
         </div>
@@ -39,14 +42,20 @@
 
 <br>
 
-<div class="list-group">
-@foreach(var user in Model.Users)
-{
-  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-    <div class=" justify-content-between">
-      <h5 class="mb-1">@user.UserName</h5>
-      <small>Role: @user.RoleName</small>
-    </div>
-  </a>
-}
-</div>
+<table class="table table-striped table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Username</th>
+      <th scope="col">Role</th>
+    </tr>
+  </thead>
+  <tbody>
+   @foreach (var user in Model.Users)
+   {
+     <tr>
+      <td>@user.UserName</td>
+      <td>@user.RoleName</td>
+     </tr>
+   }
+  </tbody>
+</table>
