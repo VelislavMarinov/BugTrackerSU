@@ -63,7 +63,7 @@
 
                 await this.projectService.CreateProjectAsync(model, userId);
 
-                return this.Redirect("/Home/Index");
+                return this.RedirectToAction("index", "Home");
             }
             catch (Exception ex)
             {
@@ -73,22 +73,22 @@
 
         [HttpGet]
         [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
-        public IActionResult MyProjects(int id = 1)
+        public async Task<IActionResult> MyProjects(int id = 1)
         {
             var userId = this.User.GetId();
 
             var userRole = this.userService.GetUserRole(this.User);
 
-            var model = this.projectService.GetUserProjects(userId, userRole, id, this.itemsPerPage);
+            var model = await this.projectService.GetUserProjects(userId, userRole, id, this.itemsPerPage);
 
             return this.View(model);
         }
 
         [HttpGet]
         [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
-        public IActionResult Project(int id)
+        public async Task<IActionResult> Project(int id)
         {
-            if (!this.projectService.ChekIfProjectIsValid(id))
+            if (!await this.projectService.ChekIfProjectIsValid(id))
             {
                 return this.BadRequest();
             }

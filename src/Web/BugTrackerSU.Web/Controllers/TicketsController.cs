@@ -34,7 +34,7 @@
 
         [HttpGet]
         [Authorize(Roles = GlobalConstants.AdminManagerSubmiterRolesAuthorization)]
-        public IActionResult Create(int id)
+        public async Task<IActionResult> Create(int id)
         {
             var userId = this.User.GetId();
 
@@ -42,12 +42,12 @@
 
             if (chekUser == false)
             {
-                return this.Redirect("/");
+                return this.BadRequest();
             }
 
             var model = new CreateTicketViewModel
             {
-                AsignedProjectDevelopers = this.projectService.GetProjectAssignedDevelopers(id),
+                AsignedProjectDevelopers = await this.projectService.GetProjectAssignedDevelopers(id),
                 ProjectId = id,
             };
 
@@ -69,7 +69,7 @@
 
             if (!this.ModelState.IsValid)
             {
-                model.AsignedProjectDevelopers = this.projectService.GetProjectAssignedUsers(id);
+                model.AsignedProjectDevelopers = await this.projectService.GetProjectAssignedUsers(id);
 
                 return this.View(model);
             }
@@ -103,7 +103,7 @@
 
         [HttpGet]
         [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
-        public IActionResult Edit(int projectId, int ticketId)
+        public async Task<IActionResult> Edit(int projectId, int ticketId)
         {
             try
             {
@@ -116,7 +116,7 @@
 
                 var model = new EditTicketViewModel
                 {
-                    AsignedProjectDevelopers = this.projectService.GetProjectAssignedDevelopers(projectId),
+                    AsignedProjectDevelopers = await this.projectService.GetProjectAssignedDevelopers(projectId),
                 };
 
                 return this.View(model);
@@ -133,7 +133,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                model.AsignedProjectDevelopers = this.projectService.GetProjectAssignedUsers(projectId);
+                model.AsignedProjectDevelopers = await this.projectService.GetProjectAssignedUsers(projectId);
 
                 return this.View(model);
             }
@@ -145,7 +145,7 @@
 
                 await this.ticketService.EditTicketAsync(model, userId, userRole);
 
-                return this.Redirect($"/Tickets/Ticket?{ticketId}");
+                return this.RedirectToAction("Ticket", "Tickets", new { ticketId = ticketId });
             }
             catch (Exception ex)
             {

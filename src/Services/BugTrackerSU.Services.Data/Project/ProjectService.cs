@@ -19,17 +19,20 @@
         private readonly IDeletableEntityRepository<ApplicationRole> roleRepository;
         private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
         private readonly IDeletableEntityRepository<ApplicationUserProject> userProjectRepository;
+        private readonly IDeletableEntityRepository<Ticket> ticketRepository;
 
         public ProjectService(
             IDeletableEntityRepository<Project> projectRepository,
             IDeletableEntityRepository<ApplicationUser> userRepository,
             IDeletableEntityRepository<ApplicationUserProject> userProjectRepository,
-            IDeletableEntityRepository<ApplicationRole> roleRepository)
+            IDeletableEntityRepository<ApplicationRole> roleRepository,
+            IDeletableEntityRepository<Ticket> ticketRepository)
         {
            this.projectRepository = projectRepository;
            this.userRepository = userRepository;
            this.userProjectRepository = userProjectRepository;
            this.roleRepository = roleRepository;
+           this.ticketRepository = ticketRepository;
         }
 
         public async Task CreateProjectAsync(CreateProjectViewModel model, string userId)
@@ -59,11 +62,11 @@
             await this.projectRepository.SaveChangesAsync();
         }
 
-        public AllProjectsViewModel GetUserProjects(string userId, string userRole, int pageNumber, int itemsPerPage)
+        public async Task<AllProjectsViewModel> GetUserProjects(string userId, string userRole, int pageNumber, int itemsPerPage)
         {
             if (userRole == GlobalConstants.AdministratorRoleName)
             {
-                var adminProjects = this.projectRepository.All()
+                var adminProjects = await this.projectRepository.All()
                 .Include(x => x.ProjectUsers)
                 .OrderByDescending(x => x.Id)
                 .Skip((pageNumber - 1) * itemsPerPage)
@@ -75,48 +78,50 @@
                     ProjectId = x.Id,
                     CreatedOn = x.CreatedOn,
                 })
-                .ToList();
+                .ToListAsync();
 
                 var adminModel = new AllProjectsViewModel
                 {
                     PageNumber = pageNumber,
                     Projects = adminProjects,
                     ItemsPerPage = itemsPerPage,
-                    ItemsCount = this.GetUserProjectsCount(userId, userRole),
+                    ItemsCount = await this.GetUserProjectsCount(userId, userRole),
                 };
 
                 return adminModel;
             }
-
-            var projects = this.projectRepository.All()
-                .Include(x => x.ProjectUsers)
-                .Where(x => x.ProjectUsers.Any(u => u.ApplicationUser.Id == userId) || x.ProjectManagerId == userId)
-                .OrderByDescending(x => x.Id)
-                .Skip((pageNumber - 1) * itemsPerPage)
-                .Take(itemsPerPage)
-                .Select(x => new ProjectViewModel
-                {
-                    Title = x.Title,
-                    Descripiton = x.Description,
-                    ProjectId = x.Id,
-                    CreatedOn = x.CreatedOn,
-                })
-                .ToList();
-
-            var model = new AllProjectsViewModel
+            else
             {
-                PageNumber = pageNumber,
-                Projects = projects,
-                ItemsPerPage = itemsPerPage,
-                ItemsCount = this.GetUserProjectsCount(userId, userRole),
-            };
+                var projects = await this.projectRepository.All()
+               .Include(x => x.ProjectUsers)
+               .Where(x => x.ProjectUsers.Any(u => u.ApplicationUser.Id == userId) || x.ProjectManagerId == userId)
+               .OrderByDescending(x => x.Id)
+               .Skip((pageNumber - 1) * itemsPerPage)
+               .Take(itemsPerPage)
+               .Select(x => new ProjectViewModel
+               {
+                   Title = x.Title,
+                   Descripiton = x.Description,
+                   ProjectId = x.Id,
+                   CreatedOn = x.CreatedOn,
+               })
+               .ToListAsync();
 
-            return model;
+                var model = new AllProjectsViewModel
+                {
+                    PageNumber = pageNumber,
+                    Projects = projects,
+                    ItemsPerPage = itemsPerPage,
+                    ItemsCount = await this.GetUserProjectsCount(userId, userRole),
+                };
+
+                return model;
+            }
         }
 
-        public List<UserViewModel> GetProjectAssignedUsers(int projectId)
+        public async Task<List<UserViewModel>> GetProjectAssignedUsers(int projectId)
         {
-            var users = this.userProjectRepository.
+            var users = await this.userProjectRepository.
                 All()
                 .Where(x => x.ProjectId == projectId)
                 .Select(x => x.ApplicationUser)
@@ -125,16 +130,14 @@
                     Id = x.Id,
                     UserName = x.UserName,
                 })
-                .ToList();
+                .ToListAsync();
 
             return users;
         }
 
-        public List<UserViewModel> GetProjectAssignedDevelopers(int projectId)
+        public async Task<List<UserViewModel>> GetProjectAssignedDevelopers(int projectId)
         {
-            var role = this.roleRepository.All().Where(x => x.Name == GlobalConstants.DeveloperRoleName).FirstOrDefault();
-
-            var users = this.userProjectRepository
+            var users = await this.userProjectRepository
                 .All()
                 .Where(x => x.ProjectId == projectId)
                 .Select(x => x.ApplicationUser)
@@ -142,75 +145,84 @@
                 {
                     Id = u.Id,
                     UserName = u.UserName,
-                    RoleName = role.Name,
                     RoleId = u.Roles.Where(r => r.UserId == u.Id).Select(r => r.RoleId).FirstOrDefault(),
 
                 })
-                .ToList();
+                .ToListAsync();
 
             foreach (var user in users)
             {
-                user.RoleName = this.roleRepository.All().Where(x => x.Id == user.RoleId).Select(x => x.Name).FirstOrDefault();
+                user.RoleName = await this.roleRepository.All().Where(x => x.Id == user.RoleId).Select(x => x.Name).FirstOrDefaultAsync();
             }
 
             return users;
         }
 
-        public bool ChekIfProjectIsValid(int projectId)
+        public async Task<bool> ChekIfProjectIsValid(int projectId)
         {
-            return this.projectRepository.All().Any(x => x.Id == projectId);
+            return await this.projectRepository.All().AnyAsync(x => x.Id == projectId);
         }
 
-        public ProjectDetailsViewModel GetProjectDetails(int projectId)
+        public async Task<ProjectDetailsViewModel> GetProjectDetails(int projectId)
         {
-            var model = this.projectRepository.
-                All()
+            var tickets = await this.ticketRepository
+                .All()
+                .Where(x => x.ProjectId == projectId)
+                .Select(x => new TicketViewModel
+                {
+                        ProjectId = x.ProjectId,
+                        Title = x.Title,
+                        Description = x.Description,
+                        TicketId = x.Id,
+                        CreatedOn = x.CreatedOn,
+                        DeveloperId = x.AssignedDeveloperId,
+                        SubmiterName = x.TicketSubmitter.UserName,
+                        DeveloperName = x.AssignedDeveloper.UserName,
+                        SubmiterId = x.AssignedDeveloperId,
+                        ProjectManagerId = x.Project.ProjectManagerId,
+                })
+                .ToListAsync();
+
+            var users = await this.GetProjectAssignedDevelopers(projectId);
+
+            var model = await this.projectRepository
+                .All()
                 .Where(x => projectId == x.Id)
                 .Select(x => new ProjectDetailsViewModel
                 {
                     Description = x.Description,
                     Title = x.Title,
                     ProjectManager = x.ProjectManager.UserName,
-                    Tickets = x.ProjectTickets.Select(p => new TicketViewModel
-                    {
-                        ProjectId = p.ProjectId,
-                        Title = p.Title,
-                        Description = p.Description,
-                        TicketId = p.Id,
-                        CreatedOn = p.CreatedOn,
-                        DeveloperId = p.AssignedDeveloperId,
-                        SubmiterName = p.TicketSubmitter.UserName,
-                        DeveloperName = p.AssignedDeveloper.UserName,
-                        SubmiterId = p.AssignedDeveloperId,
-                        ProjectManagerId = p.Project.ProjectManagerId,
-                    }).ToList(),
-                    AssingedUsers = this.GetProjectAssignedDevelopers(projectId),
+                    Tickets = tickets,
+                    AssingedUsers = users,
                 })
-               .FirstOrDefault();
+               .FirstOrDefaultAsync();
 
             return model;
         }
 
-        public int GetUserProjectsCount(string userId, string userRole)
+        public async Task<int> GetUserProjectsCount(string userId, string userRole)
         {
             if (userRole == GlobalConstants.AdministratorRoleName)
             {
-                int adminProjectsCount = this.projectRepository.All().Count();
+                int adminProjectsCount = await this.projectRepository.All().CountAsync();
 
                 return adminProjectsCount;
             }
-
-            int count = this.projectRepository
+            else
+            {
+                int count = await this.projectRepository
                 .All()
                 .Where(x => x.ProjectManagerId == userId || x.ProjectUsers.Any(u => u.ApplicationUserId == userId))
-                .Count();
+                .CountAsync();
 
-            return count;
+                return count;
+            }
         }
 
-        public List<ProjectViewModel> GetAllProjects()
+        public async Task<List<ProjectViewModel>> GetAllProjects()
         {
-            var projects = this.projectRepository.All()
+            var projects = await this.projectRepository.All()
                 .Select(x => new ProjectViewModel
                 {
                     ProjectId = x.Id,
@@ -218,7 +230,7 @@
                     Descripiton = x.Description,
                     CreatedOn = x.CreatedOn,
                 })
-                .ToList();
+                .ToListAsync();
 
             return projects;
         }

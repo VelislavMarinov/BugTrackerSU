@@ -7,12 +7,6 @@
 
     public class ProjectDetailsViewModel
     {
-        public ProjectDetailsViewModel()
-        {
-            this.Tickets = new List<TicketViewModel>();
-            this.AssingedUsers = new List<UserViewModel>();
-        }
-
         public string Title { get; set; }
 
         public string Description { get; set; }

@@ -1,16 +1,16 @@
 ﻿namespace BugTrackerSU.Web.Controllers
 {
+    using System;
     using System.Threading.Tasks;
 
     using BugTrackerSU.Common;
     using BugTrackerSU.Services.Data.Post;
     using BugTrackerSU.Services.Data.Project;
+    using BugTrackerSU.Services.Data.User;
     using BugTrackerSu.Web;
     using BugTrackerSU.Web.ViewModels.Posts;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System;
-    using BugTrackerSU.Services.Data.User;
 
     public class PostsController : BaseController
     {
@@ -40,7 +40,7 @@
         {
             var model = new CreatePostFormModel()
             {
-                Projects = this.projectService.GetAllProjects(),
+                Projects = await this.projectService.GetAllProjects(),
             };
 
             return this.View(model);
@@ -52,7 +52,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                model.Projects = this.projectService.GetAllProjects();
+                model.Projects = await this.projectService.GetAllProjects();
 
                 return this.View(model);
             }

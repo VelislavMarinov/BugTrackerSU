@@ -8,20 +8,20 @@
 
     public interface IProjectService
     {
-        List<ProjectViewModel> GetAllProjects();
+        Task<List<ProjectViewModel>> GetAllProjects();
 
-        int GetUserProjectsCount(string userId, string userRole);
+        Task<int> GetUserProjectsCount(string userId, string userRole);
 
         Task CreateProjectAsync(CreateProjectViewModel model, string userId);
 
-        AllProjectsViewModel GetUserProjects(string userId, string userRole, int pageNumber, int itemPerPage);
+        Task<AllProjectsViewModel> GetUserProjects(string userId, string userRole, int pageNumber, int itemPerPage);
 
-        List<UserViewModel> GetProjectAssignedUsers(int projectId);
+        Task<List<UserViewModel>> GetProjectAssignedUsers(int projectId);
 
-        List<UserViewModel> GetProjectAssignedDevelopers(int projectId);
+        Task<List<UserViewModel>> GetProjectAssignedDevelopers(int projectId);
 
-        bool ChekIfProjectIsValid(int projectId);
+        Task<bool> ChekIfProjectIsValid(int projectId);
 
-        ProjectDetailsViewModel GetProjectDetails(int projectId);
+        Task<ProjectDetailsViewModel> GetProjectDetails(int projectId);
     }
 }
