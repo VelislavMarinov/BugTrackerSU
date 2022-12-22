@@ -88,17 +88,48 @@
             }
         }
 
-        public async Task EditPostAsync(EditPostFormModel model, string userId)
+        public async Task EditPostAsync(EditPostFormModel model, string userId , string userRole)
         {
-            var post = this.postRepository
-                .All()
-                .Where(x => x.Id == model.PostId)
-                .FirstOrDefault();
-            post.Title = model.Title;
-            post.Content = model.Content;
+            if (userRole == GlobalConstants.AdministratorRoleName)
+            {
+                var adminPost = this.postRepository
+               .All()
+               .Where(x => x.Id == model.PostId)
+               .FirstOrDefault();
 
-            this.postRepository.Update(post);
-            await this.postRepository.SaveChangesAsync();
+                if (adminPost == null)
+                {
+                    throw new NullReferenceException();
+                }
+                else
+                {
+                    adminPost.Title = model.Title;
+                    adminPost.Content = model.Content;
+
+                    this.postRepository.Update(adminPost);
+                    await this.postRepository.SaveChangesAsync();
+                }
+            }
+            else
+            {
+                var userPost = this.postRepository
+               .All()
+               .Where(x => x.Id == model.PostId && x.AddedByUserId == userId)
+               .FirstOrDefault();
+
+                if (userPost == null)
+                {
+                    throw new NullReferenceException();
+                }
+                else
+                {
+                    userPost.Title = model.Title;
+                    userPost.Content = model.Content;
+
+                    this.postRepository.Update(userPost);
+                    await this.postRepository.SaveChangesAsync();
+                }
+            }
         }
 
         public PostViewModel GetPostById(int id)

@@ -10,7 +10,7 @@
 
         AllCategoriesViewModel GetAllCategories(int pageNumber, int itemsPerPage);
 
-        Task EditCategoryAsync(EditCategoryFormModel model, int categoryId);
+        Task EditCategoryAsync(EditCategoryFormModel model, int categoryId, string userId, string roleId);
 
         Task DeleteCategoryAsync(int categoryId, string userId, string userRole);
 

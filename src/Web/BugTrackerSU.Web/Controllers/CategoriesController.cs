@@ -91,8 +91,10 @@
 
             try
             {
-                await this.categoryService.EditCategoryAsync(model, id);
+                var userId = this.User.GetId();
+                var userRole = this.userService.GetUserRole(this.User);
 
+                await this.categoryService.EditCategoryAsync(model, id, userId, userRole);
                 return this.RedirectToAction("All", "Categories");
             }
             catch (Exception ex)

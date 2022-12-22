@@ -13,7 +13,7 @@
 
         AllTicketsViewModel GetAllUserTickets(string userId, string role, int pageNumber, int itemPerPage);
 
-        Task EditTicketAsync(EditTicketViewModel model, string userId);
+        Task EditTicketAsync(EditTicketViewModel model, string userId, string roleName);
 
         TicketDetailsViewModel GetTicketDetailsById(int ticketId);
 

@@ -109,8 +109,10 @@
 
             try
             {
-                await this.postService.EditPostAsync(model, model.UserId);
+                var userId = this.User.GetId();
+                var userRole = this.userService.GetUserRole(this.User);
 
+                await this.postService.EditPostAsync(model, userId, userRole);
                 return this.View(model);
             }
             catch (Exception ex)

@@ -100,7 +100,11 @@
 
             try
             {
-                await this.articleService.EditArticleAsync(model, id);
+                var userId = this.User.GetId();
+
+                var userRole = this.userService.GetUserRole(this.User);
+
+                await this.articleService.EditArticleAsync(model, id, userId, userRole);
 
                 return this.RedirectToAction("All", "Articles");
             }

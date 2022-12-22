@@ -53,7 +53,7 @@
 
                 if (adminArticle == null)
                 {
-                    throw new NullReferenceException(GlobalExceptions.CourseDoesNotExistExceptionMessage);
+                    throw new NullReferenceException();
                 }
                 else
                 {
@@ -80,20 +80,55 @@
             }
         }
 
-        public async Task EditArticleAsync(EditArticleFormModel model, int articleId)
+        public async Task EditArticleAsync(EditArticleFormModel model, int articleId, string userId, string roleName)
         {
-            var article = this.articleRepository
-                .All()
-                .Where(x => x.Id == articleId)
-                .FirstOrDefault();
-            article.Name = model.Name;
-            article.Description = model.Description;
-            article.ImageUrl = model.ImageUrl;
-            article.VideoUrl = model.VideoUrl;
-            article.CategoryId = model.CategoryId;
+            if (roleName == GlobalConstants.AdministratorRoleName)
+            {
+                var adminArticle = this.articleRepository
+               .All()
+               .Where(x => x.Id == articleId)
+               .FirstOrDefault();
 
-            this.articleRepository.Update(article);
-            await this.articleRepository.SaveChangesAsync();
+                if (adminArticle == null)
+                {
+                    throw new NullReferenceException();
+                }
+                else
+                {
+                    adminArticle.Name = model.Name;
+                    adminArticle.Description = model.Description;
+                    adminArticle.ImageUrl = model.ImageUrl;
+                    adminArticle.VideoUrl = model.VideoUrl;
+                    adminArticle.CategoryId = model.CategoryId;
+
+                    this.articleRepository.Update(adminArticle);
+                    await this.articleRepository.SaveChangesAsync();
+                }
+            }
+            else
+            {
+               var userArticle = this.articleRepository
+              .All()
+              .Where(x => x.Id == articleId && x.AddedByUserId == userId)
+              .FirstOrDefault();
+
+               if (userArticle == null)
+               {
+                    throw new NullReferenceException();
+               }
+               else
+               {
+                    userArticle.Name = model.Name;
+                    userArticle.Description = model.Description;
+                    userArticle.ImageUrl = model.ImageUrl;
+                    userArticle.VideoUrl = model.VideoUrl;
+                    userArticle.CategoryId = model.CategoryId;
+
+                    this.articleRepository.Update(userArticle);
+                    await this.articleRepository.SaveChangesAsync();
+               }
+            }
+
         }
 
         public AllArticlesViewModel GetAllArticlesInCategory(int categoryId, int pageNumber, int itemsPerPage)

@@ -138,18 +138,12 @@
                 return this.View(model);
             }
 
-            var userId = this.User.GetId();
-
-            var chekUser = this.ticketService.ChekIfUserIsAuthorizedToEdit(ticketId, userId, this.userService.GetUserRole(this.User));
-
-            if (chekUser == false)
-            {
-                return this.BadRequest();
-            }
-
             try
             {
-                await this.ticketService.EditTicketAsync(model, userId);
+                var userId = this.User.GetId();
+                var userRole = this.userService.GetUserRole(this.User);
+
+                await this.ticketService.EditTicketAsync(model, userId, userRole);
 
                 return this.Redirect($"/Tickets/Ticket?{ticketId}");
             }

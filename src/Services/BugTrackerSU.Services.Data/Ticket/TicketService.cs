@@ -66,11 +66,6 @@
 
         public bool ChekIfUserIsAuthorizedToEdit(int ticketId, string userId, string role)
         {
-            if (role == "Administrator")
-            {
-                return true;
-            }
-
             var ticket = this.ticketRepository
                 .All()
                 .Where(x => x.Id == ticketId)
@@ -107,21 +102,51 @@
             await this.ticketRepository.SaveChangesAsync();
         }
 
-        public async Task EditTicketAsync(EditTicketViewModel model, string userId)
+        public async Task EditTicketAsync(EditTicketViewModel model, string userId, string roleName)
         {
-            var ticket = this.ticketRepository.All().Where(x => x.Id == model.TicketId).FirstOrDefault();
-            ticket.AssignedDeveloperId = model.DeveloperId;
-            ticket.Priority = model.Priority.ToString();
-            ticket.TicketType = model.TicketType.ToString();
-            ticket.Status = model.Status.ToString();
+            if (roleName == GlobalConstants.AdministratorRoleName)
+            {
+                var ticket = this.ticketRepository.All().Where(x => x.Id == model.TicketId).FirstOrDefault();
 
-            this.ticketRepository.Update(ticket);
-            await this.ticketRepository.SaveChangesAsync();
+                if (ticket == null)
+                {
+                    throw new NullReferenceException();
+                }
+                else
+                {
+                    ticket.AssignedDeveloperId = model.DeveloperId;
+                    ticket.Priority = model.Priority.ToString();
+                    ticket.TicketType = model.TicketType.ToString();
+                    ticket.Status = model.Status.ToString();
+
+                    this.ticketRepository.Update(ticket);
+                    await this.ticketRepository.SaveChangesAsync();
+                }
+            }
+            else
+            {
+                if (this.ChekIfUserIsAuthorizedToEdit(model.TicketId, userId, roleName))
+                {
+                    var ticket = this.ticketRepository.All().Where(x => x.Id == model.TicketId).FirstOrDefault();
+
+                    ticket.AssignedDeveloperId = model.DeveloperId;
+                    ticket.Priority = model.Priority.ToString();
+                    ticket.TicketType = model.TicketType.ToString();
+                    ticket.Status = model.Status.ToString();
+
+                    this.ticketRepository.Update(ticket);
+                    await this.ticketRepository.SaveChangesAsync();
+                }
+                else
+                {
+                    throw new ArgumentException();
+                }
+            }
         }
 
         public AllTicketsViewModel GetAllUserTickets(string userId, string userRole, int pageNumber, int itemsPerPage)
         {
-            if (userRole == "Administrator")
+            if (userRole == GlobalConstants.AdministratorRoleName)
             {
                 var adminTickets = this.ticketRepository
                .All()
@@ -154,7 +179,7 @@
                 return adminModel;
             }
 
-            if (userRole == "Project Manager")
+            if (userRole == GlobalConstants.ProjectManagerRoleName)
             {
                 var projectManagerTickets = this.ticketRepository
                .All()
@@ -264,13 +289,13 @@
 
         public int GetUserTicketsCount(string userId, string userRole)
         {
-            if (userRole == "Administrator")
+            if (userRole == GlobalConstants.AdministratorRoleName)
             {
                 int adminTicketsCount = this.ticketRepository.All().Count();
 
                 return adminTicketsCount;
             }
-            else if (userRole == "Project Manager")
+            else if (userRole == GlobalConstants.ProjectManagerRoleName)
             {
                 int managerTicketsCount = this.ticketRepository.All().Where(x => x.Project.ProjectManagerId == userId).Count();
 

@@ -72,19 +72,50 @@
 
         }
 
-        public async Task EditCategoryAsync(EditCategoryFormModel model, int categoryId)
+        public async Task EditCategoryAsync(EditCategoryFormModel model, int categoryId, string userId, string userRole)
         {
-            var category = this.categoryRepository
-                .All()
-                .Where(x => x.Id == categoryId)
-                .FirstOrDefault();
+            if (userRole == GlobalConstants.AdministratorRoleName)
+            {
+                var adminCategory = this.categoryRepository
+               .All()
+               .Where(x => x.Id == categoryId)
+               .FirstOrDefault();
 
-            category.Name = model.Name;
-            category.Description = model.Description;
-            category.ImageUrl = model.ImageUrl;
+                if (adminCategory == null)
+                {
+                    throw new NullReferenceException();
+                }
+                else
+                {
+                    adminCategory.Name = model.Name;
+                    adminCategory.Description = model.Description;
+                    adminCategory.ImageUrl = model.ImageUrl;
 
-            this.categoryRepository.Update(category);
-            await this.categoryRepository.SaveChangesAsync();
+                    this.categoryRepository.Update(adminCategory);
+                    await this.categoryRepository.SaveChangesAsync();
+                }
+            }
+            else
+            {
+                var userCategory = this.categoryRepository
+               .All()
+               .Where(x => x.Id == categoryId && x.AddedByUserId == userId)
+               .FirstOrDefault();
+
+                if (userCategory == null)
+                {
+                    throw new NullReferenceException();
+                }
+                else
+                {
+                    userCategory.Name = model.Name;
+                    userCategory.Description = model.Description;
+                    userCategory.ImageUrl = model.ImageUrl;
+
+                    this.categoryRepository.Update(userCategory);
+                    await this.categoryRepository.SaveChangesAsync();
+                }
+            }
         }
 
         public AllCategoriesViewModel GetAllCategories(int pageNumber, int itemsPerPage)

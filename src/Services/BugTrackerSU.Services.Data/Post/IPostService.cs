@@ -14,7 +14,7 @@
 
         Task CreatePostAsync(CreatePostFormModel model, string userId);
 
-        Task EditPostAsync(EditPostFormModel model, string userId);
+        Task EditPostAsync(EditPostFormModel model, string userId, string roleName);
 
         PostViewModel GetPostById(int id);
 
