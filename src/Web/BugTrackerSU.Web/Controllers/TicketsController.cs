@@ -38,7 +38,7 @@
         {
             var userId = this.User.GetId();
 
-            var chekUser = this.ticketService.ChekIfUserIsAuthorizedToCreateTicket(id, userId, this.userService.GetUserRole(this.User));
+            var chekUser = await this.ticketService.ChekIfUserIsAuthorizedToCreateTicket(id, userId, this.userService.GetUserRole(this.User));
 
             if (chekUser == false)
             {
@@ -60,7 +60,7 @@
         {
             var userId = this.User.GetId();
 
-            var chekUser = this.ticketService.ChekIfUserIsAuthorizedToCreateTicket(id, userId, this.userService.GetUserRole(this.User));
+            var chekUser = await this.ticketService.ChekIfUserIsAuthorizedToCreateTicket(id, userId, this.userService.GetUserRole(this.User));
 
             if (chekUser == false)
             {
@@ -90,13 +90,13 @@
 
         [HttpGet]
         [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
-        public IActionResult MyTickets(int id = 1)
+        public async Task<IActionResult> MyTickets(int id = 1)
         {
             var userRole = this.userService.GetUserRole(this.User);
 
             var userId = this.User.GetId();
 
-            var model = this.ticketService.GetAllUserTickets(userId, userRole, id, this.itemsPerPage);
+            var model = await this.ticketService.GetAllUserTickets(userId, userRole, id, this.itemsPerPage);
 
             return this.View(model);
         }
@@ -107,7 +107,7 @@
         {
             try
             {
-                var chekUser = this.ticketService.ChekIfUserIsAuthorizedToEdit(ticketId, this.User.GetId(), this.userService.GetUserRole(this.User));
+                var chekUser = await this.ticketService.ChekIfUserIsAuthorizedToEdit(ticketId, this.User.GetId(), this.userService.GetUserRole(this.User));
 
                 if (chekUser == false)
                 {
@@ -154,9 +154,9 @@
         }
 
         [HttpGet]
-        public IActionResult Ticket(int id)
+        public async Task<IActionResult> Ticket(int id)
         {
-            var model = this.ticketService.GetTicketDetailsById(id);
+            var model = await this.ticketService.GetTicketDetailsById(id);
 
             return this.View(model);
         }

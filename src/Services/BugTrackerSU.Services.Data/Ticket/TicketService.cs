@@ -1,23 +1,19 @@
 ﻿namespace BugTrackerSU.Services.Data.Ticket
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using BugTrackerSU.Common;
     using BugTrackerSU.Data.Common.Repositories;
     using BugTrackerSU.Data.Models;
-    using BugTrackerSU.Web.ViewModels.Comments;
     using BugTrackerSU.Web.ViewModels.Tickets;
     using Microsoft.EntityFrameworkCore;
 
     public class TicketService : ITicketService
     {
         private readonly IDeletableEntityRepository<Project> projectRepository;
-        private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
         private readonly IDeletableEntityRepository<Ticket> ticketRepository;
-
 
         public TicketService(
             IDeletableEntityRepository<Project> projectRepository,
@@ -25,11 +21,10 @@
             IDeletableEntityRepository<Ticket> ticketRepository)
         {
             this.projectRepository = projectRepository;
-            this.userRepository = userRepository;
             this.ticketRepository = ticketRepository;
         }
 
-        public bool ChekIfUserIsAuthorizedToCreateTicket(int projectId, string userId, string role)
+        public async Task<bool> ChekIfUserIsAuthorizedToCreateTicket(int projectId, string userId, string role)
         {
             if (role == GlobalConstants.AdministratorRoleName)
             {
@@ -41,11 +36,11 @@
             }
             else if (role == GlobalConstants.SubmitterRoleName)
             {
-                var chekIfProjectContainsUser = this.projectRepository
+                var chekIfProjectContainsUser = await this.projectRepository
                     .All()
                     .Where(x => x.Id == projectId)
                     .Where(x => x.ProjectUsers.Any(x => x.ApplicationUserId == userId))
-                    .FirstOrDefault();
+                    .FirstOrDefaultAsync();
 
                 if (chekIfProjectContainsUser == null)
                 {
@@ -75,15 +70,15 @@
             }
         }
 
-        public bool ChekIfUserIsAuthorizedToEdit(int ticketId, string userId, string role)
+        public async Task<bool> ChekIfUserIsAuthorizedToEdit(int ticketId, string userId, string role)
         {
-            var ticket = this.ticketRepository
+            var ticket = await this.ticketRepository
                 .All()
                 .Where(x => x.Id == ticketId)
                 .Where(x => x.TicketSubmitterId == userId
                 || x.AssignedDeveloperId == userId
                 || x.Project.ProjectManagerId == userId)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             if (ticket == null)
             {
@@ -136,7 +131,7 @@
             }
             else
             {
-                if (this.ChekIfUserIsAuthorizedToEdit(model.TicketId, userId, roleName))
+                if (await this.ChekIfUserIsAuthorizedToEdit(model.TicketId, userId, roleName))
                 {
                     var ticket = this.ticketRepository.All().Where(x => x.Id == model.TicketId).FirstOrDefault();
 
@@ -155,11 +150,11 @@
             }
         }
 
-        public AllTicketsViewModel GetAllUserTickets(string userId, string userRole, int pageNumber, int itemsPerPage)
+        public async Task<AllTicketsViewModel> GetAllUserTickets(string userId, string userRole, int pageNumber, int itemsPerPage)
         {
             if (userRole == GlobalConstants.AdministratorRoleName)
             {
-                var adminTickets = this.ticketRepository
+                var adminTickets = await this.ticketRepository
                .All()
                .OrderByDescending(x => x.Id)
                .Skip((pageNumber - 1) * itemsPerPage)
@@ -177,22 +172,21 @@
                    SubmiterId = x.AssignedDeveloperId,
                    ProjectManagerId = x.Project.ProjectManagerId,
                })
-               .ToList();
+               .ToListAsync();
 
                 var adminModel = new AllTicketsViewModel
                 {
                     PageNumber = pageNumber,
                     Tickets = adminTickets,
                     ItemsPerPage = itemsPerPage,
-                    ItemsCount = this.GetUserTicketsCount(userId, userRole),
+                    ItemsCount = await this.GetUserTicketsCount(userId, userRole),
                 };
 
                 return adminModel;
             }
-
-            if (userRole == GlobalConstants.ProjectManagerRoleName)
+            else if (userRole == GlobalConstants.ProjectManagerRoleName)
             {
-                var projectManagerTickets = this.ticketRepository
+                var projectManagerTickets = await this.ticketRepository
                .All()
                .Where(x => x.Project.ProjectManagerId == userId)
                .OrderByDescending(x => x.Id)
@@ -209,20 +203,21 @@
                    SubmiterId = x.AssignedDeveloperId,
                    ProjectManagerId = x.Project.ProjectManagerId,
                })
-               .ToList();
+               .ToListAsync();
 
                 var projectMangerModel = new AllTicketsViewModel
                 {
                     PageNumber = pageNumber,
                     Tickets = projectManagerTickets,
                     ItemsPerPage = itemsPerPage,
-                    ItemsCount = this.GetUserTicketsCount(userId, userRole),
+                    ItemsCount = await this.GetUserTicketsCount(userId, userRole),
                 };
 
                 return projectMangerModel;
             }
-
-            var tickets = this.ticketRepository
+            else
+            {
+                var tickets = await this.ticketRepository
                 .All()
                 .Where(x => x.AssignedDeveloperId == userId || x.TicketSubmitterId == userId)
                 .OrderByDescending(x => x.Id)
@@ -239,22 +234,24 @@
                     SubmiterId = x.AssignedDeveloperId,
                     ProjectManagerId = x.Project.ProjectManagerId,
                 })
-                .ToList();
+                .ToListAsync();
 
-            var model = new AllTicketsViewModel
-            {
-                PageNumber = pageNumber,
-                Tickets = tickets,
-                ItemsPerPage = itemsPerPage,
-                ItemsCount = this.GetUserTicketsCount(userId, userRole),
-            };
 
-            return model;
+                var model = new AllTicketsViewModel
+                {
+                    PageNumber = pageNumber,
+                    Tickets = tickets,
+                    ItemsPerPage = itemsPerPage,
+                    ItemsCount = await this.GetUserTicketsCount(userId, userRole),
+                };
+
+                return model;
+            }
         }
 
-        public TicketDetailsViewModel GetTicketDetailsById(int ticketId)
+        public async Task<TicketDetailsViewModel> GetTicketDetailsById(int ticketId)
         {
-            var ticketDetails = this.ticketRepository
+            var ticketDetails = await this.ticketRepository
                 .All()
                 .Where(x => x.Id == ticketId)
                 .Select(x => new TicketDetailsViewModel
@@ -272,14 +269,14 @@
                     TicketType = x.TicketType,
                     CreatedOn = x.CreatedOn,
                 })
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             return ticketDetails;
         }
 
-        public TicketViewModel GetTicketById(int ticketId)
+        public async Task<TicketViewModel> GetTicketById(int ticketId)
         {
-            var ticket = this.ticketRepository
+            var ticket = await this.ticketRepository
                 .All()
                 .Where(x => x.Id == ticketId)
                 .Select(x => new TicketViewModel
@@ -293,32 +290,34 @@
                     SubmiterId = x.AssignedDeveloperId,
                     ProjectManagerId = x.Project.ProjectManagerId,
                 })
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             return ticket;
         }
 
-        public int GetUserTicketsCount(string userId, string userRole)
+        public async Task<int> GetUserTicketsCount(string userId, string userRole)
         {
             if (userRole == GlobalConstants.AdministratorRoleName)
             {
-                int adminTicketsCount = this.ticketRepository.All().Count();
+                int adminTicketsCount = await this.ticketRepository.All().CountAsync();
 
                 return adminTicketsCount;
             }
             else if (userRole == GlobalConstants.ProjectManagerRoleName)
             {
-                int managerTicketsCount = this.ticketRepository.All().Where(x => x.Project.ProjectManagerId == userId).Count();
+                int managerTicketsCount = await this.ticketRepository.All().Where(x => x.Project.ProjectManagerId == userId).CountAsync();
 
                 return managerTicketsCount;
             }
-
-            int count = this.ticketRepository
+            else
+            {
+                int count = await this.ticketRepository
                 .All()
                 .Where(x => x.TicketSubmitterId == userId || x.AssignedDeveloperId == userId)
-                .Count();
+                .CountAsync();
 
-            return count;
+                return count;
+            }
         }
     }
 }

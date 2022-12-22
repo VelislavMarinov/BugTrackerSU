@@ -9,18 +9,18 @@
     {
         Task CreateTicketAsync(CreateTicketViewModel model, string userId);
 
-        int GetUserTicketsCount(string userId, string userRole);
+        Task<int> GetUserTicketsCount(string userId, string userRole);
 
-        AllTicketsViewModel GetAllUserTickets(string userId, string role, int pageNumber, int itemPerPage);
+        Task<AllTicketsViewModel> GetAllUserTickets(string userId, string role, int pageNumber, int itemPerPage);
 
         Task EditTicketAsync(EditTicketViewModel model, string userId, string roleName);
 
-        TicketDetailsViewModel GetTicketDetailsById(int ticketId);
+        Task<TicketDetailsViewModel> GetTicketDetailsById(int ticketId);
 
-        TicketViewModel GetTicketById(int ticketId);
+        Task<TicketViewModel> GetTicketById(int ticketId);
 
-        bool ChekIfUserIsAuthorizedToEdit(int ticketId, string userId, string role);
+        Task<bool> ChekIfUserIsAuthorizedToEdit(int ticketId, string userId, string role);
 
-        bool ChekIfUserIsAuthorizedToCreateTicket(int projectId, string userId, string role);
+        Task<bool> ChekIfUserIsAuthorizedToCreateTicket(int projectId, string userId, string role);
     }
 }

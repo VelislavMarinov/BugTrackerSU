@@ -71,7 +71,7 @@
             {
                 await this.minorTaskService.CreateMinorTaskAsync(model, userId);
 
-                return this.Redirect("/MinorTasks/TicketTasks");
+                return this.RedirectToAction("TicketTasks", "MinorTasks");
             }
             catch (Exception ex)
             {

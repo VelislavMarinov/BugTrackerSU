@@ -100,7 +100,7 @@
 
             var model = new AllMinorTaskViewModel()
             {
-                TicketInfo = this.ticketService.GetTicketById(ticketId),
+                TicketInfo = await this.ticketService.GetTicketById(ticketId),
                 TicketId = ticketId,
                 PageNumber = pageNumber,
                 ItemsPerPage = itemsPerPage,
