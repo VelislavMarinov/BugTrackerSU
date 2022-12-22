@@ -36,7 +36,7 @@
 
         [HttpGet]
         [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             var model = new CreatePostFormModel()
             {
@@ -73,7 +73,7 @@
 
         [HttpGet]
         [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             try
             {
@@ -81,7 +81,7 @@
 
                 var roleName = this.userService.GetUserRole(this.User);
 
-                if (this.postService.ChekIfUserIsAuthorizedToEditPost(id, userId, roleName))
+                if (await this.postService.ChekIfUserIsAuthorizedToEditPost(id, userId, roleName))
                 {
                     return this.Forbid();
                 }
@@ -123,9 +123,9 @@
 
         [HttpGet]
         [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
-        public IActionResult All(int id = 1)
+        public async Task<IActionResult> All(int id = 1)
         {
-            var model = this.postService.GetPosts(id, this.itemsPerPage);
+            var model = await this.postService.GetPosts(id, this.itemsPerPage);
 
             return this.View(model);
         }

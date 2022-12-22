@@ -4,11 +4,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using BugTrackerSU.Common;
     using BugTrackerSU.Data.Common.Repositories;
     using BugTrackerSU.Data.Models;
-    using BugTrackerSU.Web.ViewModels.Comments;
     using BugTrackerSU.Web.ViewModels.Posts;
+    using Microsoft.EntityFrameworkCore;
 
     public class PostService : IPostService
     {
@@ -26,14 +27,14 @@
             this.commentRepository = commentRepository;
         }
 
-        public bool ChekIfUserIsAuthorizedToEditPost(int postId, string userId, string roleName)
+        public async Task<bool> ChekIfUserIsAuthorizedToEditPost(int postId, string userId, string roleName)
         {
             if (roleName == GlobalConstants.AdministratorRoleName)
             {
                 return true;
             }
 
-            return this.postRepository.All().Any(x => x.Id == postId && x.AddedByUserId == userId);
+            return await this.postRepository.All().AnyAsync(x => x.Id == postId && x.AddedByUserId == userId);
         }
 
         public async Task CreatePostAsync(CreatePostFormModel model, string userId)
@@ -132,9 +133,9 @@
             }
         }
 
-        public PostViewModel GetPostById(int id)
+        public async Task<PostViewModel> GetPostById(int id)
         {
-            var post = this.postRepository
+            var post = await this.postRepository
                .All()
                .Where(x => x.Id == id)
                .Select(x => new PostViewModel
@@ -147,14 +148,14 @@
                    AddedByUserUserName = x.AddedByUser.UserName,
                    CreatedOn = x.CreatedOn,
                })
-               .FirstOrDefault();
+               .FirstOrDefaultAsync();
 
             return post;
         }
 
-        public AllPostsViewModel GetPosts(int pageNumber, int itemsPerPage)
+        public async Task<AllPostsViewModel> GetPosts(int pageNumber, int itemsPerPage)
         {
-            var post = this.postRepository
+            var post = await this.postRepository
                .All()
                .OrderByDescending(x => x.Id)
                .Skip((pageNumber - 1) * itemsPerPage)
@@ -169,22 +170,22 @@
                    AddedByUserUserName = x.AddedByUser.UserName,
                    CreatedOn = x.CreatedOn,
                })
-               .ToList();
+               .ToListAsync();
 
             var model = new AllPostsViewModel()
             {
                 PageNumber = pageNumber,
                 ItemsPerPage = itemsPerPage,
-                ItemsCount = this.GetPostsCount(),
+                ItemsCount = await this.GetPostsCount(),
                 Posts = post,
             };
 
             return model;
         }
 
-        public List<PostViewModel> GetPostsByProjectId(int projectId)
+        public async Task<List<PostViewModel>> GetPostsByProjectId(int projectId)
         {
-            var post = this.postRepository
+            var post = await this.postRepository
               .All()
               .Where(x => x.ProjectId == projectId)
               .Select(x => new PostViewModel
@@ -197,11 +198,11 @@
                   AddedByUserUserName = x.AddedByUser.UserName,
                   CreatedOn = x.CreatedOn,
               })
-              .ToList();
+              .ToListAsync();
 
             return post;
         }
 
-        public int GetPostsCount() => this.postRepository.All().Count();
+        public async Task<int> GetPostsCount() => await this.postRepository.All().CountAsync();
     }
 }

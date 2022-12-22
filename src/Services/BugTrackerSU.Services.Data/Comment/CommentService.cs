@@ -98,7 +98,7 @@
             var model = new PostCommentsViewModel
             {
                 Comments = comments,
-                PostViewModel = this.postService.GetPostById(postId),
+                PostViewModel = await this.postService.GetPostById(postId),
                 CreatePostCommentFormModel = new CreatePostCommentFormModel
                 {
                     PostId = postId,

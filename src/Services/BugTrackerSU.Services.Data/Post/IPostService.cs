@@ -2,13 +2,14 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+
     using BugTrackerSU.Web.ViewModels.Posts;
 
     public interface IPostService
     {
-        AllPostsViewModel GetPosts(int pageNumber, int itemsPerPage);
+        Task<AllPostsViewModel> GetPosts(int pageNumber, int itemsPerPage);
 
-        List<PostViewModel> GetPostsByProjectId(int projectId);
+        Task<List<PostViewModel>> GetPostsByProjectId(int projectId);
 
         Task DeletePostAsync(int postId, string userId, string roleName);
 
@@ -16,10 +17,10 @@
 
         Task EditPostAsync(EditPostFormModel model, string userId, string roleName);
 
-        PostViewModel GetPostById(int id);
+        Task<PostViewModel> GetPostById(int id);
 
-        bool ChekIfUserIsAuthorizedToEditPost(int postId, string userId, string roleName);
+        Task<bool> ChekIfUserIsAuthorizedToEditPost(int postId, string userId, string roleName);
 
-        int GetPostsCount();
+        Task<int> GetPostsCount();
     }
 }
