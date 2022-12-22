@@ -26,6 +26,26 @@
             this.categoryRepository = categoryRepository;
         }
 
+        public string GetEmbedYouTubeLink(string rawLink)
+        {
+            var result = string.Empty;
+            if (rawLink.Contains("watch"))
+            {
+                var source1 = rawLink.Split("watch")[0];
+                var source2 = rawLink.Split("=")[1];
+                var source3 = source2.Split("&")[0];
+                result = source1 + "embed/" + source3;
+            }
+            else if (rawLink.Contains("youtu.be"))
+            {
+                var source1 = rawLink.Split("youtu.be/")[0];
+                var source2 = rawLink.Split("youtu.be/")[1];
+                result = source1 + "www.youtube.com/embed/" + source2;
+            }
+
+            return result;
+        }
+
         public async Task<int> ArticlesCountByCategoryId(int categoryId) => await this.articleRepository.All().Where(x => x.CategoryId == categoryId).CountAsync();
 
         public async Task CreateArticleAsync(CreateArticleFormModel model, string userId)
@@ -35,7 +55,7 @@
                 Name = model.Name,
                 Description = model.Description,
                 ImageUrl = model.ImageUrl,
-                VideoUrl = model.VideoUrl,
+                VideoUrl = this.GetEmbedYouTubeLink(model.VideoUrl),
                 AddedByUserId = userId,
                 CategoryId = model.CategoryId,
             };
@@ -100,7 +120,7 @@
                     adminArticle.Name = model.Name;
                     adminArticle.Description = model.Description;
                     adminArticle.ImageUrl = model.ImageUrl;
-                    adminArticle.VideoUrl = model.VideoUrl;
+                    adminArticle.VideoUrl = this.GetEmbedYouTubeLink(model.VideoUrl);
                     adminArticle.CategoryId = model.CategoryId;
 
                     this.articleRepository.Update(adminArticle);
@@ -123,7 +143,7 @@
                     userArticle.Name = model.Name;
                     userArticle.Description = model.Description;
                     userArticle.ImageUrl = model.ImageUrl;
-                    userArticle.VideoUrl = model.VideoUrl;
+                    userArticle.VideoUrl = this.GetEmbedYouTubeLink(model.VideoUrl);
                     userArticle.CategoryId = model.CategoryId;
 
                     this.articleRepository.Update(userArticle);

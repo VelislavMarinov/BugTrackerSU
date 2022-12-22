@@ -22,6 +22,7 @@
         [Display(Name = "Type of Task")]
         public TaskType TaskType { get; set; }
 
+        [Required]
         public int TicketId { get; set; }
     }
 }

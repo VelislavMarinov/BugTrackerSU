@@ -7,6 +7,8 @@
 
     public interface IArticleService
     {
+        string GetEmbedYouTubeLink(string rawLink);
+
         Task<ICollection<ArticleCategoryViewModel>> GetAllCategories();
 
         Task CreateArticleAsync(CreateArticleFormModel model, string userId);

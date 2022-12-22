@@ -89,6 +89,7 @@
                 .Take(itemsPerPage)
                 .Select(x => new MinorTaskViewModel
                 {
+                    AddebyUser = x.AddedByUser.UserName,
                     TaskType = x.Type,
                     Title = x.Title,
                     Content = x.Content,

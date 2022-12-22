@@ -18,20 +18,21 @@
 <div class="card text-dark">
     <div class="card-body p-4">
                 <div class="d-fle mb-2 ">
-                     <h4 class="fw-bold mb-1"><i class="fas fa-project-diagram"></i> @Model.TicketInfo.Title</h4>
+                     <h4 class="fw-bold mb-1">Ticket title: @Model.TicketInfo.Title</h4>
+                     <h5>Description: @Model.TicketInfo.Description</h5>
                 </div>
-                            <a asp-controller="Tickets"
-                             asp-action="Ticket"
-                             asp-route-id="@Model.TicketId"
-                             class="btn btn-primary">
-                             Ticket Details
-                            </a>
-                            <a asp-controller="MinorTasks"
-                             asp-action="Create"
-                             asp-route-ticketId="@Model.TicketId"
-                             class="btn btn-primary">
-                             Create Task
-                            </a>
+                <a asp-controller="Tickets"
+                    asp-action="Ticket"
+                    asp-route-id="@Model.TicketId"
+                    class="btn btn-primary">
+                    Ticket Details
+                </a>
+                <a asp-controller="MinorTasks"
+                    asp-action="Create"
+                    asp-route-ticketId="@Model.TicketId"
+                    class="btn btn-primary">
+                    Create Task
+                </a>
     </div>
 </div> 
 
@@ -50,11 +51,16 @@
                     <p class="card-text">Content With supporting text below as a natural lead-in to additional content.</p>
                     @if(task.TaskType == "Task")
                     {
+                        @if(task.Started == true && task.Finished == false)
+                        {
+                           <strong>Task is Started.</strong>
+                        }
+
                         @if (task.Started == false)
                         {
                             <a asp-controller="MinorTasks"
-                            asp-action="TaskStarted"
-                            asp-route-ticketId="@task.TaskId"
+                            asp-action="StartTask"
+                            asp-route-taskId="@task.TaskId"
                             class="btn btn-primary">
                             Start Task
                             </a>
@@ -62,8 +68,8 @@
                         else if (task.Finished == false)
                         {
                             <a asp-controller="MinorTasks"
-                             asp-action="TaskFinished"
-                             asp-route-ticketId="@task.TaskId"
+                             asp-action="FinishTask"
+                             asp-route-taskId="@task.TaskId"
                              class="btn btn-primary">
                              Finished
                             </a>

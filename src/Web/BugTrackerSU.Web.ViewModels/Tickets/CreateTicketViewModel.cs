@@ -28,11 +28,11 @@
 
         public ICollection<UserViewModel> AsignedProjectDevelopers { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "The field is required")]
         [Display(Name = "Assign developer")]
         public string DeveloperId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "The field is required")]
         public int ProjectId { get; set; }
 
         [Required(ErrorMessage = "The field is required")]

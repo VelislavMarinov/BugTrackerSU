@@ -19,7 +19,7 @@
         [MaxLength(PostContentMaxLength, ErrorMessage = "The content must have maximum {1} letters")]
         public string Content { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "The field is required")]
         [Display(Name = "Select Project")]
         public int ProjectId { get; set; }
 

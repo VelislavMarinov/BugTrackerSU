@@ -81,7 +81,7 @@
 
                 var roleName = this.userService.GetUserRole(this.User);
 
-                if (await this.postService.ChekIfUserIsAuthorizedToEditPost(id, userId, roleName))
+                if (!await this.postService.ChekIfUserIsAuthorizedToEditPost(id, userId, roleName))
                 {
                     return this.Forbid();
                 }
@@ -98,7 +98,7 @@
             }
         }
 
-        [HttpGet]
+        [HttpPost]
         [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
         public async Task<IActionResult> Edit(EditPostFormModel model)
         {
