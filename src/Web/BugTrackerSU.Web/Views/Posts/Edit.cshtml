@@ -1,9 +1,9 @@
 ﻿@using BugTrackerSU.Data.Models.Enums
 @using BugTrackerSU.Web.ViewModels.Posts
-@model CreatePostFormModel
+@model EditPostFormModel
 
 @{
-    ViewData["Title"] = "Create Post";
+    ViewData["Title"] = "Edit Post";
 }
 
 <nav aria-label="breadcrumb" class="main-breadcrumb">
@@ -17,8 +17,8 @@
 <div class="container">
           <div class="row justify-content-center">
             <div class="col-xl-8 col-md-6">
-              <form method="post" class="bg-dark rounded-5 shadow-5-strong p-5">
-                <h1 class="text-center text-light">@ViewData["Title"]</h1>\
+              <form method="Post" asp-controller="Posts" asp-action="Edit" asp-route-postId="@Model.PostId" class="bg-dark  rounded-5 shadow-5-strong p-5">
+                <h1 class="text-center text-light">@ViewData["Title"]</h1>
                 <br />
                 <!-- Title input -->
                 <div class="form-outline mb-4">
@@ -33,16 +33,6 @@
                   <input asp-for="Content" placeholder="Post Content" class="form-control">
                   <span asp-validation-for="Content" class="text-danger small"></span>
                 <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 88.8px;"></div><div class="form-notch-trailing"></div></div></div>
-
-               <div class="form-group">
-                    <label asp-for="ProjectId" class="text-light"></label>
-                    <select asp-for="ProjectId" class="form-control">
-                     @foreach (var project in Model.Projects)
-                     {
-                        <option value="@project.ProjectId">@project.Title</option>
-                     }
-                    </select>
-                </div>
 
                 <button type="submit" class="btn btn-primary btn-block">@ViewData["Title"]</button>
               </form>

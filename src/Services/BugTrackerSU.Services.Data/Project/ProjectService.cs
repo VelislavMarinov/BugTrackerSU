@@ -74,7 +74,7 @@
                 .Select(x => new ProjectViewModel
                 {
                     Title = x.Title,
-                    Descripiton = x.Description,
+                    Description = x.Description,
                     ProjectId = x.Id,
                     CreatedOn = x.CreatedOn,
                 })
@@ -101,7 +101,7 @@
                .Select(x => new ProjectViewModel
                {
                    Title = x.Title,
-                   Descripiton = x.Description,
+                   Description = x.Description,
                    ProjectId = x.Id,
                    CreatedOn = x.CreatedOn,
                })
@@ -227,7 +227,7 @@
                 {
                     ProjectId = x.Id,
                     Title = x.Title,
-                    Descripiton = x.Description,
+                    Description = x.Description,
                     CreatedOn = x.CreatedOn,
                 })
                 .ToListAsync();

@@ -71,7 +71,7 @@
             {
                 await this.minorTaskService.CreateMinorTaskAsync(model, userId);
 
-                return this.RedirectToAction("TicketTasks", "MinorTasks");
+                return this.RedirectToAction("TicketTasks", "MinorTasks", new { ticketId = model.TicketId });
             }
             catch (Exception ex)
             {
@@ -99,19 +99,19 @@
         }
 
         [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
-        public async Task<IActionResult> StartTask(int taskId)
+        public async Task<IActionResult> StartTask(int taskId, int ticketId)
         {
             await this.minorTaskService.StartTask(taskId);
 
-            return this.RedirectToAction("MyTickets", "Tickets");
+            return this.RedirectToAction("TicketTasks", "MinorTasks", new { ticketId = ticketId });
         }
 
         [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
-        public async Task<IActionResult> FinishTask(int taskId)
+        public async Task<IActionResult> FinishTask(int taskId, int ticketId)
         {
-            await this.minorTaskService.StartTask(taskId);
+            await this.minorTaskService.FinishTask(taskId);
 
-            return this.RedirectToAction("MyTickets", "Tickets");
+            return this.RedirectToAction("TicketTasks", "MinorTasks", new { ticketId = ticketId });
         }
     }
 }

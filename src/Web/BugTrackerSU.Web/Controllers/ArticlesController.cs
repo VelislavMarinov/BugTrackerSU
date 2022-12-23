@@ -134,9 +134,9 @@
         }
 
         [HttpGet]
-        public IActionResult Article(int id)
+        public async Task<IActionResult> Article(int id)
         {
-            var article = this.articleService.GetArticleById(id);
+            var article = await this.articleService.GetArticleById(id);
             return this.View(article);
         }
 

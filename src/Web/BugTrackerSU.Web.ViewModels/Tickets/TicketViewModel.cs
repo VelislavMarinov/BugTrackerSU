@@ -18,6 +18,8 @@
 
         public string Description { get; set; }
 
+        public string ShortDescription => this.Description?.Length > 20 ? this.Description?.Substring(0, 20) + "…" : this.Description;
+
         public DateTime CreatedOn { get; set; }
 
         public string DeveloperName { get; set; }

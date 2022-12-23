@@ -57,26 +57,26 @@
           <p class="card-text">
             Added by: @article.CreatedBy
           </p>
-
-          <br/>
-           <a asp-controller="Articles"
-             asp-action="Article"
-             asp-route-Id="@article.Id"
-             class="btn btn-primary">
-             Show more
-          </a>
+         
         @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName) 
         || @article.CreatedById == this.User.GetId())
         {        
+           <form class="align-content-lg-around" method="post" asp-controller="Articles" asp-action="Delete" asp-route-id="@article.Id">
+           <button class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal">Delete</button></form>
+           <br />
           <a asp-controller="Articles"
              asp-action="Edit"
              asp-route-id="@article.Id"
              class="btn btn-primary">
              Edit
           </a>
-           <form class="align-content-lg-around" method="post" asp-controller="Articles" asp-action="Delete" asp-route-id="@article.Id">
-           <button class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal">Delete</button></form>
         }
+        <a asp-controller="Articles"
+             asp-action="Article"
+             asp-route-Id="@article.Id"
+             class="btn btn-primary">
+             Show more
+          </a>
         </div>
      </div>
 

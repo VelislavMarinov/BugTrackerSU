@@ -95,6 +95,7 @@
                     Content = x.Content,
                     Finished = x.Finished,
                     Started = x.Started,
+                    TaskId = x.Id,
                 })
                 .ToListAsync();
 

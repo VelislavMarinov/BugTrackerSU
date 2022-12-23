@@ -63,7 +63,7 @@
 
                 await this.postService.CreatePostAsync(model, userId);
 
-                return this.Redirect("/Post/All");
+                return this.RedirectToAction("All", "Posts");
             }
             catch (Exception ex)
             {
@@ -100,7 +100,7 @@
 
         [HttpPost]
         [Authorize(Roles = GlobalConstants.AllRolesAuthorized)]
-        public async Task<IActionResult> Edit(EditPostFormModel model)
+        public async Task<IActionResult> Edit(EditPostFormModel model, int postId)
         {
             if (!this.ModelState.IsValid)
             {
@@ -113,7 +113,7 @@
                 var userRole = this.userService.GetUserRole(this.User);
 
                 await this.postService.EditPostAsync(model, userId, userRole);
-                return this.View(model);
+                return this.RedirectToAction("All", "Posts");
             }
             catch (Exception ex)
             {

@@ -145,7 +145,7 @@
 
                 await this.ticketService.EditTicketAsync(model, userId, userRole);
 
-                return this.RedirectToAction("Ticket", "Tickets", new { ticketId = ticketId });
+                return this.RedirectToAction("Ticket", "Tickets", new { id = ticketId });
             }
             catch (Exception ex)
             {

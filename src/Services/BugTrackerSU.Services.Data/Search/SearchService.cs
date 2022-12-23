@@ -63,7 +63,7 @@
                 .Select(x => new ProjectViewModel
                 {
                     Title = x.Title,
-                    Descripiton = x.Description,
+                    Description = x.Description,
                     ProjectId = x.Id,
                     CreatedOn = x.CreatedOn,
                 })
@@ -81,7 +81,7 @@
                 .Select(x => new ProjectViewModel
                 {
                     Title = x.Title,
-                    Descripiton = x.Description,
+                    Description = x.Description,
                     ProjectId = x.Id,
                     CreatedOn = x.CreatedOn,
                 })

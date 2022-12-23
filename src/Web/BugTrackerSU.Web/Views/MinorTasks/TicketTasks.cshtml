@@ -48,7 +48,7 @@
                   </div>
                   <div class="card-body">
                     <p class="card-text">Added by: @task.AddebyUser</p>
-                    <p class="card-text">Content With supporting text below as a natural lead-in to additional content.</p>
+                    <p class="card-text">Comtent: @task.Content</p>
                     @if(task.TaskType == "Task")
                     {
                         @if(task.Started == true && task.Finished == false)
@@ -61,6 +61,7 @@
                             <a asp-controller="MinorTasks"
                             asp-action="StartTask"
                             asp-route-taskId="@task.TaskId"
+                            asp-route-ticketId="@Model.TicketId"
                             class="btn btn-primary">
                             Start Task
                             </a>
@@ -70,8 +71,9 @@
                             <a asp-controller="MinorTasks"
                              asp-action="FinishTask"
                              asp-route-taskId="@task.TaskId"
+                             asp-route-ticketId="@Model.TicketId"
                              class="btn btn-primary">
-                             Finished
+                             Finish
                             </a>
                         } else
                         {

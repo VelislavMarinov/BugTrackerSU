@@ -89,14 +89,14 @@
             }
         }
 
-        public async Task EditPostAsync(EditPostFormModel model, string userId , string userRole)
+        public async Task EditPostAsync(EditPostFormModel model, string userId, string userRole)
         {
             if (userRole == GlobalConstants.AdministratorRoleName)
             {
-                var adminPost = this.postRepository
+                var adminPost = await this.postRepository
                .All()
                .Where(x => x.Id == model.PostId)
-               .FirstOrDefault();
+               .FirstOrDefaultAsync();
 
                 if (adminPost == null)
                 {

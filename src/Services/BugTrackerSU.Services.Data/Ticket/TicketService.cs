@@ -72,6 +72,12 @@
 
         public async Task<bool> ChekIfUserIsAuthorizedToEdit(int ticketId, string userId, string role)
         {
+
+            if (role == GlobalConstants.AdministratorRoleName)
+            {
+                return true;
+            }
+
             var ticket = await this.ticketRepository
                 .All()
                 .Where(x => x.Id == ticketId)

@@ -31,6 +31,7 @@
                               new CategoriesSeeder(),
                               new ArticlesSeeder(),
                               new ProjectsSeeder(),
+                              new TicketsSeeder(),
                           };
 
             foreach (var seeder in seeders)
