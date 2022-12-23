@@ -93,7 +93,7 @@
                 return this.BadRequest();
             }
 
-            var projectDetails = this.projectService.GetProjectDetails(id);
+            var projectDetails = await this.projectService.GetProjectDetails(id);
 
             return this.View(projectDetails);
         }
