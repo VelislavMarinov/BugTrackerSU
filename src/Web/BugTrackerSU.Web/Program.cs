@@ -1,5 +1,6 @@
-﻿namespace BugTrackerSU.Web
+namespace BugTrackerSU.Web
 {
+    using System;
     using System.Reflection;
 
     using BugTrackerSU.Data;
@@ -35,9 +36,11 @@
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
             ConfigureServices(builder.Services, builder.Configuration);
             var app = builder.Build();
             Configure(app);
+            app.UseAuthentication(); ;
             app.Run();
         }
 
