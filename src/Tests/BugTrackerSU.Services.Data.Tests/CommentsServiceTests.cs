@@ -16,12 +16,6 @@
 
     public class CommentsServiceTests : BaseServicesTests
     {
-
-    //    Task<PostCommentsViewModel> GetCommentsByPostId(int postId, int pageNumber, int itemPerPage);
-
-    //    Task DeleteCommentAsync(int postId, string userId, string roleName);
-
-    //    Task<int> GetCommentsCountByPostId(int postId);
         [Fact]
         public async Task CreatePostCommentAsyncShouldWorkCorrectly()
         {
