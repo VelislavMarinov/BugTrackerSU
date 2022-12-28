@@ -45,7 +45,32 @@
 - Moq
   <br/><br/>
 
+  ## Database Diagram
+
+  <kbd><img src="https://github.com/VelislavMarinov/BugTrackerSU/blob/main/src/AppScreenShots/DatabaseDiagram.png?raw=true" /></kbd>
+  <br/><br/>
+
 ## 📸 Application screenshots
 
+<kbd><img src="https://github.com/VelislavMarinov/BugTrackerSU/blob/main/src/AppScreenShots/homescreeen.png?raw=true" /></kbd>
+<br/><br/>
+<kbd><img src="https://github.com/VelislavMarinov/BugTrackerSU/blob/main/src/AppScreenShots/Categoires.png?raw=true" /></kbd>
+<br/><br/>
+<kbd><img src="https://github.com/VelislavMarinov/BugTrackerSU/blob/main/src/AppScreenShots/Articles.png?raw=true" /></kbd>
+<br/><br/>
+<kbd><img src="https://github.com/VelislavMarinov/BugTrackerSU/blob/main/src/AppScreenShots/ArticleInfo.png?raw=true" /></kbd>
+<br/><br/>
+<kbd><img src="https://github.com/VelislavMarinov/BugTrackerSU/blob/main/src/AppScreenShots/Create.png?raw=true" /></kbd>
+<br/><br/>
+<kbd><img src="https://github.com/VelislavMarinov/BugTrackerSU/blob/main/src/AppScreenShots/Untitled.png?raw=true" /></kbd>
+<br/><br/>
+<kbd><img src="https://github.com/VelislavMarinov/BugTrackerSU/blob/main/src/AppScreenShots/MyProjectInfo.png?raw=true" /></kbd>
+<br/><br/>
+<kbd><img src="https://github.com/VelislavMarinov/BugTrackerSU/blob/main/src/AppScreenShots/Ticket.png?raw=true" /></kbd>
+<br/><br/>
+<kbd><img src="https://github.com/VelislavMarinov/BugTrackerSU/blob/main/src/AppScreenShots/TicketInfo.png?raw=true" /></kbd>
+<br/><br/>
+<kbd><img src="https://github.com/VelislavMarinov/BugTrackerSU/blob/main/src/AppScreenShots/Posts.png?raw=true" /></kbd>
+<br/><br/>
 <kbd><img src="https://github.com/VelislavMarinov/BugTrackerSU/blob/main/src/AppScreenShots/homescreeen.png?raw=true" /></kbd>
 <br/><br/>
