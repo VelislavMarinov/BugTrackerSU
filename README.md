@@ -44,3 +44,8 @@
 - xUnit
 - Moq
   <br/><br/>
+
+## 📸 Application screenshots
+
+<kbd><img src="https://github.com/VelislavMarinov/BugTrackerSU/blob/main/src/AppScreenShots/homescreeen.png?raw=true" /></kbd>
+<br/><br/>
