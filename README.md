@@ -72,5 +72,3 @@
 <br/><br/>
 <kbd><img src="https://github.com/VelislavMarinov/BugTrackerSU/blob/main/src/AppScreenShots/Posts.png?raw=true" /></kbd>
 <br/><br/>
-<kbd><img src="https://github.com/VelislavMarinov/BugTrackerSU/blob/main/src/AppScreenShots/homescreeen.png?raw=true" /></kbd>
-<br/><br/>
