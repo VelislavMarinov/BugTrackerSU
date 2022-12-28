@@ -139,6 +139,5 @@
             var article = await this.articleService.GetArticleById(id);
             return this.View(article);
         }
-
     }
 }

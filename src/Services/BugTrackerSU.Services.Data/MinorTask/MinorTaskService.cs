@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using BugTrackerSU.Common;
     using BugTrackerSU.Data.Common.Repositories;
     using BugTrackerSU.Data.Models;
@@ -98,7 +99,6 @@
                     TaskId = x.Id,
                 })
                 .ToListAsync();
-
 
             var model = new AllMinorTaskViewModel()
             {

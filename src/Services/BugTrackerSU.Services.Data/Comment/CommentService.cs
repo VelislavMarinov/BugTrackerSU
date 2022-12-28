@@ -1,9 +1,9 @@
 ﻿namespace BugTrackerSU.Services.Data.Comment
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using BugTrackerSU.Common;
     using BugTrackerSU.Data.Common.Repositories;
     using BugTrackerSU.Data.Models;
@@ -41,7 +41,6 @@
         {
             if (roleName == GlobalConstants.AdministratorRoleName)
             {
-
                 var adminComment = this.commentRepository
                    .All()
                    .Where(x => x.Id == commentId)

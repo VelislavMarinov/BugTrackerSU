@@ -1,29 +1,27 @@
 ﻿namespace BugTrackerSU.Services.Data.Tests
 {
-    using BugTrackerSU.Data;
-    using BugTrackerSU.Data.Repositories;
-    using BugTrackerSU.Data.Models;
-    using System;
-    using Xunit;
-    using BugTrackerSU.Services.Data.Article;
-    using System.Threading.Tasks;
-    using BugTrackerSU.Services.Data.Category;
-    using System.Collections.Generic;
-    using BugTrackerSU.Web.ViewModels.Articles;
     using System.Linq;
-    using Microsoft.EntityFrameworkCore;
+    using System.Threading.Tasks;
+
     using BugTrackerSU.Common;
+    using BugTrackerSU.Data;
+    using BugTrackerSU.Data.Models;
+    using BugTrackerSU.Data.Repositories;
+    using BugTrackerSU.Services.Data.Article;
+    using BugTrackerSU.Services.Data.Category;
+    using BugTrackerSU.Web.ViewModels.Articles;
+    using Microsoft.EntityFrameworkCore;
+    using Xunit;
 
     public class ArticlesServicesTests : BaseServicesTests
     {
-
         [Fact]
         public void ShouldReturnEmbedYoutobeLinkCorrectly()
         {
             ApplicationDbContext db = GetDb();
             var categoryRepository = new EfDeletableEntityRepository<Category>(db);
             var articleRepository = new EfDeletableEntityRepository<Article>(db);
-            var service = new ArticleService(articleRepository,categoryRepository);
+            var service = new ArticleService(articleRepository, categoryRepository);
 
             string normalYoutubeLink = "https://www.youtube.com/watch?v=sniM-3K7_zQ";
 
@@ -60,7 +58,6 @@
                 AddedByUserId = user1.Id,
                 ImageUrl = "https://sienaconstruction.com/wp-content/uploads/2017/05/test-image.jpg",
             };
-
 
             var category2 = new Category
             {
@@ -189,7 +186,7 @@
             await service.CreateArticleAsync(articleModel, user1.Id);
             await service.CreateArticleAsync(articleModel2, user1.Id);
 
-            var articles = await service.GetAllArticlesInCategory(category1.Id,1,10);
+            var articles = await service.GetAllArticlesInCategory(category1.Id, 1, 10);
 
             Assert.True(articles.Articles.Count == 2);
         }
@@ -486,7 +483,7 @@
             await service.CreateArticleAsync(articleModel2, user1.Id);
             await service.CreateArticleAsync(articleModel3, user1.Id);
 
-            var result = await service.GetAllArticles(1,10);
+            var result = await service.GetAllArticles(1, 10);
 
             Assert.Contains(result.Articles, x => x.Name == "test1234");
             Assert.True(result.Articles.Count == 3);
@@ -559,6 +556,5 @@
 
             Assert.True(result.Name == "test12345");
         }
-
     }
 }

@@ -71,7 +71,6 @@
                     await this.categoryRepository.SaveChangesAsync();
                 }
             }
-
         }
 
         public async Task EditCategoryAsync(EditCategoryFormModel model, int categoryId, string userId, string userRole)

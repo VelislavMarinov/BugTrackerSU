@@ -146,7 +146,6 @@
                     Id = u.Id,
                     UserName = u.UserName,
                     RoleId = u.Roles.Where(r => r.UserId == u.Id).Select(r => r.RoleId).FirstOrDefault(),
-
                 })
                 .ToListAsync();
 

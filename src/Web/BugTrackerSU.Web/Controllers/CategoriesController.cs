@@ -106,7 +106,6 @@
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-
             try
             {
                 var userId = this.User.GetId();
@@ -121,6 +120,5 @@
                 return this.BadRequest(ex.Message);
             }
         }
-
     }
 }

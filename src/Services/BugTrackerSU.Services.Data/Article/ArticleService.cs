@@ -13,7 +13,6 @@
 
     public class ArticleService : IArticleService
     {
-
         private readonly IDeletableEntityRepository<Article> articleRepository;
 
         private readonly IDeletableEntityRepository<Category> categoryRepository;
@@ -150,7 +149,6 @@
                     await this.articleRepository.SaveChangesAsync();
                }
             }
-
         }
 
         public async Task<AllArticlesViewModel> GetAllArticlesInCategory(int categoryId, int pageNumber, int itemsPerPage)

@@ -13,7 +13,7 @@
 
         Task CreateArticleAsync(CreateArticleFormModel model, string userId);
 
-        Task<AllArticlesViewModel> GetAllArticlesInCategory(int categoryId ,int pageNumber, int itemsPerPage);
+        Task<AllArticlesViewModel> GetAllArticlesInCategory(int categoryId, int pageNumber, int itemsPerPage);
 
         Task EditArticleAsync(EditArticleFormModel model, int articleId, string userId, string roleName);
 
